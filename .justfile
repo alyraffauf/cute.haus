@@ -30,18 +30,6 @@ update-nixpkgs: (update "nixpkgs" "nixpkgs-unstable-small")
 #  NixOS
 #
 ############################################################################
-############################################################################
-#
-#  Darwin
-#
-############################################################################
-
-# Reset launchpad to force it to reindex Applications
-[group('desktop')]
-[macos]
-reset-launchpad:
-    defaults write com.apple.dock ResetLaunchPad -bool true
-    killall Dock
 
 ############################################################################
 #
