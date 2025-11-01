@@ -52,7 +52,6 @@
       autoUpgrade.enable = true;
       backups.enable = true;
       base.enable = true;
-      server.enable = true;
 
       swap = {
         enable = true;

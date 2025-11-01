@@ -16,6 +16,18 @@
   };
 
   config = lib.mkIf config.myNixOS.profiles.base.enable {
+    boot.kernel.sysctl = {
+      # Improved file monitoring
+      "fs.file-max" = lib.mkDefault 2097152;
+      "fs.inotify.max_user_instances" = lib.mkOverride 100 8192;
+      "fs.inotify.max_user_watches" = lib.mkOverride 100 524288;
+    };
+
+    documentation = {
+      enable = false;
+      nixos.enable = false;
+    };
+
     environment = {
       etc."nixos".source = self;
 
@@ -66,6 +78,8 @@
     };
 
     services = {
+      bpftune.enable = true;
+
       cachefilesd = {
         enable = true;
 
@@ -76,20 +90,44 @@
         '';
       };
 
-      vscode-server.enable = true;
+      journald = {
+        storage = "volatile";
+        extraConfig = "SystemMaxUse=32M\nRuntimeMaxUse=32M";
+      };
 
       openssh = {
         enable = true;
         openFirewall = true;
         settings.PasswordAuthentication = false;
       };
+
+      timesyncd.enable = true;
+      vscode-server.enable = true;
     };
 
-    system = {
-      configurationRevision = self.rev or self.dirtyRev or null;
-      nixos.tags = ["base"];
+    system.configurationRevision = self.rev or self.dirtyRev or null;
+
+    systemd = {
+      coredump.enable = false;
+      enableEmergencyMode = false;
+
+      oomd = {
+        enable = true;
+        enableRootSlice = true;
+        enableSystemSlice = true;
+        enableUserSlices = true;
+      };
     };
 
-    myNixOS.programs.njust.enable = true;
+    zramSwap = {
+      enable = lib.mkDefault true;
+      algorithm = lib.mkDefault "zstd";
+      priority = lib.mkDefault 100;
+    };
+
+    myNixOS = {
+      programs.njust.enable = true;
+      services.fail2ban.enable = true;
+    };
   };
 }

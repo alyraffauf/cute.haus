@@ -168,7 +168,6 @@
       backups.enable = true;
       base.enable = true;
       data-share.enable = true;
-      server.enable = true;
       swap.enable = true;
       media-share.enable = true;
     };

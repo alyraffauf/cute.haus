@@ -8,7 +8,6 @@
     ./data-share
     ./iso
     ./media-share
-    ./server
     ./swap
   ];
 }

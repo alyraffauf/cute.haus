@@ -82,7 +82,6 @@ in {
       backups.enable = true;
       base.enable = true;
       btrfs.enable = true;
-      server.enable = true;
       swap.enable = true;
     };
 
