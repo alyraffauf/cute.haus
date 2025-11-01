@@ -17,7 +17,7 @@ jobs:
       uses: cachix/cachix-action@master
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-        name: alyraffauf
+        name: cutehaus
     - name: Build dewford
       run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.dewford.config.system.build.toplevel
   build-evergrande:
@@ -35,7 +35,7 @@ jobs:
       uses: cachix/cachix-action@master
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-        name: alyraffauf
+        name: cutehaus
     - name: Build evergrande
       run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.evergrande.config.system.build.toplevel
   build-lavaridge:
@@ -53,7 +53,7 @@ jobs:
       uses: cachix/cachix-action@master
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-        name: alyraffauf
+        name: cutehaus
     - name: Build lavaridge
       run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.lavaridge.config.system.build.toplevel
   build-lilycove:
@@ -71,7 +71,7 @@ jobs:
       uses: cachix/cachix-action@master
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-        name: alyraffauf
+        name: cutehaus
     - name: Build lilycove
       run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.lilycove.config.system.build.toplevel
   build-littleroot:
@@ -89,7 +89,7 @@ jobs:
       uses: cachix/cachix-action@master
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-        name: alyraffauf
+        name: cutehaus
     - name: Build littleroot
       run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.littleroot.config.system.build.toplevel
   build-mauville:
@@ -107,7 +107,7 @@ jobs:
       uses: cachix/cachix-action@master
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-        name: alyraffauf
+        name: cutehaus
     - name: Build mauville
       run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.mauville.config.system.build.toplevel
   build-mossdeep:
@@ -125,7 +125,7 @@ jobs:
       uses: cachix/cachix-action@master
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-        name: alyraffauf
+        name: cutehaus
     - name: Build mossdeep
       run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.mossdeep.config.system.build.toplevel
   build-slateport:
@@ -143,7 +143,7 @@ jobs:
       uses: cachix/cachix-action@master
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-        name: alyraffauf
+        name: cutehaus
     - name: Build slateport
       run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.slateport.config.system.build.toplevel
 name: build-nixos

@@ -12,7 +12,7 @@ jobs:
     - uses: cachix/cachix-action@master
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-        name: alyraffauf
+        name: cutehaus
     - name: Build devShell default
       run: nix build --accept-flake-config --print-out-paths .#devShells.x86_64-linux.default
   build-package-gen-files:
@@ -25,7 +25,7 @@ jobs:
     - uses: cachix/cachix-action@master
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-        name: alyraffauf
+        name: cutehaus
     - name: Build package gen-files
       run: nix build --accept-flake-config --print-out-paths .#packages.x86_64-linux.gen-files
   build-package-render-workflows:
@@ -38,7 +38,7 @@ jobs:
     - uses: cachix/cachix-action@master
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-        name: alyraffauf
+        name: cutehaus
     - name: Build package render-workflows
       run: nix build --accept-flake-config --print-out-paths .#packages.x86_64-linux.render-workflows
 name: build-nix
