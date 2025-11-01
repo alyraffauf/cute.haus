@@ -1,7 +1,5 @@
 {...}: {
   imports = [
     ./fastfetch
-    ./ghostty
-    ./rofi
   ];
 }
