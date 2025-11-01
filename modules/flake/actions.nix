@@ -83,57 +83,6 @@
           devShellJobs // packageJobs;
       };
 
-      # build-darwin.yml
-      ".github/workflows/build-darwin.yml" = {
-        name = "build-darwin";
-        concurrency = {
-          cancel-in-progress = true;
-          group = "\${{ github.workflow }}-\${{ github.ref }}";
-        };
-        on = {
-          push = {
-            paths-ignore = [
-              "**/*.md"
-              ".github/**"
-              "_img/**"
-            ];
-          };
-          workflow_dispatch = {};
-        };
-        jobs =
-          lib.mapAttrs'
-          (hostname: _: {
-            name = "build-${hostname}";
-            value = {
-              runs-on = "macos-latest";
-              steps = [
-                {
-                  name = "Checkout";
-                  uses = "actions/checkout@main";
-                  "with" = {fetch-depth = 1;};
-                }
-                {
-                  name = "Install Nix";
-                  uses = "DeterminateSystems/nix-installer-action@main";
-                }
-                {
-                  name = "Cachix";
-                  uses = "cachix/cachix-action@master";
-                  "with" = {
-                    name = "alyraffauf";
-                    authToken = "\${{ secrets.CACHIX_AUTH_TOKEN }}";
-                  };
-                }
-                {
-                  name = "Build ${hostname}";
-                  run = "nix build --accept-flake-config --print-out-paths .#darwinConfigurations.${hostname}.config.system.build.toplevel";
-                }
-              ];
-            };
-          })
-          self.darwinConfigurations;
-      };
-
       # build-nixos.yml
       ".github/workflows/build-nixos.yml" = {
         name = "build-nixos";
