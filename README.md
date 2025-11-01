@@ -20,7 +20,6 @@ This repository contains NixOS and home-manager configurations, along with whate
 ├── modules/                 # Modular configurations
 │   ├── home/                # home-manager modules
 │   ├── flake/               # Organized flake components
-│   │   ├── darwin.nix       # macOS-specific configurations
 │   │   ├── home-manager.nix # Home-manager configurations
 │   │   ├── nixos.nix        # NixOS-specific configurations
 │   │   └── ...              # Other flake components
