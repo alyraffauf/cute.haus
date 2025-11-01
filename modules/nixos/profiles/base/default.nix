@@ -10,7 +10,7 @@
 
     flakeUrl = lib.mkOption {
       type = lib.types.str;
-      default = "github:alyraffauf/nixcfg";
+      default = "github:alyraffauf/cute.haus";
       description = "Default flake URL for the system";
     };
   };
