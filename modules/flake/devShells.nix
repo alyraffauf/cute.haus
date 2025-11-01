@@ -31,7 +31,7 @@ _: {
         echo "Generating files..."
         ${lib.getExe self'.packages.gen-files}
         export FLAKE="." NH_FLAKE="."
-        echo "👋 Welcome to the nixcfg devShell!"
+        echo "👋 Welcome to the cute.haus devShell!"
       '';
     };
   };
