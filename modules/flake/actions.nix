@@ -41,7 +41,7 @@
                   {
                     uses = "cachix/cachix-action@master";
                     "with" = {
-                      name = "alyraffauf";
+                      name = "cutehaus";
                       authToken = "\${{ secrets.CACHIX_AUTH_TOKEN }}";
                     };
                   }
@@ -67,7 +67,7 @@
                   {
                     uses = "cachix/cachix-action@master";
                     "with" = {
-                      name = "alyraffauf";
+                      name = "cutehaus";
                       authToken = "\${{ secrets.CACHIX_AUTH_TOKEN }}";
                     };
                   }
@@ -124,7 +124,7 @@
                   name = "Cachix";
                   uses = "cachix/cachix-action@master";
                   "with" = {
-                    name = "alyraffauf";
+                    name = "cutehaus";
                     authToken = "\${{ secrets.CACHIX_AUTH_TOKEN }}";
                   };
                 }
@@ -179,7 +179,7 @@
       #             name = "Cachix";
       #             uses = "cachix/cachix-action@master";
       #             "with" = {
-      #               name = "alyraffauf";
+      #               name = "cutehaus";
       #               authToken = "\${{ secrets.CACHIX_AUTH_TOKEN }}";
       #             };
       #           }
