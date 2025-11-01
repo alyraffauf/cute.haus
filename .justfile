@@ -23,7 +23,7 @@ update *inputs:
 
 # Update all nixpkgs inputs
 [group('flake')]
-update-nixpkgs: (update "nixpkgs" "nixpkgs-unstable-small")
+update-nixpkgs: (update "nixpkgs")
 
 ############################################################################
 #

@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
     actions-nix = {
       url = "github:alyraffauf/actions.nix";
@@ -19,22 +18,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    aws-cvpn-client = {
-      url = "github:alyraffauf/aws-cvpn-client";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    catppuccin.url = "github:catppuccin/nix";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-
-    cosmic-manager = {
-      url = "github:HeitorAugustoLN/cosmic-manager";
-
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-      };
-    };
 
     disko = {
       url = "github:nix-community/disko";
@@ -43,11 +27,6 @@
 
     files.url = "github:alyraffauf/files";
     flake-parts.url = "github:hercules-ci/flake-parts";
-
-    fontix = {
-      url = "github:alyraffauf/fontix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     git-hooks-nix = {
       url = "github:cachix/git-hooks.nix";
@@ -67,31 +46,6 @@
         rust-overlay.follows = "rust-overlay";
       };
     };
-
-    lix = {
-      url = "git+https://git.lix.systems/lix-project/lix.git?ref=release-2.93";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    lix-module = {
-      url = "git+https://git.lix.systems/lix-project/nixos-module.git?ref=release-2.93";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.lix.follows = "lix";
-    };
-
-    nix-darwin = {
-      url = "github:nix-darwin/nix-darwin/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-
-    nixgl = {
-      url = "github:nix-community/nixGL";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nur.url = "github:nix-community/NUR";
 
     nynx = {
       url = "github:alyraffauf/nynx";
@@ -115,11 +69,6 @@
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
-    zen-browser = {
-      url = "github:0xc000022070/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Non-flake inputs
     absolute = {
       url = "github:ZeroQI/Absolute-Series-Scanner";
@@ -136,23 +85,8 @@
       flake = false;
     };
 
-    homebrew-core = {
-      url = "github:homebrew/homebrew-core";
-      flake = false;
-    };
-
-    homebrew-cask = {
-      url = "github:homebrew/homebrew-cask";
-      flake = false;
-    };
-
     secrets = {
       url = "github:alyraffauf/secrets";
-      flake = false;
-    };
-
-    wallpapers = {
-      url = "github:alyraffauf/wallpapers";
       flake = false;
     };
   };
