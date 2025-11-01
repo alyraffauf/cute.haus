@@ -9,7 +9,7 @@
 
     operation = lib.mkOption {
       type = lib.types.str;
-      default = "boot";
+      default = "switch";
       description = "Operation to perform on auto-upgrade. Can be 'boot', 'switch', or 'test'.";
     };
   };

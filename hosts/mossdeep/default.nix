@@ -49,11 +49,7 @@
 
   myNixOS = {
     profiles = {
-      autoUpgrade = {
-        enable = true;
-        operation = "switch";
-      };
-
+      autoUpgrade.enable = true;
       backups.enable = true;
       base.enable = true;
       server.enable = true;

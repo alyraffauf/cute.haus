@@ -95,11 +95,7 @@
 
   myNixOS = {
     profiles = {
-      autoUpgrade = {
-        enable = true;
-        operation = "switch";
-      };
-
+      autoUpgrade.enable = true;
       base.enable = true;
       btrfs.enable = true;
       data-share.enable = true;
