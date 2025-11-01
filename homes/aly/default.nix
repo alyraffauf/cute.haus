@@ -1,177 +1,45 @@
 {
-  config,
   pkgs,
-  lib,
   self,
   ...
 }: {
   imports = [
     self.homeModules.default
-    self.inputs.fontix.homeModules.default
-    self.inputs.catppuccin.homeModules.catppuccin
+    self.inputs.agenix.homeManagerModules.default
   ];
 
-  config = lib.mkMerge [
-    {
-      home = {
-        packages = with pkgs;
-          [
-            rclone
-          ]
-          ++ [
-            self.inputs.nynx.packages.${pkgs.system}.nynx
-          ];
+  age.secrets.rclone-b2.file = "${self.inputs.secrets}/rclone/b2.age";
 
-        username = "aly";
-      };
+  home = {
+    homeDirectory = "/home/aly";
 
-      programs.home-manager.enable = true;
-      xdg.enable = true;
+    packages = with pkgs; [
+      curl
+      rclone
+      restic
+    ];
 
-      fontix = {
-        fonts = {
-          monospace = {
-            name = "CaskaydiaCove Nerd Font";
-            package = pkgs.nerd-fonts.caskaydia-cove;
-          };
+    stateVersion = "25.11";
+    username = "aly";
+  };
+  programs = {
+    helix = {
+      enable = true;
+      defaultEditor = true;
+    };
 
-          sansSerif =
-            if pkgs.stdenv.isLinux
-            then {
-              name = "Adwaita Sans";
-              package = pkgs.adwaita-fonts;
-            }
-            else {
-              name = "UbuntuSans Nerd Font";
-              package = pkgs.nerd-fonts.ubuntu-sans;
-            };
+    home-manager.enable = true;
+  };
 
-          serif = {
-            name = "Source Serif Pro";
-            package = pkgs.source-serif-pro;
-          };
-        };
+  myHome = {
+    aly.programs = {
+      git.enable = true;
+      awscli.enable = true;
+      rbw.enable = true;
+      ssh.enable = true;
+    };
 
-        sizes = {
-          applications = 10;
-          desktop = 10;
-        };
-
-        font-packages.enable = true;
-        fontconfig.enable = true;
-        ghostty.enable = true;
-        gnome.enable = lib.mkIf pkgs.stdenv.isLinux true;
-        gtk.enable = lib.mkIf pkgs.stdenv.isLinux true;
-        halloy.enable = true;
-        zed-editor.enable = true;
-      };
-
-      catppuccin = {
-        flavor = "macchiato";
-        bat.enable = true;
-        helix.enable = true;
-        ghostty.enable = true;
-        lazygit.enable = true;
-        vesktop.enable = true;
-        # vscode.profiles.default.enable = true;
-
-        zed = {
-          enable = true;
-          icons.enable = true;
-          italics = false;
-        };
-
-        zellij.enable = true;
-      };
-
-      myHome = {
-        aly = {
-          profiles.mail.enable = true;
-
-          programs = {
-            awscli.enable = true;
-            firefox.enable = true;
-            git.enable = true;
-            halloy.enable = true;
-            helix.enable = true;
-            ssh.enable = true;
-            thunderbird.enable = true;
-            vesktop.enable = true;
-            zed-editor.enable = true;
-            zen.enable = true;
-          };
-        };
-
-        profiles.shell.enable = true;
-
-        programs = {
-          fastfetch.enable = true;
-          ghostty.enable = true;
-        };
-      };
-    }
-
-    (lib.mkIf pkgs.stdenv.isDarwin {
-      home = {
-        homeDirectory = "/Users/aly";
-        shellAliases."docker" = "podman";
-      };
-
-      myHome = {
-        aly.desktop.macos.enable = true;
-        services.raycast.enable = true;
-      };
-    })
-
-    (lib.mkIf pkgs.stdenv.isLinux {
-      gtk.gtk3.bookmarks = lib.mkAfter [
-        "file://${config.home.homeDirectory}/sync"
-      ];
-
-      home = {
-        homeDirectory = "/home/aly";
-
-        packages = with pkgs;
-          [
-            bitwarden-desktop
-            cider-2
-            google-chrome
-            nicotine-plus
-            obsidian
-            plexamp
-            protonvpn-gui
-            signal-desktop-bin
-            todoist-electron
-          ]
-          ++ [
-            (pkgs.writeShellScriptBin "aws-cvpn" ''
-              exec ${self.inputs.aws-cvpn-client.packages.${pkgs.system}.default}/bin/aws-start-vpn.sh "$@"
-            '')
-          ];
-
-        stateVersion = "25.11";
-        username = "aly";
-      };
-
-      systemd.user.startServices = true; # Needed for auto-mounting agenix secrets.
-
-      myHome = {
-        aly.programs = {
-          chromium.enable = true;
-          rbw.enable = true;
-        };
-
-        profiles.defaultApps = {
-          enable = true;
-          editor.package = config.programs.zed-editor.package;
-          terminal.package = config.programs.ghostty.package;
-
-          webBrowser = {
-            exec = lib.getExe config.programs.zen-browser.finalPackage;
-            package = config.programs.zen-browser.finalPackage;
-          };
-        };
-      };
-    })
-  ];
+    profiles.shell.enable = true;
+    programs.fastfetch.enable = true;
+  };
 }

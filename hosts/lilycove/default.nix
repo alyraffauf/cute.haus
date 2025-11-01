@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   self,
   ...
 }: let
@@ -21,6 +22,16 @@ in {
     initrd.availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "sd_mod" "r8169"];
     kernelModules = ["sg"];
   };
+
+  environment.systemPackages = with pkgs; [
+    abcde
+    ffmpeg-full
+    flac
+    handbrake
+    makemkv
+    mediainfo
+    mkvtoolnix
+  ];
 
   fileSystems = {
     "/mnt/Data" = {
