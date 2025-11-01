@@ -7,7 +7,6 @@
 }: {
   imports = [
     ./aly
-    ./dustin
     ./options.nix
   ];
 

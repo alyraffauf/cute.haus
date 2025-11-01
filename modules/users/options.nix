@@ -29,6 +29,5 @@
 
     root.enable = lib.mkEnableOption "root user configuration." // {default = true;};
     aly = mkUser "aly";
-    dustin = mkUser "dustin";
   };
 }
