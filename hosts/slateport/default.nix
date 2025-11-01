@@ -27,7 +27,6 @@
       media-share.enable = true;
       server.enable = true;
       swap.enable = true;
-      wifi.enable = true;
     };
 
     programs = {
