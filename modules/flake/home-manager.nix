@@ -3,7 +3,6 @@ _: {
     homeModules = {
       default = ../home;
       aly = ../../homes/aly;
-      snippets = ../snippets;
     };
   };
 }

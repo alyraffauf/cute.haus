@@ -23,8 +23,7 @@ This repository contains NixOS and home-manager configurations, along with whate
 │   │   ├── home-manager.nix # Home-manager configurations
 │   │   ├── nixos.nix        # NixOS-specific configurations
 │   │   └── ...              # Other flake components
-│   ├── nixos/               # NixOS-specific modules
-│   └── snippets/            # Reusable configuration snippets
+│   └── nixos/               # NixOS-specific modules
 └── overlays/                # Custom Nixpkgs overlays
 ```
 

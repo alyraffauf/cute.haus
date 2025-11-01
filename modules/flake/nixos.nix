@@ -14,7 +14,6 @@
       hardware = ../hardware;
       locale-en-us = ../locale/en-us;
       nixos = ../nixos;
-      snippets = ../snippets;
       users = ../users;
     };
 
@@ -39,10 +38,10 @@
               inputs.disko.nixosModules.disko
               inputs.home-manager.nixosModules.home-manager
               inputs.lanzaboote.nixosModules.lanzaboote
+              inputs.snippets.nixosModules.snippets
               inputs.vscode-server.nixosModules.default
               modules.hardware
               modules.nixos
-              modules.snippets
               modules.users
 
               {

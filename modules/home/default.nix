@@ -3,6 +3,6 @@
     ./aly
     ./profiles
     ./programs
-    self.homeModules.snippets
+    self.inputs.snippets.homeModules.snippets
   ];
 }
