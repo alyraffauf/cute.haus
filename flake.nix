@@ -14,8 +14,8 @@
     };
 
     agenix = {
-      url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:yaxitech/ragenix";
     };
 
     disko = {
@@ -110,7 +110,7 @@
 
   outputs = inputs @ {flake-parts, ...}:
     flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = ["x86_64-linux"];
+      systems = ["aarch64-darwin" "x86_64-linux"];
 
       imports = [
         ./modules/flake
