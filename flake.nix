@@ -23,7 +23,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    files.url = "github:alyraffauf/files";
+    files.url = "github:alyraffauf/flake-files";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     git-hooks-nix = {

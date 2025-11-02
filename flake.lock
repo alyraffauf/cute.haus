@@ -255,13 +255,13 @@
         "lastModified": 1753414454,
         "narHash": "sha256-IMdHZjva8z354/TAjkKqgHJ0k7qGZeaf460EPq/awDA=",
         "owner": "alyraffauf",
-        "repo": "files",
+        "repo": "flake-files",
         "rev": "fdfd673e34933a6836e6dccda820e448300e4c05",
         "type": "github"
       },
       "original": {
         "owner": "alyraffauf",
-        "repo": "files",
+        "repo": "flake-files",
         "type": "github"
       }
     },
