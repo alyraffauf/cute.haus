@@ -6,6 +6,7 @@
   imports = [
     self.homeModules.default
     self.inputs.agenix.homeManagerModules.default
+    self.inputs.safari.homeModules.default
   ];
 
   age.secrets.rclone-b2.file = "${self.inputs.secrets}/rclone/b2.age";
@@ -22,24 +23,13 @@
     stateVersion = "25.11";
     username = "aly";
   };
-  programs = {
-    helix = {
-      enable = true;
-      defaultEditor = true;
-    };
 
-    home-manager.enable = true;
-  };
+  programs.helix.defaultEditor = true;
+  safari.enable = true;
 
-  myHome = {
-    aly.programs = {
-      git.enable = true;
-      awscli.enable = true;
-      rbw.enable = true;
-      ssh.enable = true;
-    };
-
-    profiles.shell.enable = true;
-    programs.fastfetch.enable = true;
+  myHome.aly.programs = {
+    git.enable = true;
+    awscli.enable = true;
+    ssh.enable = true;
   };
 }
