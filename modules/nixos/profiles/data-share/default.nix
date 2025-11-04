@@ -38,13 +38,5 @@
         device = "lilycove:/mnt/Data";
       };
     };
-
-    home-manager.sharedModules = [
-      {
-        gtk.gtk3.bookmarks = [
-          "file:///mnt/Data"
-        ];
-      }
-    ];
   };
 }
