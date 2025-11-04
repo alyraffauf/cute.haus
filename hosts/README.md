@@ -10,7 +10,7 @@ The `hosts/` directory is organized as follows:
 
 ```plaintext
 hosts/
-├── dewford/       # Netcap VPS
+├── dewford/       # Netcup VPS
 ├── evergrande/    # Hetzner VPS
 ├── lavaridge/     # Framework Laptop 13 (11th Gen Intel)
 ├── lilycove/      # Custom Mini-ITX NAS
@@ -31,7 +31,7 @@ To add a new device to this configuration, follow these steps:
    - Modify the `default.nix` and other relevant Nix modules (e.g., `disko.nix`, `hardware.nix`, `home.nix`) to match the new device's specifications.
 
 1. **Update `flake.nix`**:
-   - Add the new host to the `nixosConfigurations` section in `flake.nix`.
+   - Add the new host to the `nixosConfigurations` section in `modules/flake/nixos.nix`.
 
 1. **Install NixOS**:
    - Install NixOS on the new device using this flake. Note that secrets will not be available on the first boot without a valid SSH private key.
