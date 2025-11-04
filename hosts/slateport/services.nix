@@ -9,27 +9,5 @@
         '';
       };
     };
-
-    # ddclient = {
-    #   enable = true;
-
-    #   domains = [
-    #     "audiobookshelf.cute.haus"
-    #     "cute.haus"
-    #     "forgejo.cute.haus"
-    #     "immich.cute.haus"
-    #     "karakeep.cute.haus"
-    #     "navidrome.cute.haus"
-    #     "ombi.cute.haus"
-    #     "plex.cute.haus"
-    #   ];
-
-    #   interval = "10min";
-    #   passwordFile = config.age.secrets.cloudflare.path;
-    #   protocol = "cloudflare";
-    #   ssl = true;
-    #   username = "token";
-    #   zone = "cute.haus";
-    # };
   };
 }
