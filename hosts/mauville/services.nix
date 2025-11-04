@@ -347,78 +347,9 @@
 
     meilisearch.settings.experimental_dumpless_upgrade = true;
 
-    # open-webui = {
-    #   enable = true;
-
-    #   environment = {
-    #     OLLAMA_API_BASE_URL = "https://ollama.${config.mySnippets.tailnet.name}";
-    #     # Disable authentication
-    #     WEBUI_AUTH = "False";
-    #   };
-
-    #   host = "0.0.0.0";
-    #   openFirewall = true;
-    #   port = 8585;
-    # };
-
     # navidrome = {
     #   enable = true;
     #   openFirewall = true;
-    # };
-
-    # paperless = {
-    #   enable = true;
-    #   address = "0.0.0.0";
-    #   dataDir = "/mnt/Data/paperless";
-
-    #   settings = {
-    #     PAPERLESS_ACCOUNT_ALLOW_SIGNUPS = false;
-
-    #     PAPERLESS_CONSUMER_IGNORE_PATTERN = [
-    #       ".DS_STORE/*"
-    #       "desktop.ini"
-    #     ];
-
-    #     PAPERLESS_OCR_LANGUAGE = "eng";
-
-    #     PAPERLESS_OCR_USER_ARGS = {
-    #       optimize = 1;
-    #       pdfa_image_compression = "lossless";
-    #     };
-    #   };
-    # };
-
-    # slskd = {
-    #   enable = true;
-    #   domain = "0.0.0.0";
-    #   environmentFile = config.age.secrets.slskd.path;
-    #   openFirewall = true;
-
-    #   settings = {
-    #     directories.downloads = "/mnt/Media/Inbox/Music";
-    #     shares.directories = ["/mnt/Media/Music"];
-    #     soulseek.connection.buffer.read = 4096;
-    #     soulseek.connection.buffer.write = 4096;
-    #     soulseek.connection.buffer.transfer = 81920;
-    #     soulseek.distributedNetwork.childLimit = 10;
-
-    #     global = {
-    #       download = {
-    #         limit = 500; # Limit downloads to 500 KB/s
-    #         slots = 4;
-    #       };
-
-    #       limits = {
-    #         daily.megabytes = 1024; # Limit daily uplolads to 1GB
-    #         weekly.megabytes = 10240; # Limit weekly uploads to 10GB
-    #       };
-
-    #       upload = {
-    #         limit = 320; # Limit uploads to 32 KB/s
-    #         slots = 4;
-    #       };
-    #     };
-    #   };
     # };
   };
 
