@@ -1,7 +1,0 @@
-{...}: {
-  imports = [
-    ./awscli
-    ./git
-    ./ssh
-  ];
-}

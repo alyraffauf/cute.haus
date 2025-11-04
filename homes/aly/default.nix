@@ -1,4 +1,6 @@
 {
+  config,
+  lib,
   pkgs,
   self,
   ...
@@ -9,7 +11,10 @@
     self.inputs.safari.homeModules.default
   ];
 
-  age.secrets.rclone-b2.file = "${self.inputs.secrets}/rclone/b2.age";
+  age.secrets = {
+    aws.file = "${self.inputs.secrets}/aly/aws.age";
+    rclone-b2.file = "${self.inputs.secrets}/rclone/b2.age";
+  };
 
   home = {
     homeDirectory = "/home/aly";
@@ -24,12 +29,75 @@
     username = "aly";
   };
 
-  programs.helix.defaultEditor = true;
-  safari.enable = true;
+  programs = {
+    awscli = {
+      enable = true;
 
-  myHome.aly.programs = {
-    git.enable = true;
-    awscli.enable = true;
-    ssh.enable = true;
+      credentials = {
+        "default" = {
+          "credential_process" = ''sh -c "${lib.getExe' pkgs.uutils-coreutils-noprefix "cat"} ${config.age.secrets.aws.path}"'';
+        };
+      };
+    };
+
+    delta = {
+      enable = true;
+      enableGitIntegration = true;
+    };
+
+    git = {
+      enable = true;
+      lfs.enable = true;
+
+      settings = {
+        color.ui = true;
+        github.user = "alyraffauf";
+        push.autoSetupRemote = true;
+
+        user = {
+          name = "Aly Raffauf";
+          email = "aly@aly.codes";
+        };
+      };
+    };
+
+    helix.defaultEditor = true;
+    lazygit.enable = true;
+
+    ssh = {
+      enable = true;
+      enableDefaultConfig = false;
+
+      matchBlocks = let
+        rootMe = name: {
+          ${name} = {
+            hostname = name;
+            user = "root";
+          };
+        };
+      in
+        rootMe "dewford"
+        // rootMe "evergrande"
+        // rootMe "mossdeep"
+        // rootMe "slateport"
+        // {
+          "*" = {
+            forwardAgent = false;
+            addKeysToAgent = "no";
+            compression = false;
+            serverAliveInterval = 0;
+            serverAliveCountMax = 3;
+            hashKnownHosts = false;
+            userKnownHostsFile = "~/.ssh/known_hosts";
+            controlMaster = "no";
+            controlPath = "~/.ssh/master-%r@%n:%p";
+            controlPersist = "no";
+          };
+        };
+
+      package = pkgs.openssh;
+    };
   };
+
+  safari.enable = true;
 }
