@@ -99,5 +99,8 @@
     };
   };
 
-  safari.enable = true;
+  safari = {
+    enable = true;
+    fish.enable = true;
+  };
 }
