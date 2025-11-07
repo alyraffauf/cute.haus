@@ -1,7 +1,6 @@
 {self, ...}: {
   imports = [
     ./secrets.nix
-    ./services.nix
     self.diskoConfigurations.btrfs-subvolumes
     self.nixosModules.locale-en-us
   ];
@@ -32,7 +31,6 @@
 
     services = {
       caddy.enable = true;
-      homebridge.enable = true;
       prometheusNode.enable = true;
       promtail.enable = true;
       tailscale.enable = true;

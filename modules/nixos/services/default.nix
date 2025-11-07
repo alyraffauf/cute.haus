@@ -5,7 +5,6 @@
     ./fail2ban
     ./forgejo
     ./forgejo-runner
-    ./homebridge
     ./plex
     ./prometheusNode
     ./promtail

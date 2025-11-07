@@ -53,10 +53,10 @@ in {
         }
       );
 
-      homebridge = lib.mkIf config.myNixOS.services.homebridge.enable (
+      homebridge = lib.mkIf config.services.homebridge.enable (
         config.mySnippets.restic
         // {
-          paths = [config.myNixOS.services.homebridge.stateDir];
+          paths = ["/var/lib/homebridge"];
           repository = "rclone:b2:aly-backups/${config.networking.hostName}/homebridge";
         }
       );
