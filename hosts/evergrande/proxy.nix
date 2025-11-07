@@ -150,7 +150,7 @@
 
         "self2025.aly.codes" = {
           extraConfig = let
-            site = self.inputs.self2025.packages.${pkgs.system}.default;
+            site = self.inputs.self2025.packages.${pkgs.stdenv.hostPlatform.system}.default;
           in ''
             encode zstd gzip
             file_server

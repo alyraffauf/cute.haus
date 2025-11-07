@@ -32,7 +32,7 @@
     age.secrets.act-runner.file = "${self.inputs.secrets}/act-runner.age";
 
     services.gitea-actions-runner = let
-      arch = lib.replaceStrings ["-"] ["_"] pkgs.system;
+      arch = lib.replaceStrings ["-"] ["_"] pkgs.stdenv.hostPlatform.system;
     in {
       instances = let
         tokenFile = config.age.secrets.act-runner.path;
