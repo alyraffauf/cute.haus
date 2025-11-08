@@ -1143,11 +1143,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1762549313,
-        "narHash": "sha256-yrJGSMUpQG8+3K0GAfzE56YgHzodW08dycJ//jXV5wA=",
+        "lastModified": 1762561791,
+        "narHash": "sha256-BAWEiZ8/YHZNufsTsfVVlw+7g5g30KSLCGV1BHHLR2o=",
         "owner": "alyraffauf",
         "repo": "safari",
-        "rev": "c0a01de22bed58c73f85e9b3009be3800b7505a2",
+        "rev": "8bc4c2250c71c002801586e821b835bc42e94b6e",
         "type": "github"
       },
       "original": {
