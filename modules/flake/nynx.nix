@@ -17,8 +17,5 @@
 
     mossdeep.output = self.nixosConfigurations.mossdeep.config.system.build.toplevel;
     mossdeep.user = "root";
-
-    slateport.output = self.nixosConfigurations.slateport.config.system.build.toplevel;
-    slateport.user = "root";
   };
 }
