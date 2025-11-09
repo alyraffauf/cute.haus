@@ -28,7 +28,6 @@
         "littleroot"
         "mauville"
         "mossdeep"
-        "slateport"
       ] (
         host:
           inputs.nixpkgs.lib.nixosSystem {
