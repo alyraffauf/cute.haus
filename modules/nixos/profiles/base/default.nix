@@ -70,8 +70,12 @@
       };
 
       journald = {
-        storage = "volatile";
-        extraConfig = "SystemMaxUse=32M\nRuntimeMaxUse=32M";
+        storage = "auto";
+
+        extraConfig = ''
+          SystemMaxUse=500M
+          MaxRetentionSec=1week
+        '';
       };
 
       openssh = {
