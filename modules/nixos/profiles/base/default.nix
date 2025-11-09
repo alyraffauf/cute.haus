@@ -66,12 +66,7 @@
     };
 
     networking.networkmanager.enable = true;
-
-    security = {
-      polkit.enable = true;
-      rtkit.enable = true;
-      sudo-rs.enable = true;
-    };
+    security.sudo-rs.enable = true;
 
     services = {
       bpftune.enable = true;
