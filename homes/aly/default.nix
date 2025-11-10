@@ -79,7 +79,6 @@
         rootMe "snowpoint"
         // rootMe "celestic"
         // rootMe "solaceon"
-        // rootMe "slateport"
         // {
           "*" = {
             forwardAgent = false;
