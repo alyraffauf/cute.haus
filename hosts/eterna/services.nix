@@ -130,6 +130,12 @@
                         icon = "di:jellyfin";
                       }
                       {
+                        title = "Navidrome";
+                        url = "https://${config.mySnippets.tailnet.networkMap.navidrome.vHost}/";
+                        check-url = "http://${config.mySnippets.tailnet.networkMap.navidrome.hostName}:${toString config.mySnippets.tailnet.networkMap.navidrome.port}/web/index.html";
+                        icon = "di:navidrome";
+                      }
+                      {
                         title = "Sonarr";
                         url = "https://${config.mySnippets.tailnet.networkMap.sonarr.vHost}/";
                         check-url = "http://${config.mySnippets.tailnet.networkMap.sonarr.hostName}:${toString config.mySnippets.tailnet.networkMap.sonarr.port}/";
@@ -172,11 +178,11 @@
                         icon = "di:qbittorrent";
                         alt-status-codes = [401];
                       }
-                      {
-                        title = "Homebridge";
-                        url = "https://homebridge.${config.mySnippets.tailnet.name}/";
-                        icon = "di:homebridge";
-                      }
+                      # {
+                      #   title = "Homebridge";
+                      #   url = "https://homebridge.${config.mySnippets.tailnet.name}/";
+                      #   icon = "di:homebridge";
+                      # }
                       {
                         title = "Grafana";
                         url = "https://${config.mySnippets.tailnet.networkMap.grafana.vHost}/";
@@ -346,53 +352,5 @@
     };
 
     meilisearch.settings.experimental_dumpless_upgrade = true;
-
-    # navidrome = {
-    #   enable = true;
-    #   openFirewall = true;
-    # };
   };
-
-  # systemd.services = {
-  #   navidrome.serviceConfig = let
-  #     navidromeConfig = builtins.toFile "navidrome.json" (lib.generators.toJSON {} {
-  #       Address = "0.0.0.0";
-  #       DefaultTheme = "Auto";
-  #       MusicFolder = musicDirectory;
-  #       Port = navidrome.port;
-  #       SubsonicArtistParticipations = true;
-  #       UIWelcomeMessage = "Welcome to Navidrome @ ${domain}";
-  #       "Spotify.ID" = "@spotifyClientId@";
-  #       "Spotify.Secret" = "@spotifyClientSecret@";
-  #       "LastFM.Enabled" = true;
-  #       "LastFM.ApiKey" = "@lastFMApiKey@";
-  #       "LastFM.Secret" = "@lastFMSecret@";
-  #       "LastFM.Language" = "en";
-  #     });
-
-  #     navidrome-secrets = pkgs.writeShellScript "navidrome-secrets" ''
-  #       lastFMApiKey=$(cat "${navidrome.lastfm.idFile}")
-  #       lastFMSecret=$(cat "${navidrome.lastfm.secretFile}")
-  #       spotifyClientId=$(cat "${navidrome.spotify.idFile}")
-  #       spotifyClientSecret=$(cat "${navidrome.spotify.secretFile}")
-  #       ${pkgs.gnused}/bin/sed -e "s/@lastFMApiKey@/$lastFMApiKey/" -e "s/@lastFMSecret@/$lastFMSecret/" \
-  #         -e "s/@spotifyClientId@/$spotifyClientId/" -e "s/@spotifyClientSecret@/$spotifyClientSecret/" \
-  #         ${navidromeConfig} > /var/lib/navidrome/navidrome.json
-  #     '';
-  #   in {
-  #     BindReadOnlyPaths = [
-  #       navidrome.lastfm.idFile
-  #       navidrome.lastfm.secretFile
-  #       navidrome.spotify.idFile
-  #       navidrome.spotify.secretFile
-  #       musicDirectory
-  #     ];
-
-  #     ExecStartPre = navidrome-secrets;
-  #     ExecStart = lib.mkForce ''
-  #       ${config.services.navidrome.package}/bin/navidrome --configfile /var/lib/navidrome/navidrome.json \
-  #         --datafolder /var/lib/navidrome/
-  #     '';
-  #   };
-  # };
 }
