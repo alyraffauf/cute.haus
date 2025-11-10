@@ -46,7 +46,7 @@ update-alycodes:
 update-myatmosphere:
     ansible-playbook -i ansible/inventory.ini ansible/playbooks/restart-myatmosphere.yml
 
-# Pull latest myAtmosphere OCI on solaceon
+# Reboot all servers
 [group('servers')]
 reboot:
     ansible-playbook -i ansible/inventory.ini ansible/playbooks/reboot.yml
