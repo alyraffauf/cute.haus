@@ -134,6 +134,20 @@
 
     qemuGuest.enable = true;
 
+    navidrome = {
+      enable = true;
+      environmentFile = config.age.secrets.navidrome.path;
+
+      settings = {
+        Address = "0.0.0.0";
+        DefaultTheme = "Auto";
+        MusicFolder = "/mnt/Media/Music";
+        Port = config.mySnippets.tailnet.networkMap.navidrome.port;
+        SubsonicArtistParticipations = true;
+        UIWelcomeMessage = "Welcome to Navidrome @ ${config.networking.hostName}";
+      };
+    };
+
     uptime-kuma = {
       enable = true;
       appriseSupport = true;
