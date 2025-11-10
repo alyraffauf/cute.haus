@@ -38,6 +38,7 @@
         helix
         htop
         lm_sensors
+        python314
         wget
       ];
 

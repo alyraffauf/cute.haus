@@ -1,0 +1,8 @@
+- hosts: solaceon
+  remote_user: root
+
+  tasks:
+    - name: Restart podman-alycodes
+      ansible.builtin.systemd_service:
+        name: podman-alycodes
+        state: restarted

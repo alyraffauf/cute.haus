@@ -11,6 +11,7 @@ _: {
       packages =
         (with pkgs; [
           (lib.hiPrio uutils-coreutils-noprefix)
+          ansible
           git
           just
           nh

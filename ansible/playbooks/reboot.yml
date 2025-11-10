@@ -1,0 +1,7 @@
+- hosts: cutehaus
+  remote_user: root
+
+  tasks:
+    - name: Reboot all hosts
+      ansible.builtin.reboot:
+        reboot_command: /run/current-system/sw/bin/systemctl reboot

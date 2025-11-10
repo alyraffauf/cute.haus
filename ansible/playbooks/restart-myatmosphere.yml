@@ -1,0 +1,8 @@
+- hosts: solaceon
+  remote_user: root
+
+  tasks:
+    - name: Restart podman-myaymosphere
+      ansible.builtin.systemd_service:
+        name: podman-myatmosphere
+        state: restarted

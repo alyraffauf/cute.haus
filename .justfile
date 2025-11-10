@@ -27,11 +27,6 @@ update-nixpkgs: (update "nixpkgs")
 
 ############################################################################
 #
-#  NixOS
-#
-############################################################################
-############################################################################
-#
 #  Servers
 #
 ############################################################################
@@ -44,9 +39,19 @@ deploy jobs='':
 # Pull latest aly.codes OCI on solaceon
 [group('servers')]
 update-alycodes:
-    ssh root@solaceon systemctl restart podman-alycodes.service
+    ansible-playbook -i ansible/inventory.ini ansible/playbooks/restart-alycodes.yml
 
 # Pull latest myAtmosphere OCI on solaceon
 [group('servers')]
 update-myatmosphere:
-    ssh root@solaceon systemctl restart podman-myatmosphere.service
+    ansible-playbook -i ansible/inventory.ini ansible/playbooks/restart-myatmosphere.yml
+
+# Pull latest myAtmosphere OCI on solaceon
+[group('servers')]
+reboot:
+    ansible-playbook -i ansible/inventory.ini ansible/playbooks/reboot.yml
+
+# Ping all servers
+[group('servers')]
+ping:
+    ansible-playbook -i ansible/inventory.ini ansible/playbooks/ping.yml
