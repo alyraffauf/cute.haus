@@ -7,8 +7,8 @@
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
   ];
 
-  image.baseName = lib.mkForce "littleroot";
-  networking.hostName = "littleroot";
+  image.baseName = lib.mkForce "twinleaf";
+  networking.hostName = "twinleaf";
   nixpkgs.hostPlatform = "x86_64-linux";
 
   myNixOS = {

@@ -6,8 +6,9 @@
   ...
 }: {
   imports = [
+    # ./anubis.nix
+    ./proxy.nix
     ./secrets.nix
-    ./services.nix
     "${modulesPath}/profiles/qemu-guest.nix"
     self.diskoConfigurations.lvm-ext4
     self.nixosModules.locale-en-us
@@ -36,15 +37,15 @@
   ];
 
   networking = {
-    firewall.allowedTCPPorts = [2222];
-    hostName = "mossdeep";
+    firewall.allowedTCPPorts = [80 443];
+    hostName = "celestic";
   };
 
   nixpkgs.hostPlatform = "x86_64-linux";
   programs.ssh.knownHosts = config.mySnippets.ssh.knownHosts;
   system.stateVersion = "25.11";
   time.timeZone = "America/New_York";
-  myDisko.installDrive = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_62292463";
+  myDisko.installDrive = "/dev/sda";
 
   myNixOS = {
     profiles = {
@@ -64,18 +65,7 @@
     };
 
     services = {
-      alycodes = {
-        enable = true;
-        inherit (config.mySnippets.cute-haus.networkMap.aly-codes) port;
-      };
-
       caddy.enable = true;
-
-      forgejo = {
-        enable = true;
-        db = "postgresql";
-      };
-
       prometheusNode.enable = true;
       promtail.enable = true;
       tailscale.enable = true;

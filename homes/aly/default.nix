@@ -76,9 +76,9 @@
           };
         };
       in
-        rootMe "dewford"
-        // rootMe "evergrande"
-        // rootMe "mossdeep"
+        rootMe "snowpoint"
+        // rootMe "celestic"
+        // rootMe "solaceon"
         // rootMe "slateport"
         // {
           "*" = {

@@ -10,14 +10,14 @@ The `hosts/` directory is organized as follows:
 
 ```plaintext
 hosts/
-├── dewford/       # Netcup VPS
-├── evergrande/    # Hetzner VPS
-├── lavaridge/     # Framework Laptop 13 (11th Gen Intel)
-├── lilycove/      # Custom Mini-ITX NAS
-├── littleroot/    # Minimal installation ISO
-├── mauville/      # Beelink Mini S12 Pro
-├── mossdeep/      # Hetzner VPS
-└── slateport/     # Lenovo ThinkCentre M700 Tiny
+├── celestic/      # Hetzner VPS
+├── eterna/        # Beelink Mini S12 Pro
+├── jubilife/      # Custom Mini-ITX NAS
+├── oreburgh/      # Framework Laptop 13 (11th Gen Intel)
+├── slateport/     # Lenovo ThinkCentre M700 Tiny
+├── snowpoint/     # Netcup VPS
+├── solaceon/      # Hetzner VPS
+└── twinleaf/      # Minimal installation ISO
 ```
 
 ---

@@ -59,7 +59,7 @@
     // mkB2Mount "Movies" "aly-movies" "video"
     // mkB2Mount "Shows" "aly-shows" "video";
 
-  networking.hostName = "lavaridge";
+  networking.hostName = "oreburgh";
   services.xserver.xkb.options = "ctrl:nocaps";
   system.stateVersion = "25.11";
   time.timeZone = "America/New_York";

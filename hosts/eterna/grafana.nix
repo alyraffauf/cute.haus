@@ -119,7 +119,7 @@
           job_name = "bazarr";
           static_configs = [
             {
-              targets = ["lilycove:9708"];
+              targets = ["jubilife:9708"];
             }
           ];
         }
@@ -128,7 +128,7 @@
           job_name = "lidarr";
           static_configs = [
             {
-              targets = ["lilycove:9709"];
+              targets = ["jubilife:9709"];
             }
           ];
         }
@@ -137,7 +137,7 @@
           job_name = "prowlarr";
           static_configs = [
             {
-              targets = ["lilycove:9710"];
+              targets = ["jubilife:9710"];
             }
           ];
         }
@@ -146,7 +146,7 @@
           job_name = "radarr";
           static_configs = [
             {
-              targets = ["lilycove:9711"];
+              targets = ["jubilife:9711"];
             }
           ];
         }
@@ -155,8 +155,8 @@
           job_name = "smartctl";
           static_configs = [
             {
-              targets = ["lilycove:9633"];
-              labels.instance = "lilycove";
+              targets = ["jubilife:9633"];
+              labels.instance = "jubilife";
             }
           ];
         }
@@ -165,7 +165,7 @@
           job_name = "sonarr";
           static_configs = [
             {
-              targets = ["lilycove:9712"];
+              targets = ["jubilife:9712"];
             }
           ];
         }
@@ -174,28 +174,28 @@
           job_name = "node";
           static_configs = [
             {
-              targets = ["dewford:3021"];
-              labels.instance = "dewford";
+              targets = ["snowpoint:3021"];
+              labels.instance = "snowpoint";
             }
             {
-              targets = ["evergrande:3021"];
-              labels.instance = "evergrande";
+              targets = ["celestic:3021"];
+              labels.instance = "celestic";
             }
             {
-              targets = ["lavaridge:3021"];
-              labels.instance = "lavaridge";
+              targets = ["oreburgh:3021"];
+              labels.instance = "oreburgh";
             }
             {
-              targets = ["lilycove:3021"];
-              labels.instance = "lilycove";
+              targets = ["jubilife:3021"];
+              labels.instance = "jubilife";
             }
             {
-              targets = ["mauville:3021"];
-              labels.instance = "mauville";
+              targets = ["eterna:3021"];
+              labels.instance = "eterna";
             }
             {
-              targets = ["mossdeep:3021"];
-              labels.instance = "mossdeep";
+              targets = ["solaceon:3021"];
+              labels.instance = "solaceon";
             }
             {
               targets = ["slateport:3021"];

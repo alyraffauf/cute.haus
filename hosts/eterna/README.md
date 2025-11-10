@@ -1,4 +1,4 @@
-# 🖥️ Mauville
+# 🖥️ Eterna
 
 ## 💻 Specifications
 

@@ -21,13 +21,13 @@
       modules = self.nixosModules;
     in
       inputs.nixpkgs.lib.genAttrs [
-        "dewford"
-        "evergrande"
-        "lavaridge"
-        "lilycove"
-        "littleroot"
-        "mauville"
-        "mossdeep"
+        "celestic"
+        "eterna"
+        "jubilife"
+        "oreburgh"
+        "snowpoint"
+        "solaceon"
+        "twinleaf"
       ] (
         host:
           inputs.nixpkgs.lib.nixosSystem {

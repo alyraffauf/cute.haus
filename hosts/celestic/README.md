@@ -1,4 +1,4 @@
-# 🦇 Ever Grande
+# 🦇 Celestic
 
 ## Overview
 

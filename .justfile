@@ -30,7 +30,6 @@ update-nixpkgs: (update "nixpkgs")
 #  NixOS
 #
 ############################################################################
-
 ############################################################################
 #
 #  Servers
@@ -42,12 +41,12 @@ update-nixpkgs: (update "nixpkgs")
 deploy jobs='':
     nynx --operation switch {{ if jobs == "" { "" } else { "--jobs " + jobs } }}
 
-# Pull latest aly.codes OCI on mossdeep
+# Pull latest aly.codes OCI on solaceon
 [group('servers')]
 update-alycodes:
-    ssh root@mossdeep systemctl restart podman-alycodes.service
+    ssh root@solaceon systemctl restart podman-alycodes.service
 
-# Pull latest myAtmosphere OCI on mossdeep
+# Pull latest myAtmosphere OCI on solaceon
 [group('servers')]
 update-myatmosphere:
-    ssh root@mossdeep systemctl restart podman-myatmosphere.service
+    ssh root@solaceon systemctl restart podman-myatmosphere.service

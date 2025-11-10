@@ -1,21 +1,21 @@
 {self, ...}: {
   flake.nynxDeployments = {
-    dewford.output = self.nixosConfigurations.dewford.config.system.build.toplevel;
-    dewford.user = "root";
+    celestic.output = self.nixosConfigurations.celestic.config.system.build.toplevel;
+    celestic.user = "root";
 
-    evergrande.output = self.nixosConfigurations.evergrande.config.system.build.toplevel;
-    evergrande.user = "root";
+    eterna.output = self.nixosConfigurations.eterna.config.system.build.toplevel;
+    eterna.user = "root";
 
-    lavaridge.output = self.nixosConfigurations.lavaridge.config.system.build.toplevel;
-    lavaridge.user = "root";
+    jubilife.output = self.nixosConfigurations.jubilife.config.system.build.toplevel;
+    jubilife.user = "root";
 
-    lilycove.output = self.nixosConfigurations.lilycove.config.system.build.toplevel;
-    lilycove.user = "root";
+    oreburgh.output = self.nixosConfigurations.oreburgh.config.system.build.toplevel;
+    oreburgh.user = "root";
 
-    mauville.output = self.nixosConfigurations.mauville.config.system.build.toplevel;
-    mauville.user = "root";
+    snowpoint.output = self.nixosConfigurations.snowpoint.config.system.build.toplevel;
+    snowpoint.user = "root";
 
-    mossdeep.output = self.nixosConfigurations.mossdeep.config.system.build.toplevel;
-    mossdeep.user = "root";
+    solaceon.output = self.nixosConfigurations.solaceon.config.system.build.toplevel;
+    solaceon.user = "root";
   };
 }

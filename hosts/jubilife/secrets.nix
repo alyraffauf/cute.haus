@@ -33,8 +33,8 @@
     restic-passwd.file = "${self.inputs.secrets}/restic-password.age";
     slskd.file = "${self.inputs.secrets}/slskd.age";
     sonarrApiKey.file = "${self.inputs.secrets}/arr/sonarrApiKey.age";
-    syncthingCert.file = "${self.inputs.secrets}/aly/syncthing/lilycove/cert.age";
-    syncthingKey.file = "${self.inputs.secrets}/aly/syncthing/lilycove/key.age";
+    syncthingCert.file = "${self.inputs.secrets}/aly/syncthing/jubilife/cert.age";
+    syncthingKey.file = "${self.inputs.secrets}/aly/syncthing/jubilife/key.age";
     tailscaleAuthKey.file = "${self.inputs.secrets}/tailscale/auth.age";
   };
 }

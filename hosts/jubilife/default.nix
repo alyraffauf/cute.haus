@@ -49,7 +49,7 @@ in {
 
   networking = {
     firewall.allowedTCPPorts = [5143 6881];
-    hostName = "lilycove";
+    hostName = "jubilife";
   };
 
   services.tuned = {

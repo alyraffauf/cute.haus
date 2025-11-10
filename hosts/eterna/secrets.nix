@@ -26,7 +26,7 @@
     #   file = "${self.inputs.secrets}/spotify/client-secret.age";
     # };
 
-    syncthingCert.file = "${self.inputs.secrets}/aly/syncthing/mauville/cert.age";
-    syncthingKey.file = "${self.inputs.secrets}/aly/syncthing/mauville/key.age";
+    syncthingCert.file = "${self.inputs.secrets}/aly/syncthing/eterna/cert.age";
+    syncthingKey.file = "${self.inputs.secrets}/aly/syncthing/eterna/key.age";
   };
 }

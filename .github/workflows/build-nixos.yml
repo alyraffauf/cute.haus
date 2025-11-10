@@ -2,7 +2,7 @@ concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
 jobs:
-  build-dewford:
+  build-celestic:
     runs-on: ubuntu-latest
     steps:
     - name: Free Disk Space (Ubuntu)
@@ -18,9 +18,9 @@ jobs:
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
         name: cutehaus
-    - name: Build dewford
-      run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.dewford.config.system.build.toplevel
-  build-evergrande:
+    - name: Build celestic
+      run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.celestic.config.system.build.toplevel
+  build-eterna:
     runs-on: ubuntu-latest
     steps:
     - name: Free Disk Space (Ubuntu)
@@ -36,9 +36,9 @@ jobs:
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
         name: cutehaus
-    - name: Build evergrande
-      run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.evergrande.config.system.build.toplevel
-  build-lavaridge:
+    - name: Build eterna
+      run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.eterna.config.system.build.toplevel
+  build-jubilife:
     runs-on: ubuntu-latest
     steps:
     - name: Free Disk Space (Ubuntu)
@@ -54,9 +54,9 @@ jobs:
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
         name: cutehaus
-    - name: Build lavaridge
-      run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.lavaridge.config.system.build.toplevel
-  build-lilycove:
+    - name: Build jubilife
+      run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.jubilife.config.system.build.toplevel
+  build-oreburgh:
     runs-on: ubuntu-latest
     steps:
     - name: Free Disk Space (Ubuntu)
@@ -72,9 +72,9 @@ jobs:
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
         name: cutehaus
-    - name: Build lilycove
-      run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.lilycove.config.system.build.toplevel
-  build-littleroot:
+    - name: Build oreburgh
+      run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.oreburgh.config.system.build.toplevel
+  build-snowpoint:
     runs-on: ubuntu-latest
     steps:
     - name: Free Disk Space (Ubuntu)
@@ -90,9 +90,9 @@ jobs:
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
         name: cutehaus
-    - name: Build littleroot
-      run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.littleroot.config.system.build.toplevel
-  build-mauville:
+    - name: Build snowpoint
+      run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.snowpoint.config.system.build.toplevel
+  build-solaceon:
     runs-on: ubuntu-latest
     steps:
     - name: Free Disk Space (Ubuntu)
@@ -108,9 +108,9 @@ jobs:
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
         name: cutehaus
-    - name: Build mauville
-      run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.mauville.config.system.build.toplevel
-  build-mossdeep:
+    - name: Build solaceon
+      run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.solaceon.config.system.build.toplevel
+  build-twinleaf:
     runs-on: ubuntu-latest
     steps:
     - name: Free Disk Space (Ubuntu)
@@ -126,8 +126,8 @@ jobs:
       with:
         authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
         name: cutehaus
-    - name: Build mossdeep
-      run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.mossdeep.config.system.build.toplevel
+    - name: Build twinleaf
+      run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.twinleaf.config.system.build.toplevel
 name: build-nixos
 'on':
   push:

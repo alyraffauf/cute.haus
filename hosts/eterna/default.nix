@@ -74,7 +74,7 @@
       allowedUDPPorts = [2049];
     };
 
-    hostName = "mauville";
+    hostName = "eterna";
   };
 
   powerManagement.powertop.enable = true;

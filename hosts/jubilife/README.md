@@ -1,4 +1,4 @@
-# 🎮 Lilycove
+# 🎮 Jubilife
 
 ## 💻 Specifications
 

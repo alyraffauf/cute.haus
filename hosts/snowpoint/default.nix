@@ -88,7 +88,7 @@
     // mkB2Mount "Music" "aly-music" "audio"
     // mkB2Mount "Shows" "aly-shows" "video";
 
-  networking.hostName = "dewford";
+  networking.hostName = "snowpoint";
   nixpkgs.hostPlatform = "x86_64-linux";
   programs.ssh.knownHosts = config.mySnippets.ssh.knownHosts;
   system.stateVersion = "25.11";

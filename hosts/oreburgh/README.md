@@ -1,4 +1,4 @@
-# 🔥 Lavaridge
+# 🔥 Oreburgh
 
 ## 💻 Specifications
 
