@@ -1207,11 +1207,11 @@
         "treefmt-nix": "treefmt-nix_3"
       },
       "locked": {
-        "lastModified": 1762786355,
-        "narHash": "sha256-MM/mg/kv6BYKcHd3WQftgk4RWeVxq4Mn3W/Iid/FyGQ=",
+        "lastModified": 1762815092,
+        "narHash": "sha256-wq6swTbI4T7iKDH1wFR95obUkRHlvLUEjiwofcK2bvk=",
         "owner": "alyraffauf",
         "repo": "snippets",
-        "rev": "b775baec9dd9d275233a862c52d2a96314548152",
+        "rev": "2c88889b57ec6d4022b489defaf5f3f5234612e7",
         "type": "github"
       },
       "original": {
