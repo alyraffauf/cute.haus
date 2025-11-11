@@ -173,6 +173,12 @@
     };
   };
 
+  # Make navidrome wait for /mnt/Media + restart if necessary.
+  systemd.services.navidrome.serviceConfig = {
+    Restart = "on-failure";
+    RestartSec = "30s";
+  };
+
   time.timeZone = "America/New_York";
   myDisko.installDrive = "/dev/vda";
 
