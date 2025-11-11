@@ -53,17 +53,6 @@ This repository is licensed under the **[GNU General Public License](LICENSE.md)
 
 ---
 
-## 🙌 Acknowledgments
-
-- [nixcfg](https://github.com/alyraffauf/nixcfg): my original flake from which this repository is derived.
-- [nixpkgs](https://github.com/nixos/nixpkgs): 'nough said.
-- [agenix](https://github.com/ryantm/agenix): secrets storage and orchestration.
-- [disko](https://github.com/nix-community/disko): declarative partitions and disk configuration.
-- [home-manager](https://github.com/nix-community/home-manager): declarative dotfile and user package management.
-- [lanzaboote](https://github.com/nix-community/lanzaboote): secure boot for NixOS.
-
----
-
 ## ⭐ Stargazers Over Time
 
 [![Stargazers over time](https://starchart.cc/alyraffauf/cute.haus.svg?variant=adaptive)](https://starchart.cc/alyraffauf/cute.haus)
