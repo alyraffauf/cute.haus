@@ -132,7 +132,7 @@
                       {
                         title = "Photoprism";
                         url = "https://${config.mySnippets.tailnet.networkMap.photoprism.vHost}/";
-                        check-url = "http://${config.mySnippets.tailnet.networkMap.photoprism.hostName}:${toString config.mySnippets.tailnet.networkMap.photoprism.port}/web/index.html";
+                        check-url = "http://${config.mySnippets.tailnet.networkMap.photoprism.hostName}:${toString config.mySnippets.tailnet.networkMap.photoprism.port}";
                         icon = "di:photoprism";
                       }
                       {
