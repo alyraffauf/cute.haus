@@ -93,7 +93,6 @@
       };
 
       timesyncd.enable = true;
-      vscode-server.enable = true;
     };
 
     system.configurationRevision = self.rev or self.dirtyRev or null;
