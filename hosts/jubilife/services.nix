@@ -125,6 +125,18 @@ in {
       openFirewall = true;
     };
 
+    photoprism = {
+      enable = true;
+      originalsPath = "/mnt/Media/Photos/";
+      address = "0.0.0.0";
+      passwordFile = config.age.secrets.photoprismAdminPass.path;
+
+      settings = {
+        PHOTOPRISM_SITE_URL = "https://photoprism.narwhal-snapper.ts.net";
+        PHOTOPRISM_UPLOAD_NSFW = "true";
+      };
+    };
+
     samba = {
       enable = true;
       openFirewall = true;
@@ -191,6 +203,11 @@ in {
       SUBVOLUME = "/mnt/Media";
       TIMELINE_CLEANUP = true;
       TIMELINE_CREATE = true;
+    };
+
+    tuned = {
+      enable = true;
+      settings.dynamic_tuning = true;
     };
 
     xserver.xkb.options = "ctrl:nocaps";

@@ -27,6 +27,7 @@
 
     bazarrApiKey.file = "${self.inputs.secrets}/arr/bazarrApiKey.age";
     lidarrApiKey.file = "${self.inputs.secrets}/arr/lidarrApiKey.age";
+    photoprismAdminPass.file = "${self.inputs.secrets}/photoprism.age";
     prowlarrApiKey.file = "${self.inputs.secrets}/arr/prowlarrApiKey.age";
     radarrApiKey.file = "${self.inputs.secrets}/arr/radarrApiKey.age";
     rclone-b2.file = "${self.inputs.secrets}/rclone/b2.age";

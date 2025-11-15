@@ -48,13 +48,8 @@ in {
   };
 
   networking = {
-    firewall.allowedTCPPorts = [5143 6881];
+    firewall.allowedTCPPorts = [2342 5143 6881];
     hostName = "jubilife";
-  };
-
-  services.tuned = {
-    enable = true;
-    settings.dynamic_tuning = true;
   };
 
   system.stateVersion = "25.11";

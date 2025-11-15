@@ -20,6 +20,14 @@
           '';
         };
 
+        "${config.mySnippets.tailnet.networkMap.photoprism.vHost}" = {
+          extraConfig = ''
+            bind tailscale/photoprism
+            encode zstd gzip
+            reverse_proxy ${config.mySnippets.tailnet.networkMap.photoprism.hostName}:${toString config.mySnippets.tailnet.networkMap.photoprism.port}
+          '';
+        };
+
         "${config.mySnippets.tailnet.networkMap.uptime-kuma.vHost}" = {
           extraConfig = ''
             bind tailscale/uptime-kuma

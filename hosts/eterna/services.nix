@@ -130,6 +130,12 @@
                         icon = "di:jellyfin";
                       }
                       {
+                        title = "Photoprism";
+                        url = "https://${config.mySnippets.tailnet.networkMap.photoprism.vHost}/";
+                        check-url = "http://${config.mySnippets.tailnet.networkMap.photoprism.hostName}:${toString config.mySnippets.tailnet.networkMap.photoprism.port}/web/index.html";
+                        icon = "di:photoprism";
+                      }
+                      {
                         title = "Navidrome";
                         url = "https://${config.mySnippets.tailnet.networkMap.navidrome.vHost}/";
                         check-url = "http://${config.mySnippets.tailnet.networkMap.navidrome.hostName}:${toString config.mySnippets.tailnet.networkMap.navidrome.port}/web/index.html";
