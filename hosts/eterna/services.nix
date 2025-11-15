@@ -195,12 +195,6 @@
                         check-url = "http://${config.mySnippets.tailnet.networkMap.uptime-kuma.hostName}:${toString config.mySnippets.tailnet.networkMap.uptime-kuma.port}/";
                         icon = "di:uptime-kuma";
                       }
-                      {
-                        title = "VS Code";
-                        url = "https://${config.mySnippets.tailnet.networkMap.vscode.vHost}/";
-                        check-url = "http://${config.mySnippets.tailnet.networkMap.vscode.hostName}:${toString config.mySnippets.tailnet.networkMap.vscode.port}/";
-                        icon = "di:vscode";
-                      }
                     ];
                   }
                   {

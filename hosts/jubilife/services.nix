@@ -78,14 +78,6 @@ in {
           reverse_proxy ${config.mySnippets.tailnet.networkMap.tautulli.hostName}:${toString config.mySnippets.tailnet.networkMap.tautulli.port}
         '';
       };
-
-      "${config.mySnippets.tailnet.networkMap.vscode.vHost}" = {
-        extraConfig = ''
-          bind tailscale/vscode
-          encode zstd gzip
-          reverse_proxy ${config.mySnippets.tailnet.networkMap.vscode.hostName}:${toString config.mySnippets.tailnet.networkMap.vscode.port}
-        '';
-      };
     };
 
     immich = {
@@ -131,14 +123,6 @@ in {
       enable = true;
       dataDir = "/mnt/Data/ombi";
       openFirewall = true;
-    };
-
-    openvscode-server = {
-      inherit (config.mySnippets.tailnet.networkMap.vscode) port;
-      enable = true;
-      host = "0.0.0.0";
-      user = "aly";
-      withoutConnectionToken = true;
     };
 
     samba = {
