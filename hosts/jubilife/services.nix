@@ -105,7 +105,6 @@ in {
 
     ollama = {
       enable = true;
-      acceleration = "rocm";
       host = "0.0.0.0";
 
       loadModels = [
@@ -115,7 +114,6 @@ in {
       ];
 
       openFirewall = true;
-      rocmOverrideGfx = "10.3.0"; # We play pretend because ollama/ROCM does not support the 6700.
     };
 
     ombi = {
