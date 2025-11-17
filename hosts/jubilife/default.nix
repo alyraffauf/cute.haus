@@ -57,9 +57,11 @@ in {
   myDisko.installDrive = "/dev/disk/by-id/nvme-PNY_CS2130_1TB_SSD_PNY211821050701050CC";
 
   myHardware = {
-    amd = {
-      cpu.enable = true;
-      gpu.enable = true;
+    amd.cpu.enable = true;
+
+    intel.gpu = {
+      enable = true;
+      driver = "xe";
     };
 
     profiles.base.enable = true;
