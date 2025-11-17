@@ -58,12 +58,7 @@ in {
 
   myHardware = {
     amd.cpu.enable = true;
-
-    intel.gpu = {
-      enable = true;
-      driver = "xe";
-    };
-
+    intel.gpu.enable = true;
     profiles.base.enable = true;
   };
 
