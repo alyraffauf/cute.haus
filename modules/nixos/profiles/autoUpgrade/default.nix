@@ -19,10 +19,10 @@
       inherit (config.myNixOS.profiles.autoUpgrade) operation;
 
       enable = true;
-      allowReboot = lib.mkDefault true;
+      allowReboot = true;
       dates = "02:00";
       flags = ["--accept-flake-config"];
-      flake = config.myNixOS.profiles.base.flakeUrl;
+      flake = config.myNixOS.FLAKE;
       persistent = true;
       randomizedDelaySec = "120min";
 

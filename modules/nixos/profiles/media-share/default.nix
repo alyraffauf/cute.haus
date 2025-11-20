@@ -5,6 +5,7 @@
   ...
 }: {
   options.myNixOS.profiles.media-share.enable = lib.mkEnableOption "media share";
+
   config = lib.mkIf config.myNixOS.profiles.media-share.enable {
     assertions = [
       {
@@ -38,5 +39,7 @@
         device = "jubilife:/mnt/Media";
       };
     };
+
+    myNixOS.services.cachefilesd.enable = true;
   };
 }

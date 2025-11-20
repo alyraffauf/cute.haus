@@ -63,18 +63,20 @@ in {
   };
 
   myNixOS = {
-    profiles = {
-      autoUpgrade.enable = true;
+    base.enable = true;
 
+    profiles = {
       arr = {
         enable = true;
         dataDir = "/mnt/Data";
       };
 
+      autoUpgrade.enable = true;
       backups.enable = true;
-      base.enable = true;
       btrfs.enable = true;
+      vps.enable = true;
       swap.enable = true;
+      zram.enable = true;
     };
 
     programs = {

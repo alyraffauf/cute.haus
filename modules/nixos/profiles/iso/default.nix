@@ -29,7 +29,6 @@
       systemPackages = with pkgs; [
         (inxi.override {withRecommends = true;})
         helix
-        htop
         lm_sensors
         wget
       ];
@@ -54,6 +53,7 @@
         package = pkgs.gitMinimal;
       };
 
+      htop.enable = true;
       ssh.knownHosts = config.mySnippets.ssh.knownHosts;
     };
 

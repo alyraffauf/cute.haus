@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   self,
   ...
 }: {
@@ -36,12 +35,6 @@
       efiInstallAsRemovable = true;
     };
   };
-
-  environment.systemPackages = with pkgs; [
-    htop
-    rclone
-    zellij
-  ];
 
   fileSystems = let
     b2Options = [
@@ -183,13 +176,15 @@
   myDisko.installDrive = "/dev/vda";
 
   myNixOS = {
+    base.enable = true;
+
     profiles = {
       autoUpgrade.enable = true;
       backups.enable = true;
-      base.enable = true;
       data-share.enable = true;
-      swap.enable = true;
       media-share.enable = true;
+      vps.enable = true;
+      swap.enable = true;
     };
 
     programs.nix.enable = true;

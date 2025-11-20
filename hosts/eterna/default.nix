@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   self,
   ...
 }: {
@@ -13,8 +12,6 @@
     ./services.nix
     self.nixosModules.locale-en-us
   ];
-
-  environment.systemPackages = [pkgs.rclone];
 
   fileSystems = let
     b2Options = [
@@ -94,13 +91,17 @@
   myHardware.beelink.mini.s12pro.enable = true;
 
   myNixOS = {
+    base.enable = true;
+
     profiles = {
       autoUpgrade.enable = true;
-      base.enable = true;
+      backups.enable = true;
       btrfs.enable = true;
       data-share.enable = true;
       media-share.enable = true;
+      vps.enable = true;
       swap.enable = true;
+      zram.enable = true;
     };
 
     programs = {

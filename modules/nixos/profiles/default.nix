@@ -3,11 +3,13 @@
     ./arr
     ./autoUpgrade
     ./backups
-    ./base
     ./btrfs
     ./data-share
     ./iso
     ./media-share
+    ./performance
     ./swap
+    ./vps
+    ./zram
   ];
 }

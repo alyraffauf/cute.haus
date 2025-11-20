@@ -66,14 +66,17 @@
   myHardware.framework.laptop13.intel-11th.enable = true;
 
   myNixOS = {
+    base.enable = true;
+
     profiles = {
       autoUpgrade.enable = true;
       backups.enable = true;
-      base.enable = true;
       btrfs.enable = true;
       data-share.enable = true;
       media-share.enable = true;
+      vps.enable = true;
       swap.enable = true;
+      zram.enable = true;
     };
 
     programs = {

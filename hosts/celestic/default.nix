@@ -1,7 +1,6 @@
 {
   config,
   modulesPath,
-  pkgs,
   self,
   ...
 }: {
@@ -30,12 +29,6 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    htop
-    rclone
-    zellij
-  ];
-
   networking = {
     firewall.allowedTCPPorts = [80 443];
     hostName = "celestic";
@@ -48,10 +41,12 @@
   myDisko.installDrive = "/dev/sda";
 
   myNixOS = {
+    base.enable = true;
+
     profiles = {
       autoUpgrade.enable = true;
       backups.enable = true;
-      base.enable = true;
+      vps.enable = true;
 
       swap = {
         enable = true;

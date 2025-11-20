@@ -1,7 +1,6 @@
 {
   config,
   modulesPath,
-  pkgs,
   self,
   ...
 }: {
@@ -29,12 +28,6 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    htop
-    rclone
-    zellij
-  ];
-
   networking = {
     firewall.allowedTCPPorts = [2222];
     hostName = "solaceon";
@@ -47,10 +40,12 @@
   myDisko.installDrive = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_62292463";
 
   myNixOS = {
+    base.enable = true;
+
     profiles = {
       autoUpgrade.enable = true;
       backups.enable = true;
-      base.enable = true;
+      vps.enable = true;
 
       swap = {
         enable = true;

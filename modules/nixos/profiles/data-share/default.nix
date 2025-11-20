@@ -5,6 +5,7 @@
   ...
 }: {
   options.myNixOS.profiles.data-share.enable = lib.mkEnableOption "data share";
+
   config = lib.mkIf config.myNixOS.profiles.data-share.enable {
     assertions = [
       {
@@ -38,5 +39,7 @@
         device = "jubilife:/mnt/Data";
       };
     };
+
+    myNixOS.services.cachefilesd.enable = true;
   };
 }
