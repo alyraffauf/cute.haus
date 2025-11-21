@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   self,
   ...
 }: {
@@ -10,8 +9,6 @@
     self.diskoConfigurations.luks-btrfs-subvolumes
     self.nixosModules.locale-en-us
   ];
-
-  environment.systemPackages = [pkgs.rclone];
 
   fileSystems = let
     backblazeDirectory = "/mnt/Backblaze";
@@ -74,7 +71,6 @@
       btrfs.enable = true;
       data-share.enable = true;
       media-share.enable = true;
-      vps.enable = true;
       swap.enable = true;
       zram.enable = true;
     };
