@@ -1091,11 +1091,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1763174327,
-        "narHash": "sha256-auPgPh8ZTQXXKaIUHc6m//ia186vcuqsorCWd7YQJJM=",
+        "lastModified": 1765941422,
+        "narHash": "sha256-cuAB5d1h6yXj4F3aF9WhIplNCGTIOfvSji122mDpCm4=",
         "owner": "alyraffauf",
         "repo": "safari",
-        "rev": "916a8d183425a51e02841479584c75970430b40f",
+        "rev": "02f2b1a6f1a06f8a72d7700ed11cee62bc69c01e",
         "type": "github"
       },
       "original": {
