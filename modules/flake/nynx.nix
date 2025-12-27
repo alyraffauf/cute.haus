@@ -9,9 +9,6 @@
     jubilife.output = self.nixosConfigurations.jubilife.config.system.build.toplevel;
     jubilife.user = "root";
 
-    oreburgh.output = self.nixosConfigurations.oreburgh.config.system.build.toplevel;
-    oreburgh.user = "root";
-
     snowpoint.output = self.nixosConfigurations.snowpoint.config.system.build.toplevel;
     snowpoint.user = "root";
 

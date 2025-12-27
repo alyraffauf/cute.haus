@@ -24,7 +24,6 @@
         "celestic"
         "eterna"
         "jubilife"
-        "oreburgh"
         "snowpoint"
         "solaceon"
         "twinleaf"
