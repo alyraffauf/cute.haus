@@ -4,6 +4,7 @@
   ...
 }: {
   imports = [
+    ./home.nix
     ./proxy.nix
     ./secrets.nix
     self.diskoConfigurations.lvm-ext4
@@ -194,9 +195,23 @@
       plex.enable = true;
       prometheusNode.enable = true;
       promtail.enable = true;
+
+      syncthing = {
+        enable = true;
+        certFile = config.age.secrets.syncthingCert.path;
+        keyFile = config.age.secrets.syncthingKey.path;
+        musicPath = "/mnt/Media/Music";
+        syncMusic = false;
+        syncROMs = false;
+        user = "aly";
+      };
+
       tailscale.enable = true;
     };
   };
 
-  myUsers.root.enable = true;
+  myUsers.aly = {
+    enable = true;
+    password = "$6$JTk2qi27OpA2fOAY$ZgTDg0wbmbwHUD..0xT4xYX.AR5hWQFCMVmn8G88yi3IAY7015AupovTpfy0arkI7nl/IDu5L09bzLKeXGvJC1";
+  };
 }
