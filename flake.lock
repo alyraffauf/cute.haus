@@ -975,11 +975,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1762699596,
-        "narHash": "sha256-W3gnlVQpgfivXB/4fwMQ33PhKErS9eO4i7oxq5zNnMM=",
+        "lastModified": 1769411226,
+        "narHash": "sha256-/A7TJ/uTb6jeVBsHqU31jji6j342mDBhoS0nRqlBDIk=",
         "owner": "alyraffauf",
         "repo": "nynx",
-        "rev": "69f10e3dbcc0296ea89679a92f6dd0efa59ae44d",
+        "rev": "d6b204cb5ed13a2a81b384f82b74240a4f3f891d",
         "type": "github"
       },
       "original": {
