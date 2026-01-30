@@ -20,7 +20,7 @@
       containers = {
         alycodes = {
           extraOptions = ["--pull=always"];
-          image = "git.aly.codes/alyraffauf/aly.codes";
+          image = "ghcr.io/alyraffauf/aly.codes";
           ports = ["0.0.0.0:${toString config.myNixOS.services.alycodes.port}:80"];
         };
 
