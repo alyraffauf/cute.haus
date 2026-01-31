@@ -74,6 +74,7 @@
       prometheusNode.enable = true;
       promtail.enable = true;
       tailscale.enable = true;
+      watsup.enable = true;
     };
   };
 

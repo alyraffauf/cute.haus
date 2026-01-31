@@ -12,5 +12,6 @@
     ./qbittorrent
     ./syncthing
     ./tailscale
+    ./watsup
   ];
 }

@@ -7,6 +7,4 @@
       settings.PDS_HOSTNAME = config.mySnippets.cute-haus.networkMap.aly-social.vHost;
     };
   };
-
-  systemd.services.podman-alycodes.after = ["forgejo.service"];
 }
