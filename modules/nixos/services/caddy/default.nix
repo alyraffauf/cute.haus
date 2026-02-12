@@ -25,7 +25,7 @@
 
         package = pkgs.caddy.withPlugins {
           plugins = ["github.com/tailscale/caddy-tailscale@v0.0.0-20250508175905-642f61fea3cc"];
-          hash = "sha256-OR5UfIKyfsflE83u2VXZX6/QUjp+ZvXAU0kqroWvhto=";
+          hash = "sha256-XQpSWgI/7E9FvWw2EMEOyl/rkddgLWd3SSusCmViMwo=";
         };
       };
 
