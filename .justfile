@@ -25,6 +25,38 @@ update *inputs:
 [group('flake')]
 update-nixpkgs: (update "nixpkgs")
 
+# Update caddy-tailscale plugin to latest commit.
+[group('flake')]
+update-caddy-tailscale:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    CADDY_FILE="modules/nixos/services/caddy/default.nix"
+    RESPONSE=$(curl -sf "https://api.github.com/repos/tailscale/caddy-tailscale/commits?per_page=1")
+    SHA=$(echo "$RESPONSE" | grep -m1 '"sha"' | sed 's/.*"sha": *"//;s/".*//')
+    SHA12=${SHA:0:12}
+    COMMITTER_DATE=$(echo "$RESPONSE" | sed -n '/"committer": {/{n;n;n;s/.*"date": *"//;s/".*//;p;q;}')
+    TIMESTAMP=$(echo "$COMMITTER_DATE" | sed 's/[-T:]//g;s/Z//')
+    NEW_VERSION="v0.0.0-${TIMESTAMP}-${SHA12}"
+    OLD_VERSION=$(grep -o 'caddy-tailscale@[^"]*' "$CADDY_FILE" | sed 's/caddy-tailscale@//')
+    if [ "$OLD_VERSION" = "$NEW_VERSION" ]; then
+        echo "caddy-tailscale already at latest: $NEW_VERSION"
+        exit 0
+    fi
+    echo "Updating caddy-tailscale: $OLD_VERSION -> $NEW_VERSION"
+    sed -i "s|caddy-tailscale@[^\"]*|caddy-tailscale@${NEW_VERSION}|" "$CADDY_FILE"
+    sed -i 's|hash = "sha256-[^"]*"|hash = ""|' "$CADDY_FILE"
+    echo "Building to determine new hash..."
+    NEW_HASH=$(nix build .#nixosConfigurations.celestic.config.services.caddy.package 2>&1 | sed -n 's/.*got: *//p' | tr -d ' ')
+    if [ -z "$NEW_HASH" ]; then
+        echo "Error: could not determine hash. Build may have succeeded without a hash mismatch?"
+        exit 1
+    fi
+    sed -i "s|hash = \"\"|hash = \"${NEW_HASH}\"|" "$CADDY_FILE"
+    echo "Updated hash: $NEW_HASH"
+    echo "Verifying build..."
+    nix build .#nixosConfigurations.celestic.config.services.caddy.package
+    echo "Done! caddy-tailscale updated to $NEW_VERSION"
+
 ############################################################################
 #
 #  Servers
