@@ -25,7 +25,7 @@ update *inputs:
 [group('flake')]
 update-nixpkgs: (update "nixpkgs")
 
-# Update caddy-tailscale plugin to latest commit.
+# Update caddy-tailscale plugin to latest commit (also refreshes hash if stale).
 [group('flake')]
 update-caddy-tailscale:
     #!/usr/bin/env bash
@@ -38,24 +38,45 @@ update-caddy-tailscale:
     TIMESTAMP=$(echo "$COMMITTER_DATE" | sed 's/[-T:]//g;s/Z//')
     NEW_VERSION="v0.0.0-${TIMESTAMP}-${SHA12}"
     OLD_VERSION=$(grep -o 'caddy-tailscale@[^"]*' "$CADDY_FILE" | sed 's/caddy-tailscale@//')
-    if [ "$OLD_VERSION" = "$NEW_VERSION" ]; then
+    VERSION_CHANGED=false
+    if [ "$OLD_VERSION" != "$NEW_VERSION" ]; then
+        VERSION_CHANGED=true
+        echo "Updating caddy-tailscale: $OLD_VERSION -> $NEW_VERSION"
+        sed -i "s|caddy-tailscale@[^\"]*|caddy-tailscale@${NEW_VERSION}|" "$CADDY_FILE"
+    else
         echo "caddy-tailscale already at latest: $NEW_VERSION"
+    fi
+    # Always try building with the current hash first; rehash if it fails.
+    if nix build .#nixosConfigurations.celestic.config.services.caddy.package 2>/dev/null; then
+        if [ "$VERSION_CHANGED" = true ]; then
+            git add "$CADDY_FILE"
+            git commit -m "caddy: update caddy-tailscale to $NEW_VERSION"
+            echo "Done! caddy-tailscale updated to $NEW_VERSION"
+        else
+            echo "Already up to date."
+        fi
         exit 0
     fi
-    echo "Updating caddy-tailscale: $OLD_VERSION -> $NEW_VERSION"
-    sed -i "s|caddy-tailscale@[^\"]*|caddy-tailscale@${NEW_VERSION}|" "$CADDY_FILE"
+    echo "Hash is stale, determining new hash..."
     sed -i 's|hash = "sha256-[^"]*"|hash = ""|' "$CADDY_FILE"
-    echo "Building to determine new hash..."
-    NEW_HASH=$(nix build .#nixosConfigurations.celestic.config.services.caddy.package 2>&1 | sed -n 's/.*got: *//p' | tr -d ' ')
+    BUILD_OUTPUT=$(nix build .#nixosConfigurations.celestic.config.services.caddy.package 2>&1 || true)
+    NEW_HASH=$(echo "$BUILD_OUTPUT" | sed -n 's/.*got: *//p' | tr -d ' ')
     if [ -z "$NEW_HASH" ]; then
-        echo "Error: could not determine hash. Build may have succeeded without a hash mismatch?"
+        echo "Error: could not determine hash from build output."
+        echo "$BUILD_OUTPUT"
         exit 1
     fi
     sed -i "s|hash = \"\"|hash = \"${NEW_HASH}\"|" "$CADDY_FILE"
     echo "Updated hash: $NEW_HASH"
     echo "Verifying build..."
     nix build .#nixosConfigurations.celestic.config.services.caddy.package
-    echo "Done! caddy-tailscale updated to $NEW_VERSION"
+    git add "$CADDY_FILE"
+    if [ "$VERSION_CHANGED" = true ]; then
+        git commit -m "caddy: update caddy-tailscale to $NEW_VERSION"
+    else
+        git commit -m "caddy: update caddy-tailscale hash to $NEW_HASH"
+    fi
+    echo "Done!"
 
 ############################################################################
 #
