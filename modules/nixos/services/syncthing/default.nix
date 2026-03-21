@@ -16,19 +16,12 @@
       type = lib.types.path;
     };
 
-    musicPath = lib.mkOption {
-      default = "/home/${config.myNixOS.services.syncthing.user}/music";
-      description = "Path to the music folder.";
-      type = lib.types.path;
-    };
-
     romsPath = lib.mkOption {
       default = "/home/${config.myNixOS.services.syncthing.user}/roms";
       description = "Path to the ROM folder.";
       type = lib.types.path;
     };
 
-    syncMusic = lib.mkEnableOption "Whether to sync music.";
     syncROMs = lib.mkEnableOption "Whether to sync ROMs.";
 
     user = lib.mkOption {
@@ -64,11 +57,6 @@
         folders = lib.mkMerge [
           config.mySnippets.syncthing.folders
           {
-            "music" = {
-              enable = cfg.syncMusic;
-              path = cfg.musicPath;
-            };
-
             "roms" = {
               enable = cfg.syncROMs;
               path = cfg.romsPath;

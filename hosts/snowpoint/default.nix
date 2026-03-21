@@ -200,8 +200,6 @@
         enable = true;
         certFile = config.age.secrets.syncthingCert.path;
         keyFile = config.age.secrets.syncthingKey.path;
-        musicPath = "/mnt/Media/Music";
-        syncMusic = false;
         syncROMs = false;
         user = "aly";
       };
