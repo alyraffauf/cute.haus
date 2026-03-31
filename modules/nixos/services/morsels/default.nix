@@ -21,6 +21,7 @@
         extraOptions = ["--pull=always"];
         image = "ghcr.io/alyraffauf/morsels";
         ports = ["0.0.0.0:${toString config.myNixOS.services.morsels.port}:8000"];
+        volumes = ["/var/lib/morsels:/data"];
       };
     };
 
