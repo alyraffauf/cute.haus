@@ -71,6 +71,7 @@
         db = "postgresql";
       };
 
+      morsels.enable = true;
       prometheusNode.enable = true;
       promtail.enable = true;
       tailscale.enable = true;

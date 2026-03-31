@@ -94,6 +94,11 @@ deploy jobs='':
 update-alycodes:
     ansible-playbook -i ansible/inventory.ini ansible/playbooks/restart-alycodes.yml
 
+# Pull latest morsels OCI on solaceon.
+[group('servers')]
+update-morsels:
+    ansible-playbook -i ansible/inventory.ini ansible/playbooks/restart-morsels.yml
+
 # Pull latest myAtmosphere OCI on solaceon.
 [group('servers')]
 update-myatmosphere:

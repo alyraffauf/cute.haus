@@ -14,6 +14,15 @@
       email = "alyraffauf@fastmail.com";
 
       virtualHosts = {
+        "morsels.blue" = {
+          extraConfig = ''
+            encode gzip zstd
+            reverse_proxy ${config.mySnippets.cute-haus.networkMap.morsels.hostName}:${toString config.mySnippets.cute-haus.networkMap.morsels.port}
+          '';
+
+          serverAliases = ["www.morsels.blue"];
+        };
+
         "aly.codes" = {
           extraConfig = ''
             encode gzip zstd
