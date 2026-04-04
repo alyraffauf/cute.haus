@@ -104,6 +104,11 @@ update-morsels:
 update-myatmosphere:
     ansible-playbook -i ansible/inventory.ini ansible/playbooks/restart-myatmosphere.yml
 
+# Pull latest atboards OCI on celestic.
+[group('servers')]
+update-atboards:
+    ansible-playbook -i ansible/inventory.ini ansible/playbooks/restart-atboards.yml
+
 # Reboot all servers.
 [group('servers')]
 reboot:

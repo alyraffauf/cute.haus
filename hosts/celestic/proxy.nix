@@ -14,6 +14,15 @@
       email = "alyraffauf@fastmail.com";
 
       virtualHosts = {
+        "atboards.xyz" = {
+          extraConfig = ''
+            encode gzip zstd
+            reverse_proxy ${config.mySnippets.cute-haus.networkMap.atboards.hostName}:${toString config.mySnippets.cute-haus.networkMap.atboards.port}
+          '';
+
+          serverAliases = ["www.atboards.xyz"];
+        };
+
         "morsels.blue" = {
           extraConfig = ''
             encode gzip zstd

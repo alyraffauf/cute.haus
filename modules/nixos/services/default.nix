@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     ./alycodes
+    ./atboards
     ./cachefilesd
     ./caddy
     ./fail2ban

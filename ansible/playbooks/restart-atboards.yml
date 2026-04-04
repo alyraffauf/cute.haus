@@ -1,0 +1,8 @@
+- hosts: celestic
+  remote_user: root
+
+  tasks:
+    - name: Restart podman-atboards
+      ansible.builtin.systemd_service:
+        name: podman-atboards
+        state: restarted
