@@ -60,7 +60,7 @@
     };
 
     services = {
-      atboards.enable = true;
+      atbbs.enable = true;
       caddy.enable = true;
       prometheusNode.enable = true;
       promtail.enable = true;

@@ -4,5 +4,5 @@
   tasks:
     - name: Restart podman-atboards
       ansible.builtin.systemd_service:
-        name: podman-atboards
+        name: podman-atbbs
         state: restarted
