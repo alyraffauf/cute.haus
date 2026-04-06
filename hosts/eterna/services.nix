@@ -332,7 +332,7 @@
     };
 
     karakeep = {
-      enable = true;
+      enable = false;
 
       extraEnvironment = rec {
         DISABLE_NEW_RELEASE_CHECK = "true";
