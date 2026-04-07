@@ -56,11 +56,9 @@
 
     programs = {
       nix.enable = true;
-      podman.enable = true;
     };
 
     services = {
-      atbbs.enable = true;
       caddy.enable = true;
       prometheusNode.enable = true;
       promtail.enable = true;

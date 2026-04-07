@@ -4,6 +4,11 @@
     firewall.allowedUDPPorts = [8472];
   };
 
+  myNixOS.services = {
+    atbbs.enable = true;
+    morsels.enable = true;
+  };
+
   services = {
     audiobookshelf = {
       enable = true;

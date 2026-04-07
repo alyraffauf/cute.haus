@@ -1,4 +1,4 @@
-- hosts: celestic
+- hosts: eterna
   remote_user: root
 
   tasks:

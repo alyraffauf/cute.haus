@@ -1,4 +1,4 @@
-- hosts: solaceon
+- hosts: eterna
   remote_user: root
 
   tasks:
