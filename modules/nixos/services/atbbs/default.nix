@@ -21,8 +21,7 @@
         extraOptions = ["--pull=always"];
         image = "ghcr.io/alyraffauf/atbbs";
         environment.PUBLIC_URL = "https://atbbs.xyz";
-        ports = ["0.0.0.0:${toString config.myNixOS.services.atbbs.port}:8000"];
-        volumes = ["/var/lib/atbbs:/data"];
+        ports = ["0.0.0.0:${toString config.myNixOS.services.atbbs.port}:80"];
       };
     };
 
