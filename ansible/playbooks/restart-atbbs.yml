@@ -2,7 +2,10 @@
   remote_user: root
 
   tasks:
-    - name: Restart podman-atboards
+    - name: Restart podman-atbbs
       ansible.builtin.systemd_service:
-        name: podman-atbbs
+        name: "{{ item }}"
         state: restarted
+      loop:
+        - podman-atbbs
+        - podman-atbbs-telnet
