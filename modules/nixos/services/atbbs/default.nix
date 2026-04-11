@@ -17,11 +17,19 @@
     virtualisation.oci-containers = {
       backend = "podman";
 
-      containers.atbbs = {
-        extraOptions = ["--pull=always"];
-        image = "ghcr.io/alyraffauf/atbbs";
-        environment.PUBLIC_URL = "https://atbbs.xyz";
-        ports = ["0.0.0.0:${toString config.myNixOS.services.atbbs.port}:80"];
+      containers = {
+        atbbs = {
+          extraOptions = ["--pull=always"];
+          image = "ghcr.io/alyraffauf/atbbs";
+          environment.PUBLIC_URL = "https://atbbs.xyz";
+          ports = ["0.0.0.0:${toString config.myNixOS.services.atbbs.port}:80"];
+        };
+
+        atbbs-telnet = {
+          extraOptions = ["--pull=always"];
+          image = "ghcr.io/alyraffauf/atbbs-telnet";
+          ports = ["0.0.0.0:2323:2323"];
+        };
       };
     };
 
