@@ -12,7 +12,7 @@
     };
 
     services.journald = {
-      storage = "auto";
+      storage = "persistent";
 
       extraConfig = ''
         SystemMaxUse=500M
