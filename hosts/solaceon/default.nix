@@ -51,6 +51,8 @@
         enable = true;
         size = 2048;
       };
+
+      zram.enable = true;
     };
 
     programs = {
