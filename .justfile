@@ -109,6 +109,11 @@ update-myatmosphere:
 update-atbbs:
     ansible-playbook -i ansible/inventory.ini ansible/playbooks/restart-atbbs.yml
 
+# Pull latest watsup OCI on solaceon.
+[group('servers')]
+update-watsup:
+    ansible-playbook -i ansible/inventory.ini ansible/playbooks/restart-watsup.yml
+
 # Reboot all servers.
 [group('servers')]
 reboot:
