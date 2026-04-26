@@ -7,4 +7,21 @@
       settings.PDS_HOSTNAME = config.mySnippets.cute-haus.networkMap.aly-social.vHost;
     };
   };
+
+  systemd.services = {
+    bluesky-pds.serviceConfig = {
+      MemoryHigh = "384M";
+      MemoryMax = "512M";
+    };
+
+    forgejo.serviceConfig = {
+      MemoryHigh = "384M";
+      MemoryMax = "512M";
+    };
+
+    fail2ban.serviceConfig = {
+      MemoryHigh = "192M";
+      MemoryMax = "256M";
+    };
+  };
 }
