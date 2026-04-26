@@ -132,6 +132,8 @@ in {
       postgresql = lib.mkIf config.services.postgresql.enable (
         config.mySnippets.restic
         // {
+          backupCleanupCommand = start "postgresql";
+          backupPrepareCommand = stop "postgresql";
           paths = [config.services.postgresql.dataDir];
           repository = mkRepo "postgresql";
         }
