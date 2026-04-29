@@ -16,7 +16,6 @@
     };
 
     forgejo.serviceConfig = {
-      MemoryHigh = "384M";
       MemoryMax = "512M";
     };
 
