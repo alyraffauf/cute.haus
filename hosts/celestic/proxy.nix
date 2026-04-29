@@ -87,7 +87,7 @@
           extraConfig = ''
             encode zstd gzip
             # reverse_proxy ${config.mySnippets.cute-haus.networkMap.glance.hostName}:${toString config.mySnippets.cute-haus.networkMap.glance.port}
-            reverse_proxy solaceon:8383
+            reverse_proxy celestic:8383
           '';
 
           serverAliases = ["www.cute.haus"];

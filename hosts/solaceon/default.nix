@@ -61,11 +61,6 @@
     };
 
     services = {
-      alycodes = {
-        enable = true;
-        inherit (config.mySnippets.cute-haus.networkMap.aly-codes) port;
-      };
-
       caddy.enable = true;
 
       forgejo = {
@@ -76,7 +71,6 @@
       prometheusNode.enable = true;
       promtail.enable = true;
       tailscale.enable = true;
-      watsup.enable = true;
     };
   };
 

@@ -65,17 +65,26 @@
         enable = true;
         size = 2048;
       };
+
+      zram.enable = true;
     };
 
     programs = {
       nix.enable = true;
+      podman.enable = true;
     };
 
     services = {
+      alycodes = {
+        enable = true;
+        inherit (config.mySnippets.cute-haus.networkMap.aly-codes) port;
+      };
+
       caddy.enable = true;
       prometheusNode.enable = true;
       promtail.enable = true;
       tailscale.enable = true;
+      watsup.enable = true;
     };
   };
 
