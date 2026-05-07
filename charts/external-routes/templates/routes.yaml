@@ -1,52 +1,58 @@
-{{- range .Values.routes }}
+{{- range $route := .Values.routes }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .name }}
+  name: {{ $route.name }}
   labels:
-    app: {{ .name }}
+    app: {{ $route.name }}
 spec:
   ports:
-    - port: {{ .target.port }}
+    - port: {{ $route.target.port }}
       protocol: TCP
-      targetPort: {{ .target.port }}
+      targetPort: {{ $route.target.port }}
 ---
 apiVersion: v1
 kind: Endpoints
 metadata:
-  name: {{ .name }}   # must match Service name
+  name: {{ $route.name }}   # must match Service name
   labels:
-    app: {{ .name }}
+    app: {{ $route.name }}
 subsets:
   - addresses:
-      - ip: {{ .target.ip }}
+      - ip: {{ $route.target.ip }}
     ports:
-      - port: {{ .target.port }}
+      - port: {{ $route.target.port }}
         protocol: TCP
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .name }}
+  name: {{ $route.name }}
   labels:
-    app: {{ .name }}
+    app: {{ $route.name }}
 spec:
   ingressClassName: {{ $.Values.ingressClassName }}
-  {{- if .tls }}
+  {{- $hosts := prepend (default (list) $route.aliases) $route.host }}
+  {{- if $route.tls }}
   tls:
-    - hosts: [{{ .host }}]
-      secretName: {{ .tls.secretName }}
+    - hosts:
+        {{- range $hosts }}
+        - {{ . }}
+        {{- end }}
+      secretName: {{ $route.tls.secretName }}
   {{- end }}
   rules:
-    - host: {{ .host }}
+    {{- range $hosts }}
+    - host: {{ . }}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: {{ .name }}
+                name: {{ $route.name }}
                 port:
-                  number: {{ .target.port }}
+                  number: {{ $route.target.port }}
+    {{- end }}
 {{- end }}
