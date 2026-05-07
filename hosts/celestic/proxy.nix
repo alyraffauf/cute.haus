@@ -57,28 +57,6 @@
           '';
         };
 
-        "audiobookshelf.cute.haus" = {
-          extraConfig = ''
-            encode zstd gzip
-            reverse_proxy ${config.mySnippets.cute-haus.networkMap.audiobookshelf.hostName}:${toString config.mySnippets.cute-haus.networkMap.audiobookshelf.port} {
-              flush_interval -1   # proxy_buffering off
-              header_up X-Real-IP {remote_host}
-              header_up X-Forwarded-For {remote_host}
-              header_up X-Forwarded-Proto {scheme}}
-            }
-          '';
-        };
-
-        "cute.haus" = {
-          extraConfig = ''
-            encode zstd gzip
-            # reverse_proxy ${config.mySnippets.cute-haus.networkMap.glance.hostName}:${toString config.mySnippets.cute-haus.networkMap.glance.port}
-            reverse_proxy celestic:8383
-          '';
-
-          serverAliases = ["www.cute.haus"];
-        };
-
         "${config.mySnippets.cute-haus.networkMap.forgejo.vHost}" = {
           extraConfig = ''
             encode zstd gzip
@@ -90,65 +68,6 @@
 
             reverse_proxy ${config.mySnippets.cute-haus.networkMap.forgejo.hostName}:${toString config.mySnippets.cute-haus.networkMap.forgejo.port} {
               header_up X-Real-Ip {remote_host}
-            }
-          '';
-        };
-
-        "immich.cute.haus" = {
-          extraConfig = ''
-            encode zstd gzip
-
-            @uploads method POST PUT
-            handle @uploads {
-              request_body {
-                max_size 10GB
-              }
-            }
-
-            reverse_proxy ${config.mySnippets.cute-haus.networkMap.immich.hostName}:${toString config.mySnippets.cute-haus.networkMap.immich.port} {
-              flush_interval -1
-              header_up X-Real-IP {remote_host}
-              header_up X-Forwarded-For {remote_host}
-              header_up X-Forwarded-Proto {scheme}}
-
-              transport http {
-                read_buffer 0
-              }
-            }
-          '';
-        };
-
-        "karakeep.cute.haus" = {
-          extraConfig = ''
-            encode zstd gzip
-
-            reverse_proxy ${config.mySnippets.cute-haus.networkMap.karakeep.hostName}:${toString config.mySnippets.cute-haus.networkMap.karakeep.port} {
-              flush_interval -1
-              header_up X-Real-IP {remote_host}
-              header_up X-Forwarded-For {remote_host}
-              header_up X-Forwarded-Proto {scheme}}
-            }
-          '';
-        };
-
-        "ombi.cute.haus" = {
-          extraConfig = ''
-            encode zstd gzip
-
-            reverse_proxy ${config.mySnippets.cute-haus.networkMap.ombi.hostName}:${toString config.mySnippets.cute-haus.networkMap.ombi.port} {
-              header_up X-Real-IP {remote_host}
-              header_up X-Forwarded-For {remote_host}
-              header_up X-Forwarded-Proto {scheme}}
-            }
-          '';
-        };
-
-        "plex.cute.haus" = {
-          extraConfig = ''
-            encode zstd gzip
-
-            reverse_proxy ${config.mySnippets.cute-haus.networkMap.plex.hostName}:${toString config.mySnippets.cute-haus.networkMap.plex.port} {
-              flush_interval -1   # proxy_buffering off equivalent
             }
           '';
         };
@@ -174,24 +93,6 @@
           extraConfig = ''
             encode gzip zstd
             reverse_proxy ${config.mySnippets.cute-haus.networkMap.uptime-kuma.hostName}:${toString config.mySnippets.cute-haus.networkMap.uptime-kuma.port}
-          '';
-        };
-
-        "status.cute.haus" = {
-          extraConfig = ''
-            encode zstd gzip
-            reverse_proxy ${config.mySnippets.cute-haus.networkMap.uptime-kuma.hostName}:${toString config.mySnippets.cute-haus.networkMap.uptime-kuma.port}
-          '';
-        };
-
-        "vault.cute.haus" = {
-          extraConfig = ''
-            encode zstd gzip
-            reverse_proxy ${config.mySnippets.cute-haus.networkMap.vaultwarden.hostName}:${toString config.mySnippets.cute-haus.networkMap.vaultwarden.port} {
-              header_up X-Real-IP {remote_host}
-              header_up X-Forwarded-For {remote_host}
-              header_up X-Forwarded-Proto {scheme}}
-            }
           '';
         };
       };

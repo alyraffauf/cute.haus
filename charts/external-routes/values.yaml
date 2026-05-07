@@ -1,0 +1,39 @@
+ingressClassName: traefik
+
+# Each route gets a Service + Endpoints + Ingress.
+# Service name == route name. Tls secret must exist in the same namespace as the Ingress (default).
+routes:
+  - name: audiobookshelf
+    host: audiobookshelf.cute.haus
+    target: { ip: 100.79.159.70, port: 13378 } # eterna
+    tls: { secretName: cute-haus-tls }
+
+  - name: karakeep
+    host: karakeep.cute.haus
+    target: { ip: 100.79.159.70, port: 7020 } # eterna
+    tls: { secretName: cute-haus-tls }
+
+  - name: immich
+    host: immich.cute.haus
+    target: { ip: 100.81.61.31, port: 2283 } # jubilife
+    tls: { secretName: cute-haus-tls }
+
+  - name: ombi
+    host: ombi.cute.haus
+    target: { ip: 100.81.61.31, port: 5000 } # jubilife
+    tls: { secretName: cute-haus-tls }
+
+  - name: plex
+    host: plex.cute.haus
+    target: { ip: 100.81.61.31, port: 32400 } # jubilife
+    tls: { secretName: cute-haus-tls }
+
+  - name: uptime-kuma
+    host: status.cute.haus
+    target: { ip: 100.95.27.71, port: 3001 } # snowpoint
+    tls: { secretName: cute-haus-tls }
+
+  - name: vaultwarden
+    host: vault.cute.haus
+    target: { ip: 100.95.27.71, port: 8222 } # snowpoint
+    tls: { secretName: cute-haus-tls }

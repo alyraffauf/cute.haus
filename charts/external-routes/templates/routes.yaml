@@ -1,0 +1,52 @@
+{{- range .Values.routes }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .name }}
+  labels:
+    app: {{ .name }}
+spec:
+  ports:
+    - port: {{ .target.port }}
+      protocol: TCP
+      targetPort: {{ .target.port }}
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: {{ .name }}   # must match Service name
+  labels:
+    app: {{ .name }}
+subsets:
+  - addresses:
+      - ip: {{ .target.ip }}
+    ports:
+      - port: {{ .target.port }}
+        protocol: TCP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .name }}
+  labels:
+    app: {{ .name }}
+spec:
+  ingressClassName: {{ $.Values.ingressClassName }}
+  {{- if .tls }}
+  tls:
+    - hosts: [{{ .host }}]
+      secretName: {{ .tls.secretName }}
+  {{- end }}
+  rules:
+    - host: {{ .host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .name }}
+                port:
+                  number: {{ .target.port }}
+{{- end }}

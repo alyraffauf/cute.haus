@@ -59,6 +59,7 @@
       };
     in {
       aly-codes = mkChart "aly-codes";
+      external-routes = mkChart "external-routes";
       watsup = mkChart "watsup";
     };
   };
