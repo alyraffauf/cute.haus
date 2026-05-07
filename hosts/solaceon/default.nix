@@ -75,8 +75,6 @@
     };
 
     services = {
-      caddy.enable = true;
-
       forgejo = {
         enable = true;
         db = "postgresql";
