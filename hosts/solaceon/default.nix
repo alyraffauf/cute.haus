@@ -30,7 +30,7 @@
   };
 
   networking = {
-    firewall.allowedTCPPorts = [2222 8282];
+    firewall.allowedTCPPorts = [2222 8282 8383];
     hostName = "solaceon";
   };
 
@@ -45,6 +45,16 @@
     autoDeployCharts.aly-codes = {
       package = pkgs.runCommand "aly-codes-chart.tgz" {nativeBuildInputs = [pkgs.kubernetes-helm];} ''
         cp -r ${../../charts/aly-codes} ./chart
+        chmod -R +w ./chart
+        helm package ./chart --destination .
+        mv ./*.tgz $out
+      '';
+      targetNamespace = "default";
+    };
+
+    autoDeployCharts.watsup = {
+      package = pkgs.runCommand "watsup-chart.tgz" {nativeBuildInputs = [pkgs.kubernetes-helm];} ''
+        cp -r ${../../charts/watsup} ./chart
         chmod -R +w ./chart
         helm package ./chart --destination .
         mv ./*.tgz $out
@@ -89,7 +99,6 @@
       prometheusNode.enable = true;
       promtail.enable = true;
       tailscale.enable = true;
-      watsup.enable = true;
     };
   };
 
