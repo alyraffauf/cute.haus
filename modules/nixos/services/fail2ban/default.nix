@@ -79,7 +79,7 @@
           enabled = true
           backend = systemd
           filter = audiobookshelf
-          maxretry = 5
+          maxretry = 2
           port = 80,443,${toString config.services.audiobookshelf.port}
         '';
 
@@ -87,22 +87,21 @@
           enabled = true
           filter = couchdb
           port = 80,443,${toString config.services.couchdb.port}
-          maxretry = 5
+          maxretry = 2
         '';
 
         forgejo.settings = {
           action = "iptables-allports";
-          bantime = 900;
           filter = "forgejo";
           findtime = 3600;
-          maxretry = 4;
+          maxretry = 2;
         };
 
         karakeep = ''
           enabled = true
           backend = systemd
           filter = karakeep
-          maxretry = 5
+          maxretry = 2
           port = 80,443,7020
         '';
 
@@ -110,17 +109,15 @@
           enabled = true
           backend = systemd
           filter = navidrome
-          maxretry = 5
+          maxretry = 2
           port = 0,443,${toString config.services.navidrome.settings.Port}
         '';
 
-        # HTTP basic-auth failures, 5 tries → 1-day ban
         nginx-http-auth = {
           settings = {
             enabled = true;
-            maxretry = 5;
+            maxretry = 2;
             findtime = 300;
-            bantime = "24h";
           };
         };
 
@@ -138,15 +135,14 @@
           enabled = true
           filter = vaultwarden
           port = 80,443,${toString config.services.vaultwarden.config.ROCKET_PORT}
-          maxretry = 5
+          maxretry = 2
         '';
 
         vaultwarden-admin = ''
           enabled = true
           port = 80,443,${toString config.services.vaultwarden.config.ROCKET_PORT}
           filter = vaultwarden-admin
-          maxretry = 3
-          bantime = 14400
+          maxretry = 2
           findtime = 14400
         '';
       };
