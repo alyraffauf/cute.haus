@@ -48,24 +48,20 @@
       "--disable=servicelb"
     ];
 
-    autoDeployCharts.aly-codes = {
-      package = pkgs.runCommand "aly-codes-chart.tgz" {nativeBuildInputs = [pkgs.kubernetes-helm];} ''
-        cp -r ${../../charts/aly-codes} ./chart
-        chmod -R +w ./chart
-        helm package ./chart --destination .
-        mv ./*.tgz $out
-      '';
-      targetNamespace = "default";
-    };
-
-    autoDeployCharts.watsup = {
-      package = pkgs.runCommand "watsup-chart.tgz" {nativeBuildInputs = [pkgs.kubernetes-helm];} ''
-        cp -r ${../../charts/watsup} ./chart
-        chmod -R +w ./chart
-        helm package ./chart --destination .
-        mv ./*.tgz $out
-      '';
-      targetNamespace = "default";
+    autoDeployCharts = let
+      mkChart = name: {
+        package = pkgs.runCommand "${name}-chart.tgz" {nativeBuildInputs = [pkgs.kubernetes-helm];} ''
+          cp -r ${../../charts}/${name} ./chart
+          chmod -R +w ./chart
+          helm package ./chart --destination .
+          mv ./*.tgz $out
+        '';
+        targetNamespace = "default";
+      };
+    in {
+      aly-codes = mkChart "aly-codes";
+      watsup = mkChart "watsup";
+      caddy = mkChart "caddy";
     };
   };
 
