@@ -44,7 +44,6 @@
       "--service-node-port-range=8000-32767"
       "--flannel-iface=tailscale0"
       "--tls-san=celestic"
-      "--disable=traefik"
       "--disable=servicelb"
     ];
 
@@ -61,28 +60,31 @@
     in {
       aly-codes = mkChart "aly-codes";
       watsup = mkChart "watsup";
-
-      traefik = {
-        name = "traefik";
-        repo = "https://traefik.github.io/charts";
-        version = "32.1.1";
-        hash = "sha256-mDveuQR2AIqaNn1lU+JkxpLWj+kWIpTH582s4qkix30=";
-        targetNamespace = "traefik";
-        createNamespace = true;
-        values = {
-          deployment.kind = "DaemonSet";
-          service.type = "ClusterIP";
-          ports.web.hostPort = 80;
-          ports.websecure.hostPort = 443;
-          nodeSelector."kubernetes.io/hostname" = "solaceon";
-          ingressClass = {
-            enabled = true;
-            isDefaultClass = true;
-          };
-        };
-      };
     };
   };
+
+  systemd.tmpfiles.rules = [
+    "L+ /var/lib/rancher/k3s/server/manifests/traefik-config.yaml - - - - ${pkgs.writeText "traefik-config.yaml" ''
+      apiVersion: helm.cattle.io/v1
+      kind: HelmChartConfig
+      metadata:
+        name: traefik
+        namespace: kube-system
+      spec:
+        valuesContent: |-
+          deployment:
+            kind: DaemonSet
+          service:
+            type: ClusterIP
+          ports:
+            web:
+              hostPort: 80
+            websecure:
+              hostPort: 443
+          nodeSelector:
+            kubernetes.io/hostname: solaceon
+    ''}"
+  ];
 
   systemd.services.k3s-cute-haus-tls = {
     description = "Sync cute.haus origin cert into k8s secret";
