@@ -43,6 +43,8 @@
     extraFlags = [
       "--flannel-iface=tailscale0"
       "--tls-san=solaceon"
+      "--disable=traefik"
+      "--disable=servicelb"
     ];
   };
 
