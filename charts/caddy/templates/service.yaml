@@ -10,9 +10,9 @@ spec:
     app: caddy
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: 80
+      targetPort: 443
       protocol: TCP
-      name: http
+      name: https
       {{- if and (eq .Values.service.type "NodePort") .Values.service.nodePort }}
       nodePort: {{ .Values.service.nodePort }}
       {{- end }}

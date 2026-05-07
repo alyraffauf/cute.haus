@@ -21,27 +21,31 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: 80
-              name: http
+            - containerPort: 443
+              name: https
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: caddyfile
               mountPath: /etc/caddy/Caddyfile
               subPath: Caddyfile
+            - name: tls
+              mountPath: /etc/caddy/tls
+              readOnly: true
             - name: caddy-data
               mountPath: /data
             - name: caddy-config-dir
               mountPath: /config
           livenessProbe:
-            httpGet:
-              path: /
-              port: 80
-              httpHeaders:
-                - name: Host
-                  value: cute.haus
+            tcpSocket:
+              port: 443
             initialDelaySeconds: 5
             periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 443
+            initialDelaySeconds: 2
+            periodSeconds: 5
       volumes:
         - name: caddyfile
           configMap:
@@ -49,6 +53,9 @@ spec:
             items:
               - key: Caddyfile
                 path: Caddyfile
+        - name: tls
+          secret:
+            secretName: {{ .Values.tls.secretName }}
         - name: caddy-data
           emptyDir: {}
         - name: caddy-config-dir

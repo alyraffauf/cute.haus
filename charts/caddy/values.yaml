@@ -15,8 +15,11 @@ resources:
 
 service:
   type: NodePort
-  port: 80
-  nodePort: 8480
+  port: 443
+  nodePort: 8443
+
+tls:
+  secretName: cute-haus-tls
 
 caddyfile: |
   {
@@ -24,7 +27,8 @@ caddyfile: |
     auto_https off
   }
 
-  http://cute.haus, http://www.cute.haus {
+  cute.haus, www.cute.haus {
+    tls /etc/caddy/tls/tls.crt /etc/caddy/tls/tls.key
     encode zstd gzip
     reverse_proxy http://watsup-svc.default.svc.cluster.local:80
   }

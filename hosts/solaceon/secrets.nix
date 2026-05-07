@@ -1,5 +1,7 @@
 {self, ...}: {
   age.secrets = {
+    cute-haus-tls-crt.file = "${self.inputs.secrets}/cute-haus-tls.crt.age";
+    cute-haus-tls-key.file = "${self.inputs.secrets}/cute-haus-tls.key.age";
     k3s.file = "${self.inputs.secrets}/k3s.age";
     pds.file = "${self.inputs.secrets}/pds.age";
     postgres-forgejo.file = "${self.inputs.secrets}/postgresql/forgejo.age";

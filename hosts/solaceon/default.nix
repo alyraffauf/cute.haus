@@ -65,6 +65,32 @@
     };
   };
 
+  systemd.services.k3s-cute-haus-tls = {
+    description = "Sync cute.haus origin cert into k8s secret";
+    after = ["k3s.service"];
+    wants = ["k3s.service"];
+    wantedBy = ["multi-user.target"];
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      Restart = "on-failure";
+      RestartSec = 10;
+    };
+
+    script = ''
+      export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+      until ${pkgs.k3s}/bin/k3s kubectl get nodes >/dev/null 2>&1; do
+        sleep 2
+      done
+      ${pkgs.k3s}/bin/k3s kubectl create secret tls cute-haus-tls \
+        --cert=${config.age.secrets.cute-haus-tls-crt.path} \
+        --key=${config.age.secrets.cute-haus-tls-key.path} \
+        --dry-run=client -o yaml \
+        | ${pkgs.k3s}/bin/k3s kubectl apply -f -
+    '';
+  };
+
   nixpkgs.hostPlatform = "x86_64-linux";
   programs.ssh.knownHosts = config.mySnippets.ssh.knownHosts;
   system.stateVersion = "25.11";
