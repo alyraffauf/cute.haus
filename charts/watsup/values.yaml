@@ -16,14 +16,18 @@ resources:
     memory: 128Mi
 
 service:
-  type: NodePort
+  type: ClusterIP
   port: 80
   targetPort: 3000
-  nodePort: 8383
 
 ingress:
-  enabled: false
-  className: nginx
-  host: cute.haus
-  annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  enabled: true
+  className: traefik
+  hosts:
+    - cute.haus
+    - www.cute.haus
+  tls:
+    - hosts:
+        - cute.haus
+        - www.cute.haus
+      secretName: cute-haus-tls

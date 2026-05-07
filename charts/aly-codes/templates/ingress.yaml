@@ -11,8 +11,13 @@ metadata:
   {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
+  {{- with .Values.ingress.tls }}
+  tls:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   rules:
-    - host: {{ .Values.ingress.host }}
+    {{- range .Values.ingress.hosts | default (list .Values.ingress.host) }}
+    - host: {{ . }}
       http:
         paths:
           - path: /
@@ -21,5 +26,6 @@ spec:
               service:
                 name: aly-codes-svc
                 port:
-                  number: {{ .Values.service.port }}
+                  number: {{ $.Values.service.port }}
+    {{- end }}
 {{- end }}

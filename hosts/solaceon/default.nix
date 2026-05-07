@@ -61,7 +61,26 @@
     in {
       aly-codes = mkChart "aly-codes";
       watsup = mkChart "watsup";
-      caddy = mkChart "caddy";
+
+      traefik = {
+        name = "traefik";
+        repo = "https://traefik.github.io/charts";
+        version = "32.1.1";
+        hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+        targetNamespace = "traefik";
+        createNamespace = true;
+        values = {
+          deployment.kind = "DaemonSet";
+          service.type = "ClusterIP";
+          ports.web.hostPort = 80;
+          ports.websecure.hostPort = 443;
+          nodeSelector."kubernetes.io/hostname" = "solaceon";
+          ingressClass = {
+            enabled = true;
+            isDefaultClass = true;
+          };
+        };
+      };
     };
   };
 
