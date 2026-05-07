@@ -87,30 +87,36 @@
     ''}"
   ];
 
-  systemd.services.k3s-cute-haus-tls = {
-    description = "Sync cute.haus origin cert into k8s secret";
-    after = ["k3s.service"];
-    wants = ["k3s.service"];
-    wantedBy = ["multi-user.target"];
+  systemd.services = let
+    mkTlsSync = name: {
+      description = "Sync ${name} origin cert into k8s secret";
+      after = ["k3s.service"];
+      wants = ["k3s.service"];
+      wantedBy = ["multi-user.target"];
 
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      Restart = "on-failure";
-      RestartSec = 10;
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        Restart = "on-failure";
+        RestartSec = 10;
+      };
+
+      script = ''
+        export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+        until ${pkgs.k3s}/bin/k3s kubectl get nodes >/dev/null 2>&1; do
+          sleep 2
+        done
+        ${pkgs.k3s}/bin/k3s kubectl create secret tls ${name}-tls \
+          --cert=${config.age.secrets."${name}-tls-crt".path} \
+          --key=${config.age.secrets."${name}-tls-key".path} \
+          --dry-run=client -o yaml \
+          | ${pkgs.k3s}/bin/k3s kubectl apply -f -
+      '';
     };
-
-    script = ''
-      export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-      until ${pkgs.k3s}/bin/k3s kubectl get nodes >/dev/null 2>&1; do
-        sleep 2
-      done
-      ${pkgs.k3s}/bin/k3s kubectl create secret tls cute-haus-tls \
-        --cert=${config.age.secrets.cute-haus-tls-crt.path} \
-        --key=${config.age.secrets.cute-haus-tls-key.path} \
-        --dry-run=client -o yaml \
-        | ${pkgs.k3s}/bin/k3s kubectl apply -f -
-    '';
+  in {
+    k3s-aly-codes-tls = mkTlsSync "aly-codes";
+    k3s-aly-social-tls = mkTlsSync "aly-social";
+    k3s-cute-haus-tls = mkTlsSync "cute-haus";
   };
 
   nixpkgs.hostPlatform = "x86_64-linux";

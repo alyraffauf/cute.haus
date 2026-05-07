@@ -19,8 +19,13 @@ service:
   nodePort: 8282
 
 ingress:
-  enabled: false
-  className: nginx
-  host: aly.codes
-  annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  enabled: true
+  className: traefik
+  hosts:
+    - aly.codes
+    - www.aly.codes
+  tls:
+    - hosts:
+        - aly.codes
+        - www.aly.codes
+      secretName: aly-codes-tls
