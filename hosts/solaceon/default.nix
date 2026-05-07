@@ -83,7 +83,7 @@
             websecure:
               hostPort: 443
           nodeSelector:
-            kubernetes.io/hostname: solaceon
+            node-role.kubernetes.io/control-plane: "true"
     ''}"
   ];
 
