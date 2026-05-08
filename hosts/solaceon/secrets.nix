@@ -9,7 +9,6 @@
     morsels-blue-tls-crt.file = "${self.inputs.secrets}/morsels-blue-tls.crt.age";
     morsels-blue-tls-key.file = "${self.inputs.secrets}/morsels-blue-tls.key.age";
     k3s.file = "${self.inputs.secrets}/k3s.age";
-    pds.file = "${self.inputs.secrets}/pds.age";
     rclone-b2.file = "${self.inputs.secrets}/rclone/b2.age";
     restic-passwd.file = "${self.inputs.secrets}/restic-password.age";
     tailscaleAuthKey.file = "${self.inputs.secrets}/tailscale/auth.age";

@@ -7,7 +7,6 @@
 }: {
   imports = [
     ./secrets.nix
-    ./services.nix
     "${modulesPath}/profiles/qemu-guest.nix"
     self.diskoConfigurations.lvm-ext4
     self.nixosModules.locale-en-us

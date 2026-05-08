@@ -93,6 +93,12 @@ releases:
     namespace: default
     chart: ./charts/forgejo
 
+  - name: bluesky-pds
+    namespace: default
+    chart: ./charts/bluesky-pds
+    values:
+      - values/bluesky-pds.yaml
+
   - name: external-routes
     namespace: default
     chart: ./charts/external-routes
