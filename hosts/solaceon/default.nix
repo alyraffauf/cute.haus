@@ -34,6 +34,11 @@
     hostName = "solaceon";
   };
 
+  environment.systemPackages = with pkgs; [
+    helmfile
+    kubernetes-helm
+  ];
+
   services.k3s = {
     enable = true;
     role = "server";
@@ -45,47 +50,9 @@
       "--flannel-iface=tailscale0"
       "--tls-san=celestic"
       "--disable=servicelb"
+      "--disable=traefik"
     ];
-
-    autoDeployCharts = let
-      mkChart = name: {
-        package = pkgs.runCommand "${name}-chart.tgz" {nativeBuildInputs = [pkgs.kubernetes-helm];} ''
-          cp -r ${../../charts}/${name} ./chart
-          chmod -R +w ./chart
-          helm package ./chart --destination .
-          mv ./*.tgz $out
-        '';
-        targetNamespace = "default";
-      };
-    in {
-      aly-codes = mkChart "aly-codes";
-      external-routes = mkChart "external-routes";
-      watsup = mkChart "watsup";
-    };
   };
-
-  systemd.tmpfiles.rules = [
-    "L+ /var/lib/rancher/k3s/server/manifests/traefik-config.yaml - - - - ${pkgs.writeText "traefik-config.yaml" ''
-      apiVersion: helm.cattle.io/v1
-      kind: HelmChartConfig
-      metadata:
-        name: traefik
-        namespace: kube-system
-      spec:
-        valuesContent: |-
-          deployment:
-            kind: DaemonSet
-          service:
-            type: ClusterIP
-          ports:
-            web:
-              hostPort: 80
-            websecure:
-              hostPort: 443
-          nodeSelector:
-            node-role.kubernetes.io/control-plane: "true"
-    ''}"
-  ];
 
   systemd.services = let
     mkTlsSync = name: {

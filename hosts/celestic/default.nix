@@ -34,6 +34,11 @@
     hostName = "celestic";
   };
 
+  environment.systemPackages = with pkgs; [
+    helmfile
+    kubernetes-helm
+  ];
+
   services.k3s = {
     enable = true;
     role = "server";

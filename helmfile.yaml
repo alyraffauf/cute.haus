@@ -4,10 +4,9 @@ repositories:
 
 releases:
   - name: traefik
-    namespace: traefik
-    createNamespace: true
+    namespace: kube-system
     chart: traefik/traefik
-    version: 32.1.1
+    version: 40.0.0
     values:
       - deployment:
           kind: DaemonSet
@@ -19,10 +18,18 @@ releases:
           websecure:
             hostPort: 443
         nodeSelector:
-          kubernetes.io/hostname: solaceon
-        ingressClass:
-          enabled: true
-          isDefaultClass: true
+          node-role.kubernetes.io/control-plane: "true"
+        tolerations:
+          - key: CriticalAddonsOnly
+            operator: Exists
+          - key: node-role.kubernetes.io/control-plane
+            operator: Exists
+            effect: NoSchedule
+        priorityClassName: system-cluster-critical
+        providers:
+          kubernetesIngress:
+            publishedService:
+              enabled: true
 
   - name: aly-codes
     namespace: default

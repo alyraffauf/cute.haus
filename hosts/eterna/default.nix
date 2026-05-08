@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   self,
   ...
 }: {
@@ -73,6 +74,11 @@
 
     hostName = "eterna";
   };
+
+  environment.systemPackages = with pkgs; [
+    helmfile
+    kubernetes-helm
+  ];
 
   services.k3s = {
     enable = true;

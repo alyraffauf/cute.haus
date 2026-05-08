@@ -1,6 +1,5 @@
 {...}: {
   imports = [
-    ./alycodes
     ./atbbs
     ./cachefilesd
     ./caddy
@@ -14,6 +13,5 @@
     ./qbittorrent
     ./syncthing
     ./tailscale
-    ./watsup
   ];
 }
