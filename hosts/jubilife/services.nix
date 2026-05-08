@@ -1,7 +1,12 @@
 {config, ...}: let
   dataDirectory = "/mnt/Data";
 in {
-  networking.firewall.allowedTCPPorts = [6881];
+  # 6881: bittorrent. 20048: NFSv3 mountd, pinned below — needed because
+  # k3s pod traffic (jellyfin's nfs-mount sidecar) doesn't get the
+  # tailscale0/lo blanket-accept, only nfsd's 2049 happens to work
+  # without an explicit hole. Sidecar uses `nolock`, so no statd/lockd.
+  networking.firewall.allowedTCPPorts = [6881 20048];
+  networking.firewall.allowedUDPPorts = [20048];
 
   services = {
     caddy.virtualHosts = {
@@ -81,11 +86,16 @@ in {
     nfs.server = {
       enable = true;
 
-      # 127.0.0.1 is for self-mounts when a kubelet pod on jubilife mounts
-      # /mnt/Media from jubilife — kernel uses loopback as source.
+      # Pin mountd's port so we can open it in the firewall. Without
+      # this it'd be assigned a random port per boot.
+      mountdPort = 20048;
+
+      # 100.64.0.0/10 is the tailnet. 10.42.0.0/16 is the k3s pod CIDR
+      # (jellyfin's nfs-mount sidecar mounts from inside a pod on
+      # jubilife, source IP arrives as the pod IP, not the host).
       exports = ''
-        /mnt/Data 100.64.0.0/10(rw,sync,no_subtree_check,no_root_squash,fsid=0) 127.0.0.1(rw,sync,no_subtree_check,no_root_squash,fsid=0)
-        /mnt/Media 100.64.0.0/10(rw,sync,no_subtree_check,no_root_squash,fsid=1) 127.0.0.1(rw,sync,no_subtree_check,no_root_squash,fsid=1)
+        /mnt/Data 100.64.0.0/10(rw,sync,no_subtree_check,no_root_squash,fsid=0) 10.42.0.0/16(rw,sync,no_subtree_check,no_root_squash,fsid=0)
+        /mnt/Media 100.64.0.0/10(rw,sync,no_subtree_check,no_root_squash,fsid=1) 10.42.0.0/16(rw,sync,no_subtree_check,no_root_squash,fsid=1)
       '';
     };
 
