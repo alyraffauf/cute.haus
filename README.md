@@ -25,17 +25,15 @@ This repository contains NixOS and home-manager configurations, along with whate
 
 ```plaintext
 .
-├── flake.nix                # Main entry point
+├── flake.nix                # Flake entry point
+├── helmfile.yaml            # k3s release graph (helmfile + helm + vals)
 ├── homes/                   # home-manager configurations
 ├── hosts/                   # NixOS host configurations
-├── modules/                 # Modular configurations
-│   ├── home/                # home-manager modules
-│   ├── flake/               # Organized flake components
-│   │   ├── home-manager.nix # Home-manager configurations
-│   │   ├── nixos.nix        # NixOS-specific configurations
-│   │   └── ...              # Other flake components
-│   └── nixos/               # NixOS-specific modules
-└── overlays/                # Custom Nixpkgs overlays
+├── modules/                 # NixOS / home-manager / flake modules
+├── overlays/                # Custom Nixpkgs overlays
+├── charts/                  # In-tree helm charts (see charts/README.md)
+├── values/                  # Per-chart vals refs into secrets/ (see values/README.md)
+└── secrets/                 # SOPS-encrypted yaml (multi-recipient age)
 ```
 
 ---

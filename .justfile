@@ -169,3 +169,74 @@ sops-rekey:
 [group('secrets')]
 sops-edit FILE:
     sops secrets/{{FILE}}
+
+############################################################################
+#
+#  Kubes (k3s + helmfile)
+#
+############################################################################
+
+# Scaffold a new app chart under charts/<name>. After running, edit the
+# values.yaml and add a release block to helmfile.yaml. See charts/README.md.
+[group('kubes')]
+new-app NAME:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    DIR="charts/{{ NAME }}"
+    if [[ -e "$DIR" ]]; then
+        echo "$DIR already exists; aborting." >&2
+        exit 1
+    fi
+    mkdir -p "$DIR/templates"
+    cat > "$DIR/Chart.yaml" <<EOF
+    apiVersion: v2
+    name: {{ NAME }}
+    description: TODO
+    type: application
+    version: 0.1.0
+    appVersion: "1.0.0"
+    dependencies:
+      - name: common
+        version: 0.1.0
+        repository: file://../common
+    EOF
+    cat > "$DIR/values.yaml" <<'EOF'
+    replicaCount: 1
+    strategy: Recreate
+
+    image:
+      repository: TODO
+      tag: latest
+      pullPolicy: Always
+
+    resources:
+      requests: { cpu: 50m, memory: 64Mi }
+      limits:   { cpu: "1", memory: 256Mi }
+
+    ports:
+      - name: http
+        containerPort: 80
+
+    service:
+      type: ClusterIP
+      ports:
+        - name: http
+          port: 80
+          targetPort: http
+
+    probes:
+      readiness:
+        httpGet: { path: /, port: http }
+        periodSeconds: 10
+
+    ingress:
+      enabled: true
+      className: traefik
+      routes:
+        - host: TODO.cute.haus
+          tlsSecret: cute-haus-tls
+    EOF
+    for kind in deployment service ingress; do
+        echo '{{{{- include "common.'"$kind"'" . }}}}' > "$DIR/templates/$kind.yaml"
+    done
+    echo "scaffolded $DIR. next: edit values.yaml and add a release to helmfile.yaml."

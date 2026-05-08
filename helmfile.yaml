@@ -9,6 +9,10 @@ repositories:
     url: https://pkgs.tailscale.com/helmcharts
 
 releases:
+  # ─── Cluster infra ──────────────────────────────────────────────────────
+  # Ingress, storage, postgres operator, tailscale operator. These come
+  # before any app release that depends on their CRDs / StorageClasses.
+
   - name: traefik
     namespace: kube-system
     chart: traefik/traefik
@@ -63,25 +67,33 @@ releases:
     chart: cnpg/cloudnative-pg
     version: 0.28.0
 
-  - name: pg-shared
-    namespace: cnpg-system
-    chart: ./charts/pg-shared
-    needs:
-      - cnpg-system/cnpg
-
   - name: tailscale-operator
     namespace: tailscale
     createNamespace: true
     chart: tailscale/tailscale-operator
     version: 1.96.5
     values:
-      - values/tailscale-operator.yaml
+      - values/secrets/tailscale-operator.yaml
 
+  # ─── Shared platform services ───────────────────────────────────────────
+
+  # CNPG Cluster (3-instance HA postgres) + longhorn-pg StorageClass.
+  # Apps that need a database get a role + db here; see charts/pg-shared.
+  - name: pg-shared
+    namespace: cnpg-system
+    chart: ./charts/pg-shared
+    needs:
+      - cnpg-system/cnpg
+
+  # Cloudflare Origin TLS Secrets per domain (aly-codes, aly-social,
+  # cute-haus, morsels-blue). Apps reference these by name in ingress.routes.
   - name: cluster-tls
     namespace: default
     chart: ./charts/cluster-tls
     values:
-      - values/cluster-tls.yaml
+      - values/secrets/cluster-tls.yaml
+
+  # ─── Apps ───────────────────────────────────────────────────────────────
 
   - name: aly-codes
     namespace: default
@@ -103,7 +115,7 @@ releases:
     namespace: default
     chart: ./charts/vaultwarden
     values:
-      - values/vaultwarden.yaml
+      - values/secrets/vaultwarden.yaml
 
   - name: forgejo
     namespace: default
@@ -113,8 +125,11 @@ releases:
     namespace: default
     chart: ./charts/bluesky-pds
     values:
-      - values/bluesky-pds.yaml
+      - values/secrets/bluesky-pds.yaml
 
+  # Ingress + Service + EndpointSlice for services that live OUTSIDE the
+  # cluster (on tailnet IPs). e.g. plex/immich on jubilife, audiobookshelf
+  # on eterna. See charts/external-routes/values.yaml for the route list.
   - name: external-routes
     namespace: default
     chart: ./charts/external-routes

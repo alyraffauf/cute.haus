@@ -14,6 +14,8 @@ resources:
     cpu: "2"
     memory: 1Gi
 
+# Matches USER_UID/USER_GID below — forgejo's docker-entrypoint runs as
+# uid/gid 1000 and needs write access to /var/lib/forgejo on the PVC.
 podSecurityContext:
   fsGroup: 1000
 
@@ -34,8 +36,9 @@ service:
       targetPort: ssh
 
 persistence:
-  # 2-replica longhorn class (defined by pg-shared chart). Forgejo doesn't
-  # need 3-replica since b2 is the offsite safety net.
+  # B2 (rclone) is the offsite safety net for repos / LFS / attachments,
+  # so this PVC just needs to survive single-node loss. Uses pg-shared's
+  # StorageClass to keep all postgres-adjacent PVCs on one class.
   enabled: true
   storageClassName: longhorn-pg
   size: 10Gi
