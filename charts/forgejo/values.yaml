@@ -4,7 +4,9 @@ strategy: Recreate
 image:
   repository: codeberg.org/forgejo/forgejo
   tag: "15"
-  pullPolicy: Always
+  # Stops a registry hiccup at pod-restart time from wedging the deployment
+  # (codeberg has had 502s). Tradeoff: bumping tag is the only way to update.
+  pullPolicy: IfNotPresent
 
 resources:
   requests:
