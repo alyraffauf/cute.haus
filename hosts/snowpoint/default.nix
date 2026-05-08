@@ -142,16 +142,6 @@
       };
     };
 
-    uptime-kuma = {
-      enable = true;
-      appriseSupport = true;
-
-      settings = {
-        PORT = toString config.mySnippets.cute-haus.networkMap.uptime-kuma.port;
-        HOST = "0.0.0.0";
-      };
-    };
-
     vaultwarden = {
       enable = true;
 

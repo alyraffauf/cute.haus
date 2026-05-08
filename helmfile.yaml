@@ -63,6 +63,10 @@ releases:
     namespace: default
     chart: ./charts/morsels
 
+  - name: uptime-kuma
+    namespace: default
+    chart: ./charts/uptime-kuma
+
   - name: external-routes
     namespace: default
     chart: ./charts/external-routes
