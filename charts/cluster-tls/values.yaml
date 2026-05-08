@@ -1,0 +1,3 @@
+# Filled by values/cluster-tls.yaml via vals refs into secrets/cluster-tls.yaml.
+# Each entry creates a kubernetes.io/tls Secret named <key>-tls.
+secret: {}

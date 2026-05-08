@@ -5,6 +5,8 @@ repositories:
     url: https://charts.longhorn.io
   - name: cnpg
     url: https://cloudnative-pg.github.io/charts
+  - name: tailscale
+    url: https://pkgs.tailscale.com/helmcharts
 
 releases:
   - name: traefik
@@ -66,6 +68,20 @@ releases:
     chart: ./charts/pg-shared
     needs:
       - cnpg-system/cnpg
+
+  - name: tailscale-operator
+    namespace: tailscale
+    createNamespace: true
+    chart: tailscale/tailscale-operator
+    version: 1.96.5
+    values:
+      - values/tailscale-operator.yaml
+
+  - name: cluster-tls
+    namespace: default
+    chart: ./charts/cluster-tls
+    values:
+      - values/cluster-tls.yaml
 
   - name: aly-codes
     namespace: default

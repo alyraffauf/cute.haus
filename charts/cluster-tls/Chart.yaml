@@ -1,0 +1,6 @@
+apiVersion: v2
+name: cluster-tls
+description: TLS Secrets for cluster ingresses (cert + key per domain)
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
