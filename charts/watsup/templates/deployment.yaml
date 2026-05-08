@@ -17,6 +17,13 @@ spec:
       {{- with .Values.dnsPolicy }}
       dnsPolicy: {{ . }}
       {{- end }}
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: watsup
       containers:
         - name: watsup
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
