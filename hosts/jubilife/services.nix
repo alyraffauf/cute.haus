@@ -13,16 +13,6 @@ in {
         '';
       };
 
-      "${config.mySnippets.tailnet.networkMap.jellyfin.vHost}" = {
-        extraConfig = ''
-          bind tailscale/jellyfin
-          encode zstd gzip
-          reverse_proxy ${config.mySnippets.tailnet.networkMap.jellyfin.hostName}:${toString config.mySnippets.tailnet.networkMap.jellyfin.port} {
-            flush_interval -1
-          }
-        '';
-      };
-
       "${config.mySnippets.tailnet.networkMap.lidarr.vHost}" = {
         extraConfig = ''
           bind tailscale/lidarr
@@ -88,18 +78,14 @@ in {
       inherit (config.mySnippets.cute-haus.networkMap.immich) port;
     };
 
-    jellyfin = {
-      enable = true;
-      openFirewall = true;
-      dataDir = "${dataDirectory}/jellyfin";
-    };
-
     nfs.server = {
       enable = true;
 
+      # 127.0.0.1 is for self-mounts when a kubelet pod on jubilife mounts
+      # /mnt/Media from jubilife — kernel uses loopback as source.
       exports = ''
-        /mnt/Data 100.64.0.0/10(rw,sync,no_subtree_check,no_root_squash,fsid=0)
-        /mnt/Media 100.64.0.0/10(rw,sync,no_subtree_check,no_root_squash,fsid=1)
+        /mnt/Data 100.64.0.0/10(rw,sync,no_subtree_check,no_root_squash,fsid=0) 127.0.0.1(rw,sync,no_subtree_check,no_root_squash,fsid=0)
+        /mnt/Media 100.64.0.0/10(rw,sync,no_subtree_check,no_root_squash,fsid=1) 127.0.0.1(rw,sync,no_subtree_check,no_root_squash,fsid=1)
       '';
     };
 
