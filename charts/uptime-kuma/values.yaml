@@ -1,7 +1,7 @@
 image:
   repository: louislam/uptime-kuma
   tag: "1"
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 resources:
   requests:
