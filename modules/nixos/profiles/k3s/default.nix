@@ -50,18 +50,18 @@ in {
         serverAddr = lib.mkIf (cfg.serverAddr != null) cfg.serverAddr;
         tokenFile = config.age.secrets.k3s.path;
         extraFlags =
-          [
-            "--flannel-iface=tailscale0"
-            "--service-node-port-range=8000-32767"
-          ]
-          ++ lib.optionals (cfg.role == "server") [
-            "--disable=traefik"
-            "--disable=servicelb"
-          ]
+          ["--flannel-iface=tailscale0"]
+          ++ lib.optionals (cfg.role == "server") (
+            [
+              "--service-node-port-range=8000-32767"
+              "--disable=traefik"
+              "--disable=servicelb"
+            ]
+            ++ map (san: "--tls-san=${san}") cfg.tlsSans
+          )
           ++ lib.optionals cfg.clusterInit [
             "--write-kubeconfig-mode=644"
-          ]
-          ++ map (san: "--tls-san=${san}") cfg.tlsSans;
+          ];
       };
 
       # Longhorn prereq
