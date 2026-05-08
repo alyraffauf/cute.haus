@@ -14,7 +14,7 @@ resources:
     memory: 256Mi
   limits:
     cpu: "2"
-    memory: 1Gi
+    memory: 2Gi
 
 # Matches USER_UID/USER_GID below — forgejo's docker-entrypoint runs as
 # uid/gid 1000 and needs write access to /var/lib/forgejo on the PVC.
