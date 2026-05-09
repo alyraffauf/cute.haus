@@ -69,8 +69,8 @@ Then:
    ```
 3. If the app needs secrets:
    - `just sops-edit <name>.yaml` — write the encrypted file
-   - Create `values/<name>.yaml` with `ref+sops://secrets/<name>.yaml#/...`
-     refs for each key
+   - Create `values/<name>.yaml` with `ref+sops://../secrets/<name>.yaml#/...`
+     refs for each key (path is relative to `k8s/`, where helmfile runs)
    - Add `values: [values/<name>.yaml]` to the helmfile release
 4. `helmfile -l name=<name> apply`
 

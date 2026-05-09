@@ -1,8 +1,0 @@
-- hosts: eterna
-  remote_user: root
-
-  tasks:
-    - name: Restart podman-morsels
-      ansible.builtin.systemd_service:
-        name: podman-morsels
-        state: restarted

@@ -89,31 +89,6 @@ update-caddy-tailscale:
 deploy jobs='':
     nynx --operation switch {{ if jobs == "" { "" } else { "--jobs " + jobs } }}
 
-# Pull latest aly.codes OCI on solaceon.
-[group('servers')]
-update-alycodes:
-    ansible-playbook -i ansible/inventory.ini ansible/playbooks/restart-alycodes.yml
-
-# Pull latest morsels OCI on eterna.
-[group('servers')]
-update-morsels:
-    ansible-playbook -i ansible/inventory.ini ansible/playbooks/restart-morsels.yml
-
-# Pull latest myAtmosphere OCI on solaceon.
-[group('servers')]
-update-myatmosphere:
-    ansible-playbook -i ansible/inventory.ini ansible/playbooks/restart-myatmosphere.yml
-
-# Pull latest atbbs OCI on eterna.
-[group('servers')]
-update-atbbs:
-    ansible-playbook -i ansible/inventory.ini ansible/playbooks/restart-atbbs.yml
-
-# Pull latest watsup OCI on solaceon.
-[group('servers')]
-update-watsup:
-    ansible-playbook -i ansible/inventory.ini ansible/playbooks/restart-watsup.yml
-
 # Reboot all servers.
 [group('servers')]
 reboot:
@@ -176,13 +151,13 @@ sops-edit FILE:
 #
 ############################################################################
 
-# Scaffold a new app chart under charts/<name>. After running, edit the
-# values.yaml and add a release block to helmfile.yaml. See charts/README.md.
+# Scaffold a new app chart under k8s/charts/<name>. After running, edit the
+# values.yaml and add a release block to k8s/helmfile.yaml. See k8s/charts/README.md.
 [group('kubes')]
 new-app NAME:
     #!/usr/bin/env bash
     set -euo pipefail
-    DIR="charts/{{ NAME }}"
+    DIR="k8s/charts/{{ NAME }}"
     if [[ -e "$DIR" ]]; then
         echo "$DIR already exists; aborting." >&2
         exit 1
@@ -240,4 +215,4 @@ new-app NAME:
         echo '{{{{- include "common.'"$kind"'" . }}}}' > "$DIR/templates/$kind.yaml"
     done
     helm dependency update "$DIR" >/dev/null
-    echo "scaffolded $DIR. next: edit values.yaml and add a release to helmfile.yaml."
+    echo "scaffolded $DIR. next: edit values.yaml and add a release to k8s/helmfile.yaml."

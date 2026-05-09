@@ -1,3 +1,3 @@
 .github
 flake.lock
-charts/*/templates
+k8s/charts/*/templates
