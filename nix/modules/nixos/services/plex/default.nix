@@ -42,6 +42,11 @@
 
         openFirewall = true;
       };
+
+      # Plex's main process exits on SIGTERM but leaves transcoder children
+      # alive in the cgroup, so systemd waits the full default 90s before
+      # SIGKILL on every shutdown. Cap to 15s — the cache regenerates.
+      systemd.services.plex.serviceConfig.TimeoutStopSec = 15;
     })
 
     (lib.mkIf config.myNixOS.services.plex.tautulli.enable {
