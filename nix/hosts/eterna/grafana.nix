@@ -182,10 +182,6 @@ _: {
               labels.instance = "celestic";
             }
             {
-              targets = ["oreburgh:3021"];
-              labels.instance = "oreburgh";
-            }
-            {
               targets = ["jubilife:3021"];
               labels.instance = "jubilife";
             }

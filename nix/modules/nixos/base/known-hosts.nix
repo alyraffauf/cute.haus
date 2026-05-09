@@ -26,10 +26,6 @@ in {
       hostNames = ["fortree" "fortree.local" "fortree.${tnet}"];
       publicKeyFile = pub "fortree";
     };
-    oreburgh = {
-      hostNames = ["oreburgh" "oreburgh.local" "oreburgh.${tnet}" "lavaridge" "lavaridge.local" "lavaridge.${tnet}"];
-      publicKeyFile = pub "oreburgh";
-    };
     jubilife = {
       hostNames = ["jubilife" "jubilife.local" "jubilife.${tnet}" "lilycove" "lilycove.local" "lilycove.${tnet}"];
       publicKeyFile = pub "jubilife";

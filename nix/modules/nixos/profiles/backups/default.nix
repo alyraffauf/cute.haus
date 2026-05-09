@@ -8,9 +8,8 @@
   mkRepo = service: "${backupDestination}/${service}";
   stop = service: "${pkgs.systemd}/bin/systemctl stop ${service}";
   start = service: "${pkgs.systemd}/bin/systemctl start ${service}";
-  # mySnippets.restic still wires `passwordFile`/`rcloneConfigFile` to
-  # `config.age.secrets.*.path`. Override to point at the sops-managed
-  # paths so we can drop ragenix.
+  # mySnippets.restic defaults `passwordFile`/`rcloneConfigFile` to
+  # `config.age.secrets.*.path`; override to the sops-managed paths.
   restic =
     config.mySnippets.restic
     // {
