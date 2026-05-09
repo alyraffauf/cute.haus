@@ -50,7 +50,7 @@
             runner.capacity = config.myNixOS.services.forgejo-runner.dockerContainers;
           };
 
-          url = "http://${config.mySnippets.cute-haus.networkMap.forgejo.hostName}:${toString config.mySnippets.cute-haus.networkMap.forgejo.port}";
+          url = "https://git.aly.codes";
         };
 
         alycodes-nixos = {
@@ -80,7 +80,7 @@
             runner.capacity = config.myNixOS.services.forgejo-runner.nativeRunners;
           };
 
-          url = "http://${config.mySnippets.cute-haus.networkMap.forgejo.hostName}:${toString config.mySnippets.cute-haus.networkMap.forgejo.port}";
+          url = "https://git.aly.codes";
         };
       };
     };
