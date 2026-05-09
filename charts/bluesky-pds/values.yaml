@@ -1,5 +1,6 @@
 replicaCount: 1
 strategy: Recreate
+terminationGracePeriodSeconds: 15
 
 image:
   repository: ghcr.io/bluesky-social/pds
@@ -63,7 +64,8 @@ probes:
     periodSeconds: 30
   readiness:
     httpGet: { path: /xrpc/_health, port: http }
-    periodSeconds: 10
+    periodSeconds: 5
+    failureThreshold: 2
 
 ingress:
   enabled: true

@@ -1,5 +1,6 @@
 replicaCount: 1
 strategy: Recreate
+terminationGracePeriodSeconds: 15
 
 image:
   repository: codeberg.org/forgejo/forgejo
@@ -65,7 +66,8 @@ probes:
     periodSeconds: 30
   readiness:
     httpGet: { path: /api/healthz, port: http }
-    periodSeconds: 10
+    periodSeconds: 5
+    failureThreshold: 2
 
 ingress:
   enabled: true

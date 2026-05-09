@@ -1,5 +1,6 @@
 replicaCount: 1
 strategy: Recreate
+terminationGracePeriodSeconds: 10
 
 image:
   repository: louislam/uptime-kuma
@@ -45,7 +46,8 @@ probes:
     failureThreshold: 180
   readiness:
     httpGet: { path: /, port: http }
-    periodSeconds: 10
+    periodSeconds: 5
+    failureThreshold: 2
 
 ingress:
   enabled: true
