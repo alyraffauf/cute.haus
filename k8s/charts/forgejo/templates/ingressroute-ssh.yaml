@@ -1,0 +1,16 @@
+{{- if .Values.ssh.enabled }}
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: {{ .Chart.Name }}-ssh
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  entryPoints:
+    - ssh
+  routes:
+    - match: HostSNI(`*`)
+      services:
+        - name: {{ .Chart.Name }}
+          port: {{ .Values.ssh.port | default 2222 }}
+{{- end }}

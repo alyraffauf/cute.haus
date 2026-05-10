@@ -52,6 +52,16 @@ env:
   USER_GID: "1000"
   FORGEJO_WORK_DIR: /var/lib/forgejo
   FORGEJO_CUSTOM: /var/lib/forgejo/custom
+  FORGEJO__database__DB_TYPE: postgres
+  FORGEJO__database__HOST: pg-shared-rw.cnpg-system.svc:5432
+  FORGEJO__database__NAME: forgejo
+  FORGEJO__database__USER: forgejo
+  FORGEJO__repository__ENABLE_PUSH_CREATE_USER: "true"
+  FORGEJO__repository__ENABLE_PUSH_CREATE_ORG: "true"
+  FORGEJO__log__LOGGER_SSH_MODE: file
+
+secret: {}
+envFromSecret: forgejo-env
 
 failover:
   fastTolerationSeconds: 60
@@ -75,3 +85,7 @@ ingress:
   routes:
     - host: git.aly.codes
       tlsSecret: aly-codes-tls
+
+ssh:
+  enabled: true
+  port: 2222
