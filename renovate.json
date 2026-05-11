@@ -6,23 +6,17 @@
   "labels": ["dependencies"],
 
   "helm-values": {
-    "managerFilePatterns": [
-      "/k8s/charts/.+/values\\.yaml$/"
-    ]
+    "managerFilePatterns": ["/k8s/charts/.+/values\\.yaml$/"]
   },
   "helmfile": {
-    "managerFilePatterns": [
-      "/k8s/helmfile\\.yaml$/"
-    ]
+    "managerFilePatterns": ["/k8s/helmfile\\.yaml$/"]
   },
 
   "packageRules": [
     {
       "description": "Skip tranquil-pds (atcr.io needs separate creds)",
       "enabled": false,
-      "matchPackageNames": [
-        "/tranquil/"
-      ]
+      "matchPackageNames": ["/tranquil/"]
     },
     {
       "description": "Auto-merge patch + digest updates after CI passes",
