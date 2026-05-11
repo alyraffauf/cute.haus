@@ -1,0 +1,84 @@
+replicaCount: 2
+spread: true
+terminationGracePeriodSeconds: 15
+
+image:
+  repository: atcr.io/tranquil.farm/tranquil-pds
+  tag: latest
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: atcr-pull
+
+pullSecret:
+  name: atcr-pull
+  registry: atcr.io
+  username: ""
+  password: ""
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: "1"
+    memory: 1Gi
+
+ports:
+  - name: http
+    containerPort: 3000
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+
+env:
+  PDS_HOSTNAME: pds.cute.haus
+  PDS_USER_HANDLE_DOMAINS: aly.social
+  SERVER_HOST: 0.0.0.0
+  SERVER_PORT: "3000"
+  BLOB_STORAGE_BACKEND: s3
+  S3_BUCKET: aly-tranquil-blobs
+  S3_ENDPOINT: https://s3.us-east-005.backblazeb2.com
+  AWS_REGION: us-east-005
+  TRANQUIL_STORE_DATA_DIR: /data/store
+  PLC_DIRECTORY_URL: https://plc.directory
+  CRAWLERS: https://bsky.network
+  INVITE_CODE_REQUIRED: "true"
+  SKIP_IMPORT_VERIFICATION: "true"
+  # Email via existing Resend account (same SMTP creds as bluesky-pds).
+  MAIL_FROM_ADDRESS: admin@aly.social
+  MAIL_FROM_NAME: tranquil
+  MAIL_SMARTHOST_HOST: smtp.resend.com
+  MAIL_SMARTHOST_PORT: "2465"
+  MAIL_SMARTHOST_USERNAME: resend
+  MAIL_SMARTHOST_TLS: implicit
+
+secret: {}
+envFromSecret: tranquil-pds-env
+
+failover:
+  fastTolerationSeconds: 60
+
+probes:
+  startup:
+    httpGet: { path: /xrpc/_health, port: http }
+    periodSeconds: 5
+    failureThreshold: 60
+  liveness:
+    httpGet: { path: /xrpc/_health, port: http }
+    periodSeconds: 30
+  readiness:
+    httpGet: { path: /xrpc/_health, port: http }
+    periodSeconds: 5
+    failureThreshold: 2
+
+ingress:
+  enabled: true
+  className: traefik
+  routes:
+    - host: pds.cute.haus
+      tlsSecret: cute-haus-tls
