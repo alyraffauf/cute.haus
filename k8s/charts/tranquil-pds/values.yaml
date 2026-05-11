@@ -84,3 +84,7 @@ ingress:
   routes:
     - host: pds.cute.haus
       tlsSecret: cute-haus-tls
+    - host: aly.social
+      tlsSecret: aly-social-tls
+    - host: "*.aly.social"
+      tlsSecret: aly-social-tls

@@ -13,7 +13,7 @@ spec:
     {{- $hosts := prepend (default (list) .aliases) .host }}
     - hosts:
         {{- range $hosts }}
-        - {{ . }}
+        - {{ . | quote }}
         {{- end }}
       secretName: {{ .tlsSecret }}
     {{- end }}
@@ -22,7 +22,7 @@ spec:
     {{- range .Values.ingress.routes }}
     {{- $hosts := prepend (default (list) .aliases) .host }}
     {{- range $hosts }}
-    - host: {{ . }}
+    - host: {{ . | quote }}
       http:
         paths:
           - path: /

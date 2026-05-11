@@ -191,14 +191,6 @@ releases:
     values:
       - values/secrets/forgejo.yaml
 
-  - name: bluesky-pds
-    namespace: default
-    chart: ./charts/bluesky-pds
-    needs:
-      - default/cluster-tls
-    values:
-      - values/secrets/bluesky-pds.yaml
-
   - name: tranquil-pds
     namespace: default
     chart: ./charts/tranquil-pds
