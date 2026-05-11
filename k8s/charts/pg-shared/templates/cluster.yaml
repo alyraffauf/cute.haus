@@ -50,6 +50,18 @@ spec:
   monitoring:
     enablePodMonitor: false
 
+  {{- with .Values.roles }}
+  managed:
+    roles:
+      {{- range $name, $_ := . }}
+      - name: {{ $name }}
+        ensure: present
+        login: true
+        passwordSecret:
+          name: {{ $name }}-pg-creds
+      {{- end }}
+  {{- end }}
+
   {{- if .Values.backup.enabled }}
   backup:
     barmanObjectStore:

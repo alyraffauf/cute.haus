@@ -28,6 +28,16 @@ cluster:
 failover:
   fastTolerationSeconds: 60
 
+# Declarative role + database management. Each entry produces:
+#   - kubernetes.io/basic-auth Secret (<name>-pg-creds) consumed by CNPG
+#   - entry under Cluster.spec.managed.roles[] (CNPG creates/maintains role)
+#   - Database CRD owned by the role (defaults to role name; override via
+#     `database: <name>`).
+# Passwords come from values/secrets/pg-shared.yaml via vals + sops.
+# Apps consume their connection string via DATABASE_URL refs into
+# secrets/pg-roles.yaml.
+roles: {}
+
 # B2 (S3-compatible) backup of the cnpg cluster. WAL archiving is continuous;
 # base backup runs on the schedule below. WAL retention is implicit — CNPG
 # keeps enough WAL to PITR from the oldest base backup within retentionPolicy.
