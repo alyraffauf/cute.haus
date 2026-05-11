@@ -29,6 +29,10 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if and (gt (int (.Values.replicaCount | default 1)) 1) .Values.spread }}
       topologySpreadConstraints:
         - maxSkew: 1
