@@ -1,0 +1,43 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":dependencyDashboard"],
+  "timezone": "America/New_York",
+  "schedule": ["every weekend"],
+  "labels": ["dependencies"],
+
+  "helm-values": {
+    "fileMatch": ["k8s/charts/.+/values\\.yaml$"]
+  },
+  "helmfile": {
+    "fileMatch": ["k8s/helmfile\\.yaml$"]
+  },
+
+  "packageRules": [
+    {
+      "description": "Skip tranquil-pds (atcr.io needs separate creds)",
+      "matchPackagePatterns": ["tranquil"],
+      "enabled": false
+    },
+    {
+      "description": "Auto-merge patch + digest updates after CI passes",
+      "matchUpdateTypes": ["patch", "digest", "pin", "pinDigest"],
+      "automerge": true
+    },
+    {
+      "description": "Group helm chart minor bumps into one PR per week",
+      "matchManagers": ["helmfile"],
+      "matchUpdateTypes": ["minor"],
+      "groupName": "helm chart minor updates"
+    },
+    {
+      "description": "Major bumps stay manual",
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    }
+  ],
+
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["security"]
+  }
+}
