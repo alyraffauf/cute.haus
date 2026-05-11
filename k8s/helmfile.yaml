@@ -1,3 +1,11 @@
+# Keep helm release history small. Each revision is stored as a Secret
+# containing gzip+base64 of all rendered manifests; CRD-bundling charts
+# (cert-manager, traefik, cnpg) make each revision ~1MB, so the default 10
+# means ~10MB per release and helm's pre-upgrade LIST query stalls the
+# apiserver's HTTP/2 stream over the tailnet.
+helmDefaults:
+  historyMax: 3
+
 repositories:
   - name: traefik
     url: https://traefik.github.io/charts
