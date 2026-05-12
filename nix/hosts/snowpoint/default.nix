@@ -117,7 +117,11 @@
     base.enable = true;
 
     profiles = {
-      autoUpgrade.enable = true;
+      autoUpgrade = {
+        enable = true;
+        dates = "03:30";
+      };
+
       backups.enable = true;
       data-share.enable = true;
       media-share.enable = true;

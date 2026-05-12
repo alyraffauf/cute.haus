@@ -86,7 +86,11 @@ in {
         dataDir = "/mnt/Data";
       };
 
-      autoUpgrade.enable = true;
+      autoUpgrade = {
+        enable = true;
+        dates = "04:15";
+      };
+
       backups.enable = true;
       btrfs.enable = true;
       vps.enable = true;

@@ -92,7 +92,11 @@
     base.enable = true;
 
     profiles = {
-      autoUpgrade.enable = true;
+      autoUpgrade = {
+        enable = true;
+        dates = "05:00";
+      };
+
       backups.enable = true;
       btrfs.enable = true;
       data-share.enable = true;

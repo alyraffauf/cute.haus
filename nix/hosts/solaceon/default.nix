@@ -40,7 +40,11 @@
     base.enable = true;
 
     profiles = {
-      autoUpgrade.enable = true;
+      autoUpgrade = {
+        enable = true;
+        dates = "02:00";
+      };
+
       backups.enable = true;
 
       k3s = {
