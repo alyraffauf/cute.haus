@@ -5,8 +5,10 @@ locals {
     "immich.cute.haus"         = false
     "jellyfin.cute.haus"       = false
     "kuma.cute.haus"           = true
+    "navidrome.cute.haus"      = true
     "ombi.cute.haus"           = true
     "pds.cute.haus"            = false
+    "photoprism.cute.haus"     = false
     "plex.cute.haus"           = false
     "status.cute.haus"         = true
     "vault.cute.haus"          = true
@@ -18,19 +20,8 @@ resource "cloudflare_dns_record" "cute_haus_a_solaceon" {
   zone_id  = local.zones.cute_haus
   name     = each.key
   type     = "A"
-  content  = local.hosts.solaceon
+  content  = local.hosts.snowpoint
   proxied  = each.value
-  ttl      = 1
-  tags     = []
-  settings = {}
-}
-
-resource "cloudflare_dns_record" "cute_haus_navidrome_a" {
-  zone_id  = local.zones.cute_haus
-  name     = "navidrome.cute.haus"
-  type     = "A"
-  content  = "107.140.155.124"
-  proxied  = true
   ttl      = 1
   tags     = []
   settings = {}

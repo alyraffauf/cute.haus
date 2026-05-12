@@ -45,7 +45,7 @@ releases:
             exposedPort: 2222
             protocol: TCP
         nodeSelector:
-          node-role.kubernetes.io/control-plane: "true"
+          cute.haus/ingress: "true"
         tolerations:
           - key: CriticalAddonsOnly
             operator: Exists

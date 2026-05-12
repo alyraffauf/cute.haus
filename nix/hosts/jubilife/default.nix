@@ -13,6 +13,7 @@ in {
     ./home.nix
     ./oci.nix
     ./prometheus.nix
+    ./proxy.nix
     ./secrets.nix
     ./services.nix
     self.diskoConfigurations.luks-btrfs-subvolumes

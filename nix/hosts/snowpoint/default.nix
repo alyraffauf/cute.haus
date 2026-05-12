@@ -5,7 +5,7 @@
 }: {
   imports = [
     ./home.nix
-    ./proxy.nix
+    # ./proxy.nix
     ./secrets.nix
     self.diskoConfigurations.lvm-ext4
     self.nixosModules.locale-en-us
@@ -129,6 +129,7 @@
         role = "agent";
         serverAddr = "https://solaceon:6443";
         zone = "cloud-netcup";
+        ingress = true;
       };
     };
 

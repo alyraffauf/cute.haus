@@ -103,6 +103,7 @@
         serverAddr = "https://solaceon:6443";
         tlsSans = ["solaceon" "celestic"];
         zone = "home";
+        ingress = true;
       };
 
       media-share.enable = true;

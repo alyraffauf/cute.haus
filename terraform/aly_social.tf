@@ -2,7 +2,7 @@ resource "cloudflare_dns_record" "aly_social_wildcard_a" {
   zone_id  = local.zones.aly_social
   name     = "*.aly.social"
   type     = "A"
-  content  = local.hosts.celestic
+  content  = local.hosts.snowpoint
   proxied  = false
   ttl      = 1
   tags     = []
@@ -13,7 +13,7 @@ resource "cloudflare_dns_record" "aly_social_apex_a_solaceon" {
   zone_id  = local.zones.aly_social
   name     = "aly.social"
   type     = "A"
-  content  = local.hosts.solaceon
+  content  = local.hosts.snowpoint
   proxied  = true
   ttl      = 1
   tags     = []
@@ -24,7 +24,7 @@ resource "cloudflare_dns_record" "aly_social_status_a_solaceon" {
   zone_id  = local.zones.aly_social
   name     = "status.aly.social"
   type     = "A"
-  content  = local.hosts.solaceon
+  content  = local.hosts.snowpoint
   proxied  = true
   ttl      = 1
   tags     = []

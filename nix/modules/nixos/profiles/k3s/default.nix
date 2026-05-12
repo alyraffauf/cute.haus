@@ -53,6 +53,12 @@ in {
         cloud-netcup.
       '';
     };
+
+    ingress = lib.mkEnableOption ''
+      cute.haus/ingress=true node label. Traefik runs on nodes with this
+      label; set true on any node that should serve public HTTP(S)/SSH
+      ingress (needs ports 80/443/2222 open at the firewall).
+    '';
   };
 
   config = lib.mkIf cfg.enable {
@@ -77,6 +83,9 @@ in {
           ]
           ++ lib.optionals (cfg.zone != null) [
             "--node-label=topology.kubernetes.io/zone=${cfg.zone}"
+          ]
+          ++ lib.optionals cfg.ingress [
+            "--node-label=cute.haus/ingress=true"
           ];
       };
 

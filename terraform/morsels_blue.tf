@@ -2,7 +2,7 @@ resource "cloudflare_dns_record" "morsels_blue_apex_a_solaceon" {
   zone_id  = local.zones.morsels_blue
   name     = "morsels.blue"
   type     = "A"
-  content  = local.hosts.solaceon
+  content  = local.hosts.snowpoint
   proxied  = true
   ttl      = 1
   tags     = []

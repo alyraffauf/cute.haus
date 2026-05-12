@@ -49,6 +49,7 @@
         clusterInit = true;
         tlsSans = ["celestic" "eterna"];
         zone = "cloud-hetzner";
+        ingress = true;
       };
 
       vps.enable = true;
