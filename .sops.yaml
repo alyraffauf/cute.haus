@@ -11,7 +11,7 @@ keys:
   - &user_aly_petalburg age162sx8kppp90mjxw88eqs78hgnpkddf8k9kgtksmmexzvcdxknpkspmkgaf
   - &user_aly_rustboro age12qh3vyt3srzelqaw9v62g3jzj07sq7aj7h2vc5yevpu0yuvwhp6sd99lsa
   - &user_aly_slateport age1mpcyeqjcl8j0dd4sj6f0vufs2vpus3xn4dvxe3cr8g8rgcm0nfxq03ds4y
-  - &user_aly_sootopolis age1ntdvfac379q6dtwwmrspcktvymhsd72r47370gqqu2nr9xx2zgjsxdgepd
+  - &user_aly_sootopolis age15td0jk5e2qeq2pexvxguhuuaxuaa7nhql7mhx9jr79caska6t4pqdv5spl
   # === host keys (root@<host>) ===
   - &host_celestic age15mhrzghrmprq387xqsln6996yx3ja2e2zpamh9mtuu9zqmxahunqg9qugw
   - &host_eterna age1su5lre6favcv6gdc50yh7ecv33qgfp0tm6klunpuasa3q79kmqtsykaq0d
