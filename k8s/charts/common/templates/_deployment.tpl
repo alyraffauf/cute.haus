@@ -70,8 +70,15 @@ spec:
           {{- end }}
           {{- with .Values.envFromSecret }}
           envFrom:
+            {{- if kindIs "string" . }}
             - secretRef:
                 name: {{ . }}
+            {{- else }}
+            {{- range . }}
+            - secretRef:
+                name: {{ . }}
+            {{- end }}
+            {{- end }}
           {{- end }}
           {{- with .Values.resources }}
           resources:

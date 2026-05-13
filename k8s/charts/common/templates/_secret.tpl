@@ -1,9 +1,15 @@
 {{- define "common.secret" -}}
 {{- if .Values.envFromSecret -}}
+{{/* envFromSecret may be a string (single secret) or a list. The chart
+     manages the first/only entry; subsequent list entries are external. */}}
+{{- $name := .Values.envFromSecret -}}
+{{- if not (kindIs "string" .Values.envFromSecret) -}}
+{{- $name = index .Values.envFromSecret 0 -}}
+{{- end }}
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ .Values.envFromSecret }}
+  name: {{ $name }}
   labels:
     app: {{ .Chart.Name }}
 type: Opaque

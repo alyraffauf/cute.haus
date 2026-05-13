@@ -57,9 +57,15 @@ env:
   MAIL_SMARTHOST_PORT: "2465"
   MAIL_SMARTHOST_USERNAME: resend
   MAIL_SMARTHOST_TLS: implicit
+  # SSO client creds in tranquil-sso-env Secret, written by ansible.
+  SSO_OIDC_ENABLED: "true"
+  SSO_OIDC_ISSUER: https://id.cute.haus
+  SSO_OIDC_DISPLAY_NAME: cute.haus
 
 secret: {}
-envFromSecret: tranquil-pds-env
+envFromSecret:
+  - tranquil-pds-env
+  - tranquil-sso-env
 
 failover:
   fastTolerationSeconds: 60

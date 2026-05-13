@@ -9,3 +9,13 @@ oidc_clients:
     isPublic: false
     pkceEnabled: true
     integration: forgejo
+
+  - key: tranquil
+    name: Tranquil
+    launchURL: https://pds.cute.haus/
+    callbackURLs:
+      - https://pds.cute.haus/oauth/sso/callback
+    logoutCallbackURLs: []
+    isPublic: false
+    pkceEnabled: true
+    integration: tranquil
