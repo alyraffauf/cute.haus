@@ -18,6 +18,7 @@ _: {
           nh
           sops
           ssh-to-age
+          terraform
         ])
         # ++ lib.attrValues config.treefmt.build.programs
         ++ [
