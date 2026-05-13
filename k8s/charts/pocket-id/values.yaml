@@ -4,7 +4,7 @@ terminationGracePeriodSeconds: 15
 
 image:
   repository: ghcr.io/pocket-id/pocket-id
-  tag: v1@sha256:f8cde808e8e840acda25683fc2168e0206e3f3fb1a48cca89d211aafd87eaeef
+  tag: v2@sha256:45bdeaf3fcd6d07cf8721e98785d93324bb8e65b586498874c05a3d489c8094e
   pullPolicy: IfNotPresent
 
 # pocket-id's container entrypoint runs as uid/gid 1000.
