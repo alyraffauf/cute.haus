@@ -30,18 +30,11 @@ service:
       port: 80
       targetPort: 1411
 
-# /app/data holds the JWT signing keys + uploaded user profile pictures.
-# Postgres has the user table + passkey credentials.
-persistence:
-  enabled: true
-  storageClassName: longhorn-pg
-  size: 1Gi
-  mountPath: /app/data
-
 env:
   APP_URL: https://id.cute.haus
   TRUST_PROXY: "true"
   DB_PROVIDER: postgres
+  FILE_BACKEND: database
 
 secret: {}
 envFromSecret: pocket-id-env
