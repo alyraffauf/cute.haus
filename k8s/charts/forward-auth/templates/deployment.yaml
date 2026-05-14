@@ -46,9 +46,11 @@ spec:
               value: "auth-{{ $key }}.cute.haus"
             - name: COOKIE_DOMAIN
               value: {{ $.Values.cookieDomain | quote }}
-            # Each TFA pod needs its own cookie name, otherwise they overwrite each other's cookies on cute.haus.
+            # Each TFA pod needs its own cookie names, otherwise they overwrite each other's cookies on cute.haus.
             - name: COOKIE_NAME
               value: "_fa_{{ $key }}"
+            - name: CSRF_COOKIE_NAME
+              value: "_fa_csrf_{{ $key }}"
             - name: URL_PATH
               value: /_oauth
             - name: LIFETIME
