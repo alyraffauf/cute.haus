@@ -40,7 +40,7 @@ failover:
 rclone:
   image:
     repository: rclone/rclone
-    tag: "1.71"
+    tag: 1.71@sha256:3103526c506266a9ecdf064efe99bf3677d92ef6407af124d8c56b4f49cbaa51
     pullPolicy: IfNotPresent
   remote: b2:aly-audiobooks
   mountPath: /audiobooks

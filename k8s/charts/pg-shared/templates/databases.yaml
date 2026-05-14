@@ -1,5 +1,5 @@
-{{- range $name, $cfg := .Values.roles }}
-{{- $db := $cfg.database | default $name }}
+{{- range $name, $role := .Values.roles }}
+{{- $db := $role.database | default $name }}
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: Database

@@ -1,8 +1,5 @@
-# Keep helm release history small. Each revision is stored as a Secret
-# containing gzip+base64 of all rendered manifests; CRD-bundling charts
-# (cert-manager, traefik, cnpg) make each revision ~1MB, so the default 10
-# means ~10MB per release and helm's pre-upgrade LIST query stalls the
-# apiserver's HTTP/2 stream over the tailnet.
+# Low history; CRD-heavy charts (cert-manager, traefik, cnpg) push each
+# revision Secret to ~1MB, and the default of 10 stalls the apiserver.
 helmDefaults:
   historyMax: 3
 

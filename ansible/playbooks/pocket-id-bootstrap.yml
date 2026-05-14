@@ -47,7 +47,7 @@
       loop: "{{ oidc_clients }}"
       loop_control:
         loop_var: client_spec
-        label: "{{ client_spec.key }}"
+        label: "{{ client_spec.slug }}"
 
     - name: Wire each client into its target app
       ansible.builtin.include_tasks: "tasks/integrations/{{ client_spec.integration }}.yml"

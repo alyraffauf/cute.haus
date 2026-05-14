@@ -21,12 +21,14 @@ _: {
           (lib.hiPrio uutils-coreutils-noprefix)
           age
           ansibleWithK8s
+          bun
           git
           helmfile
           just
           kubectl
           kubernetes-helm
           nh
+          skopeo
           sops
           ssh-to-age
           terraform

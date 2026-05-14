@@ -28,57 +28,50 @@
     command: su -s /bin/sh git -c "forgejo admin auth list"
   register: forgejo_auth_list
 
-- name: "[forgejo] Find cute.haus source ID (if any)"
+# Output is a whitespace-aligned table: `<id> <name> <type> <enabled>`.
+# Find the row whose name is cute.haus and take its first column (the ID).
+- name: "[forgejo] Extract cute.haus auth source ID (empty if absent)"
   ansible.builtin.set_fact:
     forgejo_source_id: >-
       {{
-        forgejo_auth_list.stdout_lines[1:]
-          | map('regex_search', '^(\d+)\s+cute\.haus\s+', '\1')
-          | select('truthy')
-          | flatten
-          | first
-          | default(none)
+        (forgejo_auth_list.stdout_lines
+          | select('search', '\scute\.haus\s')
+          | first | default('')
+        ).split() | first | default('')
       }}
 
 # Explicit empty strings clear fields that update-oauth's cli.IsSet semantics
 # would otherwise leave untouched on re-runs.
-- name: "[forgejo] Add auth source"
-  when: forgejo_source_id is none
-  kubernetes.core.k8s_exec:
-    namespace: "{{ k8s_namespace }}"
-    pod: "{{ forgejo_pod }}"
-    command: >-
-      su -s /bin/sh git -c "forgejo admin auth add-oauth
+- name: "[forgejo] Build shared OAuth flags"
+  ansible.builtin.set_fact:
+    forgejo_oauth_flags: >-
       --name 'cute.haus'
       --provider 'openidConnect'
-      --key '{{ client_credentials_map[client_spec.key].client_id }}'
-      --secret '{{ client_credentials_map[client_spec.key].client_secret }}'
+      --key '{{ client_credentials_by_slug[client_spec.slug].client_id }}'
+      --secret '{{ client_credentials_by_slug[client_spec.slug].client_secret }}'
       --auto-discover-url '{{ pocket_id_url }}/.well-known/openid-configuration'
       --scopes 'openid profile email'
       --group-claim-name ''
       --admin-group ''
       --required-claim-name ''
       --required-claim-value ''
-      --restricted-group ''"
+      --restricted-group ''
+  no_log: true
+
+- name: "[forgejo] Add auth source"
+  when: forgejo_source_id == ''
+  kubernetes.core.k8s_exec:
+    namespace: "{{ k8s_namespace }}"
+    pod: "{{ forgejo_pod }}"
+    command: >-
+      su -s /bin/sh git -c "forgejo admin auth add-oauth {{ forgejo_oauth_flags }}"
   no_log: true
 
 - name: "[forgejo] Update auth source"
-  when: forgejo_source_id is not none
+  when: forgejo_source_id != ''
   kubernetes.core.k8s_exec:
     namespace: "{{ k8s_namespace }}"
     pod: "{{ forgejo_pod }}"
     command: >-
-      su -s /bin/sh git -c "forgejo admin auth update-oauth
-      --id {{ forgejo_source_id }}
-      --name 'cute.haus'
-      --provider 'openidConnect'
-      --key '{{ client_credentials_map[client_spec.key].client_id }}'
-      --secret '{{ client_credentials_map[client_spec.key].client_secret }}'
-      --auto-discover-url '{{ pocket_id_url }}/.well-known/openid-configuration'
-      --scopes 'openid profile email'
-      --group-claim-name ''
-      --admin-group ''
-      --required-claim-name ''
-      --required-claim-value ''
-      --restricted-group ''"
+      su -s /bin/sh git -c "forgejo admin auth update-oauth --id {{ forgejo_source_id }} {{ forgejo_oauth_flags }}"
   no_log: true

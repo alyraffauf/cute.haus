@@ -4,9 +4,7 @@ terminationGracePeriodSeconds: 15
 
 image:
   repository: codeberg.org/forgejo/forgejo
-  tag: "15"
-  # Stops a registry hiccup at pod-restart time from wedging the deployment
-  # (codeberg has had 502s). Tradeoff: bumping tag is the only way to update.
+  tag: 15@sha256:db04c7114b656f896e206ba3873fe8d3a7adf2daa44907037f0274f4ba653fb9
   pullPolicy: IfNotPresent
 
 resources:

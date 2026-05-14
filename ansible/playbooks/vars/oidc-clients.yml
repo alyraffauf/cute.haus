@@ -1,5 +1,5 @@
 oidc_clients:
-  - key: forgejo
+  - slug: forgejo
     name: Forgejo
     logoUrl: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/forgejo.png
     launchURL: https://git.aly.codes/
@@ -10,7 +10,7 @@ oidc_clients:
     pkceEnabled: true
     integration: forgejo
 
-  - key: tranquil
+  - slug: tranquil
     name: Tranquil
     launchURL: https://pds.cute.haus/
     callbackURLs:
@@ -20,8 +20,8 @@ oidc_clients:
     pkceEnabled: true
     integration: tranquil
 
-  # The key here has to match the forward-auth-<app> Deployment name.
-  - key: forward-auth-navidrome
+  # Slug must match the forward-auth-<app> Deployment name.
+  - slug: forward-auth-navidrome
     name: Navidrome
     logoUrl: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/navidrome.png
     launchURL: https://navidrome.cute.haus/
@@ -35,7 +35,7 @@ oidc_clients:
   # immich runs on jubilife (NixOS), not k8s — no integration task. Read
   # creds from the oidc-client-immich K8s Secret and feed them into the
   # immich NixOS module via sops.
-  - key: immich
+  - slug: immich
     name: Immich
     logoUrl: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/immich.png
     launchURL: https://immich.cute.haus/
@@ -46,7 +46,7 @@ oidc_clients:
     isPublic: false
     pkceEnabled: true
 
-  - key: audiobookshelf
+  - slug: audiobookshelf
     name: Audiobookshelf
     logoUrl: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/audiobookshelf.png
     launchURL: https://audiobookshelf.cute.haus/
@@ -57,7 +57,7 @@ oidc_clients:
     isPublic: false
     pkceEnabled: true
 
-  - key: paperless
+  - slug: paperless
     name: Paperless
     logoUrl: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/paperless-ngx.png
     launchURL: https://paperless.cute.haus/

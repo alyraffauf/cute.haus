@@ -4,8 +4,8 @@ terminationGracePeriodSeconds: 10
 
 image:
   repository: louislam/uptime-kuma
-  tag: "2"
-  pullPolicy: Always
+  tag: 2@sha256:9aeb4e51d038047f414309c77a1af553281ca535723cb88907d907269d0a908e
+  pullPolicy: IfNotPresent
 
 resources:
   requests:

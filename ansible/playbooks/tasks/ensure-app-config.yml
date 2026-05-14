@@ -18,7 +18,7 @@
         )
       }}
 
-- name: PUT merged configuration
+- name: Apply application configuration
   ansible.builtin.uri:
     url: "{{ pocket_id_url }}/api/application-configuration"
     method: PUT
