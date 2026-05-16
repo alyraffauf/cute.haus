@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with: { fetch-depth: 1 }
-      - uses: azure/setup-helm@v4
+      - uses: azure/setup-helm@v5
       - name: helm template each local chart
         run: |
           set -e
