@@ -71,12 +71,15 @@ probes:
     httpGet: { path: /api/, port: http }
     periodSeconds: 5
     failureThreshold: 60
+    timeoutSeconds: 5
   liveness:
     httpGet: { path: /api/, port: http }
     periodSeconds: 30
+    timeoutSeconds: 5
   readiness:
     httpGet: { path: /api/, port: http }
     periodSeconds: 10
+    timeoutSeconds: 5
 
 ingress:
   enabled: true
