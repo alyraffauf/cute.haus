@@ -36,14 +36,19 @@ failover:
   fastTolerationSeconds: 60
 
 probes:
+  startup:
+    httpGet: { path: /, port: http }
+    periodSeconds: 5
+    failureThreshold: 24
+    timeoutSeconds: 3
   liveness:
     httpGet: { path: /, port: http }
-    initialDelaySeconds: 30
-    periodSeconds: 15
+    periodSeconds: 30
+    timeoutSeconds: 3
   readiness:
     httpGet: { path: /, port: http }
-    initialDelaySeconds: 10
-    periodSeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 3
 
 ingress:
   enabled: true
