@@ -12,8 +12,7 @@
       delegate_to: localhost
       changed_when: true
 
-    # --disable-eviction skips PDB checks (Longhorn instance-manager and
-    # single-replica CNPG pods otherwise block eviction indefinitely).
+    # --disable-eviction bypasses PDBs (Longhorn instance-manager blocks otherwise).
     - name: Drain node
       ansible.builtin.command: >-
         kubectl drain {{ inventory_hostname }}

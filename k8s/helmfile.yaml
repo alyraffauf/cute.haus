@@ -82,14 +82,15 @@ releases:
     values:
       - defaultSettings:
           defaultDataPath: /var/lib/longhorn
-          # 2 replicas per volume, hard zone anti-affinity → 1 of {home,
-          # cloud-hetzner, cloud-netcup} per replica.
-          defaultReplicaCount: 2
+          # One replica per zone (home, cloud-hetzner, cloud-netcup); soft
+          # zone affinity lets a third land in cloud during a home outage.
+          defaultReplicaCount: 3
           replicaSoftAntiAffinity: false
-          replicaZoneSoftAntiAffinity: false
-          # Gradually move replicas around to satisfy zone constraints +
-          # equalize disk pressure when nodes join/leave.
+          replicaZoneSoftAntiAffinity: true
           replicaAutoBalance: best-effort
+          # Serialize rebuilds — concurrent rebuilds saturate disk/network
+          # and make kubectl unresponsive on cloud nodes.
+          concurrentReplicaRebuildPerNodeLimit: 1
           # When a node goes NotReady, allow Longhorn to force-delete the
           # stuck pod so the volume can detach + reattach to the rescheduled
           # pod on a healthy node. Cuts failover from ~5min to ~2min.
