@@ -1,7 +1,7 @@
-# This file is maintained automatically by "terraform init".
+# This file is maintained automatically by "tofu init".
 # Manual edits may be lost in future updates.
 
-provider "registry.terraform.io/backblaze/b2" {
+provider "registry.opentofu.org/backblaze/b2" {
   version     = "0.12.1"
   constraints = "~> 0.12"
   hashes = [
@@ -14,7 +14,7 @@ provider "registry.terraform.io/backblaze/b2" {
   ]
 }
 
-provider "registry.terraform.io/cloudflare/cloudflare" {
+provider "registry.opentofu.org/cloudflare/cloudflare" {
   version     = "5.19.1"
   constraints = "~> 5.0"
   hashes = [
@@ -31,23 +31,11 @@ provider "registry.terraform.io/cloudflare/cloudflare" {
   ]
 }
 
-provider "registry.terraform.io/hetznercloud/hcloud" {
+provider "registry.opentofu.org/hetznercloud/hcloud" {
   version     = "1.63.0"
   constraints = "~> 1.48"
   hashes = [
-    "h1:/BDH9OdzcieKCmKvrrzoH7zst/STuBo9QY1eYOHf1qk=",
     "h1:1Yxj4ZifWjSYntT/IK08jX71yeO6cwLBJ2r1YdrOP+0=",
-    "h1:1rfGuHceQqFhYX0pDpMdy9T7x5AXrS4CQSzHWK6sN4w=",
-    "h1:7W005UxN3VPZob4+kcdbnucDgpNdhHb9T33uWU99ft4=",
-    "h1:DH2SyItmRRQU2szeJYeGXVobvv48YWzR9ds0negRmrA=",
-    "h1:FmkJ05xMeApac1/nz5GOAB/s729eMEkjAyThtD4zJxY=",
-    "h1:J8zv0yOD2j0hPLycqRUAUl8SL/0SV6qGKZ/+d7bNeI4=",
-    "h1:QmDRYrjI9j0UP3+eDW97NkzKgdeCEvORVLoGBIwN9a4=",
-    "h1:cnsKDc8YWYCmfubt1YLT91Liu78FfN9n7HKFBbAXRHw=",
-    "h1:ff7zgLGIrGIk+AknBtqQyLlyxVX2gHwDl54F/whP+ZQ=",
-    "h1:jhDhX2StwluRLqS/Uotls04RcGLG4vKS2IrxN+9q3Mc=",
-    "h1:jlE0a47UOQ1v3cFZ56rcD3TOSz9qD/Ik2bsInX3Y9lg=",
-    "h1:qtLpf6u8E1Kp8Z833MBmzm2NBRr1mR7mzOu6Cq7/gH0=",
     "zh:0510f27825d28b065615c6e715a4aae38a50633195a8a88d4507476bb6484c33",
     "zh:0fba95c8fc048155c2211f15f850b75fe33cac96201bcaaa28467b32f6ac568e",
     "zh:11d917ac92ca30fe82d362465a1685b3a9f9a3abcd486b0114ff680746d0af08",

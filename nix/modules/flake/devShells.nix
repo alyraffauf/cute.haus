@@ -31,7 +31,7 @@ _: {
           skopeo
           sops
           ssh-to-age
-          terraform
+          opentofu
           vals
         ])
         # ++ lib.attrValues config.treefmt.build.programs
