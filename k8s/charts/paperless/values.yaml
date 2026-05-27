@@ -15,7 +15,7 @@ podSecurityContext:
 
 resources:
   requests:
-    cpu: 100m
+    cpu: 500m
     memory: 512Mi
   limits:
     cpu: "2"
@@ -35,7 +35,7 @@ service:
 env:
   PAPERLESS_URL: https://paperless.cute.haus
   PAPERLESS_TIME_ZONE: America/New_York
-  PAPERLESS_WEBSERVER_WORKERS: "4"
+  PAPERLESS_WEBSERVER_WORKERS: "2"
   PAPERLESS_OCR_LANGUAGE: eng
   PAPERLESS_REDIS: redis://localhost:6379
   PAPERLESS_DBHOST: pg-shared-rw.cnpg-system.svc
