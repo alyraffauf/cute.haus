@@ -18,7 +18,7 @@ spec:
       secretName: {{ .tlsSecret }}
     {{- end }}
   rules:
-    {{- $svcPort := (index $.Values.service.ports 0).port }}
+    {{- $svcPort := .Values.ingress.servicePort | default (index $.Values.service.ports 0).port }}
     {{- range .Values.ingress.routes }}
     {{- $hosts := prepend (default (list) .aliases) .host }}
     {{- range $hosts }}

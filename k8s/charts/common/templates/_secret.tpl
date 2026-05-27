@@ -1,11 +1,15 @@
 {{- define "common.secret" -}}
-{{- if .Values.envFromSecret -}}
-{{/* The chart manages the first entry in envFromSecret; later entries
-     are written by ansible or other out-of-band processes. */}}
+{{- $name := "" -}}
+{{- if .Values.managedSecret -}}
+  {{- $name = .Values.managedSecret.name -}}
+{{- else if .Values.envFromSecret -}}
+  {{- $name = index .Values.envFromSecret 0 -}}
+{{- end -}}
+{{- if $name -}}
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ index .Values.envFromSecret 0 }}
+  name: {{ $name }}
   labels:
     app: {{ .Chart.Name }}
 type: Opaque
