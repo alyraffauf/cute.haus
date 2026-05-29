@@ -28,7 +28,7 @@ service:
 
 persistence:
   enabled: true
-  storageClassName: longhorn-pg
+  storageClassName: longhorn
   size: 10Gi
   mountPath: /pds
 

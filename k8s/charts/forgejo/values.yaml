@@ -37,11 +37,8 @@ service:
       targetPort: ssh
 
 persistence:
-  # B2 (rclone) is the offsite safety net for repos / LFS / attachments,
-  # so this PVC just needs to survive single-node loss. Uses pg-shared's
-  # StorageClass to keep all postgres-adjacent PVCs on one class.
   enabled: true
-  storageClassName: longhorn-pg
+  storageClassName: longhorn
   size: 10Gi
   mountPath: /var/lib/forgejo
 
