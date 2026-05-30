@@ -9,7 +9,7 @@ keys:
   - &user_aly_jubilife age1e5a0aaueyk34klry2qk094zrwfsvga0uft93mwweye30xhqhvfzs3jgqku
   - &user_aly_pacifidlog age1j9jju3whwj72udhge7v4c77gk6v6w2cq8zjngzyppwtptfsz499qyywu9a
   - &user_aly_petalburg age162sx8kppp90mjxw88eqs78hgnpkddf8k9kgtksmmexzvcdxknpkspmkgaf
-  - &user_aly_rustboro age12qh3vyt3srzelqaw9v62g3jzj07sq7aj7h2vc5yevpu0yuvwhp6sd99lsa
+  - &user_aly_rustboro age1n90usl6sl9tvl64lrxt66gmxyw3u8lkqmv5zxga3pmqmsyjr2c6sadnttd
   - &user_aly_slateport age1mpcyeqjcl8j0dd4sj6f0vufs2vpus3xn4dvxe3cr8g8rgcm0nfxq03ds4y
   - &user_aly_snowpoint age1zj2aq2a2v3ngcer7s3jz6pufhh8ula8pw56etmy28dy25wrkk3vq59hu2s
   - &user_aly_sootopolis age15td0jk5e2qeq2pexvxguhuuaxuaa7nhql7mhx9jr79caska6t4pqdv5spl
@@ -21,7 +21,7 @@ keys:
   - &host_jubilife age157en2pt286a22pxzyugt84ak6rn2at89tpma88juqfgj84lme5csq4999g
   - &host_pacifidlog age1axn36h9356ena7rq6y2xa4rcm250w9h0m9pz6x0677gla0v4f4dsj92yfm
   - &host_petalburg age1kgp3x48wn0dmzwqp0vdpfsdw42rej0ypkj0qavs7c2t2tgdud5zqcmhl40
-  - &host_rustboro age1tmzw0gsq0fm27x3l7zvad5fxgj6xdykgz5whhh8axtphmlpl3ccqj2fhf6
+  - &host_rustboro age1sukfru07msq8fm5ddgym23yal9lfm99090p999p09mxgrrwh9aqs6zp4fy
   - &host_slateport age1ephzrpgftmvq4cul9766q2r3mss38xu6un74ryfmw0729afysghsh0a3qg
   - &host_snowpoint age1stsuakfyj3gkee4sm328ky2crmymyuzwjjmxrpvnm754sdt2zvnshf68jx
   - &host_solaceon age1n66v74s70rma853sdhf7q9tn2wj85v25hh6qvyvxrf42hca284esqr26wa
