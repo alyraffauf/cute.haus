@@ -4,7 +4,7 @@ terminationGracePeriodSeconds: 15
 
 image:
   repository: atcr.io/tranquil.farm/tranquil-pds
-  tag: latest@sha256:a634ee2a9418514cb6fc5cc1bc8e86606758ea7fbd40fcdda0a1c4ed9fa87f79
+  tag: latest@sha256:42d099f94945933bc68971e580a2300bd8beb35d21a5401afba764fb8b92362d
   pullPolicy: IfNotPresent
 
 imagePullSecrets:
