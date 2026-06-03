@@ -10,13 +10,13 @@ _: {
       });
 
       qbittorrent-nox = prev.qbittorrent-nox.overrideAttrs (_old: rec {
-        version = "5.1.4";
+        version = "5.2.1";
 
         src = prev.fetchFromGitHub {
           owner = "qbittorrent";
           repo = "qBittorrent";
           rev = "release-${version}";
-          hash = "sha256-9RfKir/e+8Kvln20F+paXqtWzC3KVef2kNGyk1YpSv4=";
+          hash = "sha256-xC0XCVbshs4rtfLoJKKp0+IeSN2SRg7J5G504TcXFPI=";
         };
       });
     };
