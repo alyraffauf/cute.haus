@@ -13,7 +13,7 @@ import { $ } from "bun";
 const CADDY_FILE = "nix/modules/nixos/services/caddy/default.nix";
 const GITHUB_REPO = "tailscale/caddy-tailscale";
 const NIX_BUILD_TARGET =
-  ".#nixosConfigurations.celestic.config.services.caddy.package";
+  ".#nixosConfigurations.jubilife.config.services.caddy.package";
 
 type GithubCommit = {
   sha: string;

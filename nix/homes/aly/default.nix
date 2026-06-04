@@ -19,6 +19,7 @@
         sopsFile = ../../../secrets/aly.yaml;
         key = "aws";
       };
+
       rclone-b2 = {
         sopsFile = ../../../secrets/b2.yaml;
         key = "rclone_config";
@@ -87,7 +88,7 @@
         };
       in
         rootMe "snowpoint"
-        // rootMe "celestic"
+        // rootMe "pastoria"
         // rootMe "solaceon"
         // {
           "*" = {

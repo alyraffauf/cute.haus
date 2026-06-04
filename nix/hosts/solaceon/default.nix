@@ -1,5 +1,6 @@
 {
   modulesPath,
+  pkgs,
   self,
   ...
 }: {
@@ -27,8 +28,19 @@
   };
 
   networking = {
-    firewall.allowedTCPPorts = [8282 8383];
+    firewall.allowedTCPPorts = [23 8282 8383];
     hostName = "solaceon";
+  };
+
+  systemd.services.atbbs-telnet = {
+    description = "TCP proxy for atbbs telnet";
+    wantedBy = ["multi-user.target"];
+    after = ["network.target"];
+
+    serviceConfig = {
+      ExecStart = "${pkgs.socat}/bin/socat TCP-LISTEN:23,fork,reuseaddr TCP:eterna:2323";
+      Restart = "always";
+    };
   };
 
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -74,7 +86,6 @@
     services = {
       prometheusNode.enable = true;
       alloy.enable = true;
-
       tailscale.enable = true;
     };
   };

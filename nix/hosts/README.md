@@ -10,9 +10,9 @@ The `hosts/` directory is organized as follows:
 
 ```plaintext
 hosts/
-├── celestic/      # Hetzner VPS
 ├── eterna/        # Beelink Mini S12 Pro
 ├── jubilife/      # Custom Mini-ITX NAS
+├── pastoria/      # OVHcloud VPS
 ├── snowpoint/     # Netcup VPS
 ├── solaceon/      # Hetzner VPS
 └── twinleaf/      # Minimal installation ISO

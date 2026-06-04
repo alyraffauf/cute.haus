@@ -180,8 +180,8 @@ _: {
               labels.instance = "snowpoint";
             }
             {
-              targets = ["celestic:3021"];
-              labels.instance = "celestic";
+              targets = ["pastoria:3021"];
+              labels.instance = "pastoria";
             }
             {
               targets = ["jubilife:3021"];

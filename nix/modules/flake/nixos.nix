@@ -21,7 +21,6 @@
       modules = self.nixosModules;
     in
       inputs.nixpkgs.lib.genAttrs [
-        "celestic"
         "eterna"
         "jubilife"
         "pastoria"

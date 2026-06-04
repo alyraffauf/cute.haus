@@ -1,8 +1,5 @@
 {self, ...}: {
   flake.nynxDeployments = {
-    celestic.output = self.nixosConfigurations.celestic.config.system.build.toplevel;
-    celestic.user = "root";
-
     eterna.output = self.nixosConfigurations.eterna.config.system.build.toplevel;
     eterna.user = "root";
 

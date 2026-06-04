@@ -1,7 +1,6 @@
 locals {
   hosts = {
     solaceon  = hcloud_server.solaceon.ipv4_address
-    celestic  = hcloud_server.celestic.ipv4_address
     snowpoint = "152.53.90.225"
   }
 

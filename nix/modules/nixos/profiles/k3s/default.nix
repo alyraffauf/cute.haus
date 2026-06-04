@@ -37,7 +37,7 @@ in {
     tlsSans = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [];
-      example = ["solaceon" "celestic" "eterna"];
+      example = ["solaceon" "eterna" "pastoria"];
       description = "Hostnames to include as TLS SANs on this node's certs.";
     };
 
