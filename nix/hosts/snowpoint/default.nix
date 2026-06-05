@@ -145,7 +145,7 @@
       k3s = {
         enable = true;
         role = "agent";
-        serverAddr = "https://solaceon:6443";
+        serverAddr = "https://pastoria:6443";
         zone = "cloud-netcup";
         ingress = true;
       };
