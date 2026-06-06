@@ -16,10 +16,10 @@ podSecurityContext:
 resources:
   requests:
     cpu: 500m
-    memory: 512Mi
+    memory: 1Gi
   limits:
     cpu: "2"
-    memory: 2Gi
+    memory: 4Gi
 
 ports:
   - name: http
@@ -54,6 +54,7 @@ env:
   PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
   PAPERLESS_SOCIAL_AUTO_SIGNUP: "True"
   PAPERLESS_ACCOUNT_DEFAULT_HTTP_PROTOCOL: https
+  PAPERLESS_ACCOUNT_DEFAULT_GROUP: users
 
 secret: {}
 envFromSecret:
