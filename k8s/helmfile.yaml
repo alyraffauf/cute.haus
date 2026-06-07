@@ -32,8 +32,16 @@ releases:
         ports:
           web:
             hostPort: 80
+            transport:
+              respondingTimeouts:
+                readTimeout: 600s
+                writeTimeout: 0s
           websecure:
             hostPort: 443
+            transport:
+              respondingTimeouts:
+                readTimeout: 600s
+                writeTimeout: 0s
           ssh:
             port: 2222
             hostPort: 2222
