@@ -95,6 +95,8 @@ spec:
               value: "true"
             - name: PAPERLESS_TASK_WORKERS
               value: "2"
+            - name: PAPERLESS_OCR_PAGES
+              value: "2"
             - name: PAPERLESS_WEBSERVER_WORKERS
               value: "2"
           envFrom:
