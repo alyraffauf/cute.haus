@@ -1,12 +1,4 @@
-{
-  config,
-  self,
-  ...
-}: {
-  imports = [
-    self.nixosModules.locale-en-us
-  ];
-
+{config, ...}: {
   fileSystems = let
     b2Options = [
       "allow_other"
@@ -79,7 +71,6 @@
   powerManagement.powertop.enable = true;
 
   system.stateVersion = "25.11";
-  time.timeZone = "America/New_York";
   myHardware.beelink.mini.s12pro.enable = true;
 
   myNixOS = {

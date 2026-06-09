@@ -5,7 +5,6 @@
 }: {
   imports = [
     self.diskoConfigurations.lvm-ext4
-    self.nixosModules.locale-en-us
   ];
 
   boot = {
@@ -120,8 +119,6 @@
     Restart = "on-failure";
     RestartSec = "30s";
   };
-
-  time.timeZone = "America/New_York";
   myDisko.installDrive = "/dev/vda";
 
   myNixOS = {

@@ -9,7 +9,6 @@
 in {
   imports = [
     self.diskoConfigurations.luks-btrfs-subvolumes
-    self.nixosModules.locale-en-us
   ];
 
   boot = {
@@ -75,7 +74,6 @@ in {
     ];
 
   system.stateVersion = "25.11";
-  time.timeZone = "America/New_York";
   myDisko.installDrive = "/dev/disk/by-id/nvme-PNY_CS2130_1TB_SSD_PNY211821050701050CC";
 
   myHardware = {

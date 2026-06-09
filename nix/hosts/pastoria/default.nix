@@ -6,7 +6,6 @@
   imports = [
     "${modulesPath}/profiles/qemu-guest.nix"
     self.diskoConfigurations.lvm-ext4
-    self.nixosModules.locale-en-us
   ];
 
   boot = {
@@ -28,7 +27,6 @@
   networking.hostName = "pastoria";
   nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "26.05";
-  time.timeZone = "America/New_York";
   myDisko.installDrive = "/dev/sda";
 
   myNixOS = {

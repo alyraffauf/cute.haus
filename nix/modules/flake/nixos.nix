@@ -12,7 +12,6 @@
 
     nixosModules = {
       hardware = inputs.import-tree ../hardware;
-      locale-en-us = ../locale/en-us;
       nixos = inputs.import-tree ../nixos;
       users = inputs.import-tree ../users;
     };
@@ -32,6 +31,7 @@
           inputs.nixpkgs.lib.nixosSystem {
             modules = [
               (inputs.import-tree ../../hosts/${host})
+              modules.locale-en-us
               inputs.disko.nixosModules.disko
               inputs.lanzaboote.nixosModules.lanzaboote
               inputs.sops-nix.nixosModules.sops
