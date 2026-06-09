@@ -4,12 +4,6 @@
   ...
 }: {
   flake = {
-    diskoConfigurations = {
-      btrfs-subvolumes = ../../disko/btrfs-subvolumes;
-      luks-btrfs-subvolumes = ../../disko/luks-btrfs-subvolumes;
-      lvm-ext4 = ../../disko/lvm-ext4;
-    };
-
     nixosModules = {
       hardware = inputs.import-tree ../../hardware;
       nixos = inputs.import-tree ../../nixos;
