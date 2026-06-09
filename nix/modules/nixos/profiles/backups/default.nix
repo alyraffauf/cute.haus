@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  self,
   ...
 }: let
   backupDestination = "rclone:b2:aly-backups/${config.networking.hostName}";
@@ -35,6 +36,18 @@ in {
   };
 
   config = lib.mkIf config.myNixOS.profiles.backups.enable {
+    sops.secrets = {
+      restic-passwd = {
+        sopsFile = "${self}/secrets/restic.yaml";
+        key = "PASSWORD";
+      };
+
+      rclone-b2 = {
+        sopsFile = "${self}/secrets/b2.yaml";
+        key = "rclone_config";
+      };
+    };
+
     services.restic.backups = {
       audiobookshelf = lib.mkIf config.services.audiobookshelf.enable (
         restic

@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  self,
   ...
 }: let
   cfg = config.myNixOS.profiles.k3s;
@@ -62,6 +63,11 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    sops.secrets.k3s = {
+      sopsFile = "${self}/secrets/k3s.yaml";
+      key = "TOKEN";
+    };
+
     # systemd-oomd fights kubelet's eviction manager
     systemd.oomd.enable = lib.mkForce false;
 

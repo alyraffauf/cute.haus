@@ -1,7 +1,6 @@
 _: {
   systemd.tmpfiles.rules = [
     "d /mnt/Data/dizquetv 0755 root root"
-    "d /mnt/Data/tubesync/config/ 0755 root root"
     "d /mnt/Data/arm/home 0755 1000 1000 - -"
     "d /mnt/Data/arm/config 0755 1000 1000 - -"
     "d /mnt/Data/arm 0755 1000 1000 - -"
@@ -40,18 +39,5 @@ _: {
         "/etc/localtime:/etc/localtime:ro"
       ];
     };
-
-    # tubesync = {
-    #   environment.TUBESYNC_WORKERS = "8";
-    #   extraOptions = ["--pull=always"];
-    #   image = "ghcr.io/meeb/tubesync:latest";
-    #   ports = ["0.0.0.0:14848:4848"];
-
-    #   volumes = [
-    #     "/mnt/Data/tubesync/config/:/config"
-    #     "/mnt/Media/YouTube/:/downloads"
-    #     "/etc/localtime:/etc/localtime:ro"
-    #   ];
-    # };
   };
 }

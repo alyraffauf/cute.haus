@@ -1,7 +1,50 @@
-{config, ...}: let
+{
+  config,
+  self,
+  ...
+}: let
   dataDirectory = "/mnt/Data";
   tnet = "narwhal-snapper.ts.net";
 in {
+  sops = {
+    templates."immich-config.json" = {
+      owner = "immich";
+      content = ''
+        {
+          "oauth": {
+            "enabled": true,
+            "issuerUrl": "https://id.cute.haus",
+            "clientId": "${config.sops.placeholder.immichOauthClientId}",
+            "clientSecret": "${config.sops.placeholder.immichOauthClientSecret}",
+            "scope": "openid email profile",
+            "buttonText": "Sign in with cute.haus",
+            "autoRegister": true,
+            "autoLaunch": false,
+            "mobileOverrideEnabled": false,
+            "mobileRedirectUri": ""
+          }
+        }
+      '';
+    };
+
+    secrets = {
+      immichOauthClientId = {
+        sopsFile = "${self}/secrets/immich.yaml";
+        key = "oauth/client_id";
+        owner = "immich";
+      };
+      immichOauthClientSecret = {
+        sopsFile = "${self}/secrets/immich.yaml";
+        key = "oauth/client_secret";
+        owner = "immich";
+      };
+      photoprismAdminPass = {
+        sopsFile = "${self}/secrets/photoprism.yaml";
+        key = "ADMIN_PASSWORD";
+      };
+    };
+  };
+
   networking.firewall.allowedTCPPorts = [6881];
 
   services = {

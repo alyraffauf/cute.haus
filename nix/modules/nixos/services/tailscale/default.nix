@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  self,
   ...
 }: {
   options.myNixOS.services.tailscale = {
@@ -22,6 +23,11 @@
   };
 
   config = lib.mkIf config.myNixOS.services.tailscale.enable {
+    sops.secrets.tailscaleAuthKey = {
+      sopsFile = "${self}/secrets/tailscale.yaml";
+      key = "auth_key";
+    };
+
     assertions = [
       {
         assertion = config.myNixOS.services.tailscale.authKeyFile != null;

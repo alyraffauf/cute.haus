@@ -82,6 +82,11 @@
   nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "25.11";
 
+  sops.secrets.navidrome = {
+    sopsFile = "${self}/secrets/navidrome.yaml";
+    key = "env";
+  };
+
   services = {
     qemuGuest.enable = true;
 

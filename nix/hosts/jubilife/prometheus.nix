@@ -1,4 +1,31 @@
-{config, ...}: {
+{
+  config,
+  self,
+  ...
+}: {
+  sops.secrets = {
+    bazarrApiKey = {
+      sopsFile = "${self}/secrets/arr.yaml";
+      key = "bazarr_api_key";
+    };
+    lidarrApiKey = {
+      sopsFile = "${self}/secrets/arr.yaml";
+      key = "lidarr_api_key";
+    };
+    prowlarrApiKey = {
+      sopsFile = "${self}/secrets/arr.yaml";
+      key = "prowlarr_api_key";
+    };
+    radarrApiKey = {
+      sopsFile = "${self}/secrets/arr.yaml";
+      key = "radarr_api_key";
+    };
+    sonarrApiKey = {
+      sopsFile = "${self}/secrets/arr.yaml";
+      key = "sonarr_api_key";
+    };
+  };
+
   services.prometheus.exporters = {
     exportarr-bazarr = {
       enable = true;

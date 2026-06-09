@@ -195,10 +195,6 @@ _: {
               targets = ["solaceon:3021"];
               labels.instance = "solaceon";
             }
-            {
-              targets = ["slateport:3021"];
-              labels.instance = "slateport";
-            }
           ];
         }
       ];
