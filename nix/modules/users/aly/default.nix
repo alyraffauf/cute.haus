@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  self,
   ...
 }: {
   config = lib.mkIf config.myUsers.aly.enable {
@@ -11,10 +10,7 @@
       hashedPassword = config.myUsers.aly.password;
       isNormalUser = true;
 
-      openssh.authorizedKeys.keyFiles =
-        lib.map (file: "${self}/keys/${file}")
-        (lib.filter (file: lib.hasPrefix "aly_" file)
-          (builtins.attrNames (builtins.readDir "${self}/keys")));
+      openssh.authorizedKeys.keyFiles = config.myNixOS.sshKeyFiles.aly;
 
       uid = 1000;
     };

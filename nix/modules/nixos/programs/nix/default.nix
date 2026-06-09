@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  self,
   ...
 }: let
   buildMachines = [
@@ -93,12 +92,7 @@ in {
       createHome = false;
       group = "nixbuild";
 
-      openssh.authorizedKeys.keyFiles = let
-        pubDir = "${self}/keys";
-        aly = lib.filter (file: lib.hasPrefix "aly_" file) (builtins.attrNames (builtins.readDir pubDir));
-        root = lib.filter (file: lib.hasPrefix "root_" file) (builtins.attrNames (builtins.readDir pubDir));
-      in
-        lib.map (file: "${pubDir}/${file}") (aly ++ root);
+      openssh.authorizedKeys.keyFiles = config.myNixOS.sshKeyFiles.aly ++ config.myNixOS.sshKeyFiles.root;
     };
 
     users.groups.nixbuild = lib.mkIf isBuildMachine {};
