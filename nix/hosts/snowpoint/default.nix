@@ -45,11 +45,11 @@
       key = "env";
     };
     syncthingCert = {
-      sopsFile = ../../../secrets/syncthing.yaml;
+      sopsFile = "${self}/secrets/syncthing.yaml";
       key = "snowpoint_cert";
     };
     syncthingKey = {
-      sopsFile = ../../../secrets/syncthing.yaml;
+      sopsFile = "${self}/secrets/syncthing.yaml";
       key = "snowpoint_key";
     };
   };

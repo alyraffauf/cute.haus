@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  self,
+  ...
+}: {
   fileSystems."/mnt/Storage" = {
     device = "/dev/disk/by-id/ata-CT2000BX500SSD1_2345E8842829";
     fsType = "btrfs";
@@ -100,11 +104,11 @@
 
   sops.secrets = {
     syncthingCert = {
-      sopsFile = ../../../secrets/syncthing.yaml;
+      sopsFile = "${self}/secrets/syncthing.yaml";
       key = "eterna_cert";
     };
     syncthingKey = {
-      sopsFile = ../../../secrets/syncthing.yaml;
+      sopsFile = "${self}/secrets/syncthing.yaml";
       key = "eterna_key";
     };
   };

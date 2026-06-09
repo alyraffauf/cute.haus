@@ -173,11 +173,11 @@ in {
 
   sops.secrets = {
     syncthingCert = {
-      sopsFile = ../../../secrets/syncthing.yaml;
+      sopsFile = "${self}/secrets/syncthing.yaml";
       key = "jubilife_cert";
     };
     syncthingKey = {
-      sopsFile = ../../../secrets/syncthing.yaml;
+      sopsFile = "${self}/secrets/syncthing.yaml";
       key = "jubilife_key";
     };
   };
