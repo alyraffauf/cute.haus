@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  self,
   ...
 }: {
   options.myNixOS.services.syncthing = {
@@ -32,18 +31,6 @@
   };
 
   config = lib.mkIf config.myNixOS.services.syncthing.enable {
-    sops.secrets = {
-      syncthingCert = {
-        sopsFile = "${self}/secrets/syncthing.yaml";
-        key = "${config.networking.hostName}_cert";
-      };
-
-      syncthingKey = {
-        sopsFile = "${self}/secrets/syncthing.yaml";
-        key = "${config.networking.hostName}_key";
-      };
-    };
-
     systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
 
     services = {

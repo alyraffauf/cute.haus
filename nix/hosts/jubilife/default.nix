@@ -98,6 +98,16 @@ in {
 
       backups.enable = true;
       btrfs.enable = true;
+
+      b2-mounts = {
+        enable = true;
+        cacheDir = "/mnt/Data/.rclone-cache";
+        audioCacheSize = "50G";
+        audioReadAhead = "3G";
+        videoCacheSize = "300G";
+        videoReadAhead = "5G";
+      };
+
       vps.enable = true;
       swap.enable = true;
       zram.enable = true;

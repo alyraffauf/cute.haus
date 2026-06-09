@@ -1,54 +1,9 @@
 {config, ...}: {
-  fileSystems = let
-    b2Options = [
-      "allow_other"
-      "args2env"
-      "cache-dir=/mnt/Storage/.rclone-cache"
-      "config=${config.sops.secrets.rclone-b2.path}"
-      "dir-cache-time=1h"
-      "nodev"
-      "nofail"
-      "vfs-cache-mode=full"
-      "vfs-write-back=10s"
-      "x-systemd.after=network-online.target"
-      "x-systemd.automount"
-    ];
-
-    b2ProfileOptions = {
-      audio = [
-        "buffer-size=128M"
-        "vfs-cache-max-age=168h"
-        "vfs-cache-max-size=10G"
-        "vfs-read-ahead=3G"
-      ];
-
-      video = [
-        "buffer-size=512M"
-        "vfs-cache-max-age=336h"
-        "vfs-cache-max-size=200G"
-        "vfs-read-ahead=5G"
-      ];
-    };
-
-    mkB2Mount = name: remote: profile: {
-      "/mnt/Backblaze/${name}" = {
-        device = "b2:${remote}";
-        fsType = "rclone";
-        options = b2Options ++ b2ProfileOptions.${profile};
-      };
-    };
-  in
-    mkB2Mount "Anime" "aly-anime" "video"
-    // mkB2Mount "Audiobooks" "aly-audiobooks" "audio"
-    // mkB2Mount "Movies" "aly-movies" "video"
-    // mkB2Mount "Shows" "aly-shows" "video"
-    // {
-      "/mnt/Storage" = {
-        device = "/dev/disk/by-id/ata-CT2000BX500SSD1_2345E8842829";
-        fsType = "btrfs";
-        options = ["compress=zstd" "noatime" "nofail"];
-      };
-    };
+  fileSystems."/mnt/Storage" = {
+    device = "/dev/disk/by-id/ata-CT2000BX500SSD1_2345E8842829";
+    fsType = "btrfs";
+    options = ["compress=zstd" "noatime" "nofail"];
+  };
 
   networking = {
     firewall = {
@@ -84,6 +39,17 @@
 
       backups.enable = true;
       btrfs.enable = true;
+
+      b2-mounts = {
+        enable = true;
+        cacheDir = "/mnt/Storage/.rclone-cache";
+        audioCacheSize = "10G";
+        audioReadAhead = "3G";
+        videoCacheSize = "200G";
+        videoReadAhead = "5G";
+        shares = ["Anime" "Audiobooks" "Movies" "Shows"];
+      };
+
       data-share.enable = true;
 
       k3s = {
