@@ -7,7 +7,6 @@
     nixosModules = {
       hardware = inputs.import-tree ../../hardware;
       nixos = inputs.import-tree ../../nixos;
-      users = inputs.import-tree ../../users;
     };
 
     nixosConfigurations = let
