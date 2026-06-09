@@ -81,12 +81,6 @@ in {
         reverse_proxy jubilife:11434
       '';
 
-      "photoprism.${tnet}".extraConfig = ''
-        bind tailscale/photoprism
-        encode zstd gzip
-        reverse_proxy jubilife:2342
-      '';
-
       "prowlarr.${tnet}".extraConfig = ''
         bind tailscale/prowlarr
         encode zstd gzip
@@ -152,18 +146,6 @@ in {
       ];
 
       openFirewall = true;
-    };
-
-    photoprism = {
-      enable = true;
-      originalsPath = "/mnt/Media/Photos/";
-      address = "0.0.0.0";
-      passwordFile = config.sops.secrets.photoprismAdminPass.path;
-
-      settings = {
-        PHOTOPRISM_SITE_URL = "https://photoprism.narwhal-snapper.ts.net";
-        PHOTOPRISM_UPLOAD_NSFW = "true";
-      };
     };
 
     samba = {
