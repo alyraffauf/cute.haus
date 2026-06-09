@@ -61,7 +61,6 @@
         enable = true;
         role = "server";
         clusterInit = true;
-        tlsSans = ["pastoria" "eterna"];
         zone = "cloud-hetzner";
         ingress = true;
       };

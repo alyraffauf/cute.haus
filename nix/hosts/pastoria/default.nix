@@ -44,7 +44,6 @@
         enable = true;
         role = "server";
         serverAddr = "https://solaceon:6443";
-        tlsSans = ["solaceon" "eterna"];
         zone = "cloud-ovhcloud";
         ingress = true;
       };

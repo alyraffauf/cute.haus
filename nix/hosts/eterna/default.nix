@@ -90,7 +90,6 @@
         enable = true;
         role = "server";
         serverAddr = "https://pastoria:6443";
-        tlsSans = ["solaceon" "pastoria"];
         zone = "home";
         ingress = true;
       };
