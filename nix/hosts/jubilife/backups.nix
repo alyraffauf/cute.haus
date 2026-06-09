@@ -1,19 +1,51 @@
 {config, ...}: {
   services.restic.backups = {
-    dizquetv =
-      config.mySnippets.restic
-      // {
-        passwordFile = config.sops.secrets.restic-passwd.path;
-        rcloneConfigFile = config.sops.secrets.rclone-b2.path;
-        paths = ["/mnt/Data/dizquetv"];
-        repository = "rclone:b2:aly-backups/${config.networking.hostName}/dizquetv";
+    dizquetv = {
+      extraBackupArgs = [
+        "--cleanup-cache"
+        "--compression max"
+        "--no-scan"
+      ];
+      inhibitsSleep = true;
+      initialize = true;
+      passwordFile = config.sops.secrets.restic-passwd.path;
+      pruneOpts = [
+        "--keep-daily 7"
+        "--keep-weekly 4"
+        "--keep-monthly 3"
+      ];
+      rcloneConfigFile = config.sops.secrets.rclone-b2.path;
+      paths = ["/mnt/Data/dizquetv"];
+      repository = "rclone:b2:aly-backups/${config.networking.hostName}/dizquetv";
+      timerConfig = {
+        OnCalendar = "daily";
+        Persistent = true;
+        RandomizedDelaySec = "3h";
       };
+    };
 
-    # syncthing-sync =
-    #   config.mySnippets.restic
-    #   // {
-    #     paths = ["/home/aly/sync"];
-    #     repository = "rclone:b2:aly-backups/syncthing/sync";
+    # syncthing-sync = {
+    #   extraBackupArgs = [
+    #     "--cleanup-cache"
+    #     "--compression max"
+    #     "--no-scan"
+    #   ];
+    #   inhibitsSleep = true;
+    #   initialize = true;
+    #   passwordFile = config.sops.secrets.restic-passwd.path;
+    #   pruneOpts = [
+    #     "--keep-daily 7"
+    #     "--keep-weekly 4"
+    #     "--keep-monthly 3"
+    #   ];
+    #   rcloneConfigFile = config.sops.secrets.rclone-b2.path;
+    #   paths = ["/home/aly/sync"];
+    #   repository = "rclone:b2:aly-backups/syncthing/sync";
+    #   timerConfig = {
+    #     OnCalendar = "daily";
+    #     Persistent = true;
+    #     RandomizedDelaySec = "3h";
     #   };
+    # };
   };
 }

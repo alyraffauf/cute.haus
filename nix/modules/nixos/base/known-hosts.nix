@@ -1,12 +1,6 @@
-# Host-key pinning for ssh between hosts. Was previously sourced from
-# the snippets flake (`mySnippets.ssh.knownHosts`); inlined here so we
-# can drop the secrets-as-flake-input dep.
-{
-  config,
-  self,
-  ...
-}: let
-  tnet = config.mySnippets.tailnet.name;
+# Host-key pinning for ssh between hosts.
+{self, ...}: let
+  tnet = "narwhal-snapper.ts.net";
   pub = host: "${self}/keys/root_${host}.pub";
 in {
   programs.ssh.knownHosts = {

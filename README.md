@@ -10,14 +10,6 @@ This repository contains NixOS configurations, along with whatever custom module
 
 ---
 
-## 🔗 Related Flakes
-
-- [flake](https://github.com/alyraffauf/flake): Fully featured flake template for NixOS, nix-darwin, home-manager configurations, and software projects.
-- [fontix](https://github.com/alyraffauf/fontix): Home-manager modules for setting consistent fonts and sizing across applications.
-- [snippets](https://github.com/alyraffauf/snippets): Reusable Nix snippets used across multiple repositories.
-
----
-
 ## 📂 Repository Structure
 
 ```plaintext

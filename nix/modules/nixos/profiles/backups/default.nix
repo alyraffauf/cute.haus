@@ -8,14 +8,27 @@
   mkRepo = service: "${backupDestination}/${service}";
   stop = service: "${pkgs.systemd}/bin/systemctl stop ${service}";
   start = service: "${pkgs.systemd}/bin/systemctl start ${service}";
-  # mySnippets.restic defaults `passwordFile`/`rcloneConfigFile` to
-  # `config.age.secrets.*.path`; override to the sops-managed paths.
-  restic =
-    config.mySnippets.restic
-    // {
-      passwordFile = config.sops.secrets.restic-passwd.path;
-      rcloneConfigFile = config.sops.secrets.rclone-b2.path;
+  restic = {
+    extraBackupArgs = [
+      "--cleanup-cache"
+      "--compression max"
+      "--no-scan"
+    ];
+    inhibitsSleep = true;
+    initialize = true;
+    passwordFile = config.sops.secrets.restic-passwd.path;
+    pruneOpts = [
+      "--keep-daily 7"
+      "--keep-weekly 4"
+      "--keep-monthly 3"
+    ];
+    rcloneConfigFile = config.sops.secrets.rclone-b2.path;
+    timerConfig = {
+      OnCalendar = "daily";
+      Persistent = true;
+      RandomizedDelaySec = "3h";
     };
+  };
 in {
   options.myNixOS.profiles.backups = {
     enable = lib.mkEnableOption "automatically back up enabled services to b2";

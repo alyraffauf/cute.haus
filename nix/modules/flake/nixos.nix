@@ -34,7 +34,6 @@
               (inputs.import-tree ../../hosts/${host})
               inputs.disko.nixosModules.disko
               inputs.lanzaboote.nixosModules.lanzaboote
-              inputs.snippets.nixosModules.snippets
               inputs.sops-nix.nixosModules.sops
               modules.hardware
               modules.nixos

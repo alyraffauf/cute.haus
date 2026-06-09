@@ -39,7 +39,7 @@
         enable = true;
 
         virtualHosts = {
-          "${config.networking.hostName}.${config.mySnippets.tailnet.name}".extraConfig = let
+          "${config.networking.hostName}.narwhal-snapper.ts.net".extraConfig = let
             syncthing = ''
               redir /syncthing /syncthing/
               handle_path /syncthing/* {
