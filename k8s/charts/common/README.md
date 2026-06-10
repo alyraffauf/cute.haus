@@ -14,12 +14,14 @@ read from the consumer chart's `.Values` and use `.Chart.Name` for names.
 
 ## Partials
 
-| Define           | Renders                                 | Conditional on                |
-| ---------------- | --------------------------------------- | ----------------------------- |
-| `common.service` | `v1` Service                            | always                        |
-| `common.ingress` | `networking.k8s.io/v1` Ingress          | `.Values.ingress.enabled`     |
-| `common.pvc`     | PVC with `helm.sh/resource-policy:keep` | `.Values.persistence.enabled` |
-| `common.secret`  | Opaque Secret (envFrom target)          | `.Values.envFromSecret` set   |
+| Define                     | Renders                                 | Conditional on                |
+| -------------------------- | --------------------------------------- | ----------------------------- |
+| `common.service`           | `v1` Service                            | always                        |
+| `common.ingress`           | `networking.k8s.io/v1` Ingress          | `.Values.ingress.enabled`     |
+| `common.pvc`               | PVC with `helm.sh/resource-policy:keep` | `.Values.persistence.enabled` |
+| `common.secret`            | Opaque Secret (envFrom target)          | `.Values.envFromSecret` set   |
+| `common.tailnetIngress`    | Tailscale Ingress                       | `.Values.tailnet.enabled`     |
+| `common.tailnetProxyClass` | Same-node Tailscale ProxyClass          | `.Values.tailnet.enabled`     |
 
 ### Service
 
@@ -47,6 +49,28 @@ ingress:
 
 The ingress backend always points at the chart's own Service on
 `service.ports[0].port`.
+
+### Tailnet Ingress
+
+```yaml
+tailnet:
+  enabled: true
+  hostname: example # defaults to .Chart.Name
+  ingressName: example-tailnet # optional
+  serviceName: example # defaults to .Chart.Name
+  servicePort: 80 # defaults to service.ports[0].port if present
+  proxyClass:
+    name: example-same-node # optional
+  affinity:
+    matchLabels: # defaults to app: <chart name>
+      app: example
+    namespaces: [default] # defaults to release namespace
+```
+
+Renders a Tailscale `Ingress` plus a `ProxyClass` that requires the
+operator-managed proxy pod to schedule on the same node as pods labeled
+`app: <chart name>`. App charts should include both partials from their own
+templates.
 
 ### Secret
 

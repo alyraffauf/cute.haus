@@ -16,12 +16,18 @@ recurringJob:
   retain: 14
   concurrency: 2
 
-# Expose the Longhorn UI on the tailnet (the operator picks the hostname
-# from tls.hosts[0]; result is https://<host>.<tailnet>.ts.net).
-# Longhorn-frontend has no built-in auth — do NOT expose publicly.
-ui:
+# Expose the Longhorn UI on the tailnet. Longhorn-frontend has no built-in
+# auth — do NOT expose publicly.
+tailnet:
   enabled: true
   hostname: longhorn
-  service:
-    name: longhorn-frontend
-    port: 80
+  ingressName: longhorn-ui
+  serviceName: longhorn-frontend
+  servicePort: 80
+  proxyClass:
+    name: longhorn-ui-same-node
+  affinity:
+    matchLabels:
+      app: longhorn-ui
+    namespaces:
+      - longhorn-system
