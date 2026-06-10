@@ -25,7 +25,6 @@
       caddy
       cachefilesd
       data-share
-      hw-base
       intel-cpu
       intel-gpu
       k3s-node

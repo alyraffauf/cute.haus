@@ -23,6 +23,8 @@
       };
     };
 
+    hardware.enableAllFirmware = true;
+
     programs = {
       direnv = {
         enable = true;
@@ -39,6 +41,8 @@
     security.sudo-rs.enable = true;
 
     services = {
+      fstrim.enable = true;
+
       openssh = {
         enable = true;
         openFirewall = true;

@@ -25,7 +25,6 @@
       btrfs
       caddy
       forgejo-runner
-      hw-base
       intel-gpu
       k3s-node
       lanzaboote
