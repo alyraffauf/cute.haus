@@ -4,15 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
-    actions-nix = {
-      url = "github:alyraffauf/actions.nix";
-
-      inputs = {
-        git-hooks.follows = "git-hooks-nix";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,11 +12,6 @@
     files.url = "github:alyraffauf/flake-files";
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:denful/import-tree";
-
-    git-hooks-nix = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.0.0";
@@ -84,9 +70,7 @@
 
       imports = [
         (inputs.import-tree ./nix/modules/flake)
-        inputs.actions-nix.flakeModules.default
         inputs.files.flakeModules.default
-        inputs.git-hooks-nix.flakeModule
         inputs.treefmt-nix.flakeModule
       ];
     };

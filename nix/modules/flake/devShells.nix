@@ -1,6 +1,5 @@
 _: {
   perSystem = {
-    config,
     lib,
     pkgs,
     inputs',
@@ -44,8 +43,6 @@ _: {
         ];
 
       shellHook = ''
-        echo "Installing pre-commit hooks..."
-        ${config.pre-commit.installationScript}
         echo "Generating files..."
         ${lib.getExe self'.packages.gen-files}
         export FLAKE="." NH_FLAKE="."
