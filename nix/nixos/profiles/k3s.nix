@@ -2,7 +2,6 @@
   flake.modules.nixos.k3s-node = {
     config,
     lib,
-    options,
     pkgs,
     ...
   }: let
@@ -126,17 +125,26 @@
           };
         };
       }
-
-      (lib.optionalAttrs (options ? myBackups) {
-        myBackups.jobs.k3s = lib.mkIf (cfg.role == "server") {
-          backupPrepareCommand = "${config.services.k3s.package}/bin/k3s etcd-snapshot save";
-          paths = [
-            "/var/lib/rancher/k3s/server/db/snapshots"
-            "/var/lib/rancher/k3s/server/cred"
-            "/var/lib/rancher/k3s/server/tls"
-          ];
-        };
-      })
     ];
+  };
+
+  flake.modules.nixos.backups = {
+    config,
+    lib,
+    options,
+    ...
+  }: let
+    cfg = config.myK3s;
+  in {
+    config = lib.mkIf (options ? myK3s) {
+      myBackups.jobs.k3s = lib.mkIf (cfg.role == "server") {
+        backupPrepareCommand = "${config.services.k3s.package}/bin/k3s etcd-snapshot save";
+        paths = [
+          "/var/lib/rancher/k3s/server/db/snapshots"
+          "/var/lib/rancher/k3s/server/cred"
+          "/var/lib/rancher/k3s/server/tls"
+        ];
+      };
+    };
   };
 }

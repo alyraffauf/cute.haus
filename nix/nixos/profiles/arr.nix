@@ -2,13 +2,8 @@ _: {
   flake.modules.nixos.arr = {
     config,
     lib,
-    options,
-    pkgs,
     ...
-  }: let
-    stop = service: "${pkgs.systemd}/bin/systemctl stop ${service}";
-    start = service: "${pkgs.systemd}/bin/systemctl start ${service}";
-  in {
+  }: {
     options.myArr.dataDir = lib.mkOption {
       type = lib.types.str;
       default = "/var/lib";
@@ -55,40 +50,51 @@ _: {
           "d ${config.services.sonarr.dataDir} 0755 sonarr sonarr"
         ];
       }
-
-      (lib.optionalAttrs (options ? myBackups) {
-        myBackups.jobs = {
-          bazarr = {
-            backupCleanupCommand = start "bazarr";
-            backupPrepareCommand = stop "bazarr";
-            paths = [config.services.bazarr.dataDir];
-          };
-
-          lidarr = {
-            backupCleanupCommand = start "lidarr";
-            backupPrepareCommand = stop "lidarr";
-            paths = [config.services.lidarr.dataDir];
-          };
-
-          prowlarr = {
-            backupCleanupCommand = start "prowlarr";
-            backupPrepareCommand = stop "prowlarr";
-            paths = [config.services.prowlarr.dataDir];
-          };
-
-          radarr = {
-            backupCleanupCommand = start "radarr";
-            backupPrepareCommand = stop "radarr";
-            paths = [config.services.radarr.dataDir];
-          };
-
-          sonarr = {
-            backupCleanupCommand = start "sonarr";
-            backupPrepareCommand = stop "sonarr";
-            paths = [config.services.sonarr.dataDir];
-          };
-        };
-      })
     ];
+  };
+
+  flake.modules.nixos.backups = {
+    config,
+    lib,
+    options,
+    pkgs,
+    ...
+  }: let
+    stop = service: "${pkgs.systemd}/bin/systemctl stop ${service}";
+    start = service: "${pkgs.systemd}/bin/systemctl start ${service}";
+  in {
+    config = lib.mkIf (options ? myArr) {
+      myBackups.jobs = {
+        bazarr = {
+          backupCleanupCommand = start "bazarr";
+          backupPrepareCommand = stop "bazarr";
+          paths = [config.services.bazarr.dataDir];
+        };
+
+        lidarr = {
+          backupCleanupCommand = start "lidarr";
+          backupPrepareCommand = stop "lidarr";
+          paths = [config.services.lidarr.dataDir];
+        };
+
+        prowlarr = {
+          backupCleanupCommand = start "prowlarr";
+          backupPrepareCommand = stop "prowlarr";
+          paths = [config.services.prowlarr.dataDir];
+        };
+
+        radarr = {
+          backupCleanupCommand = start "radarr";
+          backupPrepareCommand = stop "radarr";
+          paths = [config.services.radarr.dataDir];
+        };
+
+        sonarr = {
+          backupCleanupCommand = start "sonarr";
+          backupPrepareCommand = stop "sonarr";
+          paths = [config.services.sonarr.dataDir];
+        };
+      };
+    };
   };
 }

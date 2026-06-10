@@ -2,13 +2,10 @@ _: {
   flake.modules.nixos.qbittorrent = {
     config,
     lib,
-    options,
     pkgs,
     ...
   }: let
     cfg = config.myQbittorrent;
-    stop = service: "${pkgs.systemd}/bin/systemctl stop ${service}";
-    start = service: "${pkgs.systemd}/bin/systemctl start ${service}";
   in {
     options.myQbittorrent = {
       dataDir = lib.mkOption {
@@ -49,14 +46,25 @@ _: {
           webuiPort = cfg.port;
         };
       }
-
-      (lib.optionalAttrs (options ? myBackups) {
-        myBackups.jobs.qbittorrent = {
-          backupCleanupCommand = start "qbittorrent";
-          backupPrepareCommand = stop "qbittorrent";
-          paths = [config.services.qbittorrent.profileDir];
-        };
-      })
     ];
+  };
+
+  flake.modules.nixos.backups = {
+    config,
+    lib,
+    options,
+    pkgs,
+    ...
+  }: let
+    stop = service: "${pkgs.systemd}/bin/systemctl stop ${service}";
+    start = service: "${pkgs.systemd}/bin/systemctl start ${service}";
+  in {
+    config = lib.mkIf (options ? myQbittorrent) {
+      myBackups.jobs.qbittorrent = {
+        backupCleanupCommand = start "qbittorrent";
+        backupPrepareCommand = stop "qbittorrent";
+        paths = [config.services.qbittorrent.profileDir];
+      };
+    };
   };
 }

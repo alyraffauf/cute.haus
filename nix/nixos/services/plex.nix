@@ -2,13 +2,8 @@
   flake.modules.nixos.plex = {
     config,
     lib,
-    options,
-    pkgs,
     ...
-  }: let
-    stop = service: "${pkgs.systemd}/bin/systemctl stop ${service}";
-    start = service: "${pkgs.systemd}/bin/systemctl start ${service}";
-  in {
+  }: {
     options.myPlex.dataDir = lib.mkOption {
       description = "Data directory to use.";
       default = "/var/lib";
@@ -44,19 +39,19 @@
 
         systemd.services.plex.serviceConfig.TimeoutStopSec = 15;
       }
-
-      (lib.optionalAttrs (options ? myBackups) {
-        myBackups.jobs.plex = {
-          backupCleanupCommand = start "plex";
-          backupPrepareCommand = stop "plex";
-          exclude = ["${config.services.plex.dataDir}/Plex Media Server/Plug-in Support/Databases"];
-          paths = [config.services.plex.dataDir];
-        };
-      })
     ];
   };
 
-  flake.modules.nixos.tautulli = {
+  flake.modules.nixos.tautulli = _: {
+    config = {
+      services.tautulli = {
+        enable = true;
+        openFirewall = true;
+      };
+    };
+  };
+
+  flake.modules.nixos.backups = {
     config,
     lib,
     options,
@@ -67,14 +62,16 @@
     start = service: "${pkgs.systemd}/bin/systemctl start ${service}";
   in {
     config = lib.mkMerge [
-      {
-        services.tautulli = {
-          enable = true;
-          openFirewall = true;
+      (lib.mkIf (options ? myPlex) {
+        myBackups.jobs.plex = {
+          backupCleanupCommand = start "plex";
+          backupPrepareCommand = stop "plex";
+          exclude = ["${config.services.plex.dataDir}/Plex Media Server/Plug-in Support/Databases"];
+          paths = [config.services.plex.dataDir];
         };
-      }
+      })
 
-      (lib.optionalAttrs (options ? myBackups) {
+      (lib.mkIf config.services.tautulli.enable {
         myBackups.jobs.tautulli = {
           backupCleanupCommand = start "tautulli";
           backupPrepareCommand = stop "tautulli";
