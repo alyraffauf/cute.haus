@@ -1,0 +1,51 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: default-forward-auth-navidrome@kubernetescrd
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - "navidrome.cute.haus"
+      secretName: cute-haus-tls
+  rules:
+    - host: "navidrome.cute.haus"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Chart.Name }}
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Chart.Name }}-rest
+  labels:
+    app: {{ .Chart.Name }}
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: default-{{ .Chart.Name }}-drop-auth-header@kubernetescrd
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - "navidrome.cute.haus"
+      secretName: cute-haus-tls
+  rules:
+    - host: "navidrome.cute.haus"
+      http:
+        paths:
+          - path: /rest/
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Chart.Name }}
+                port:
+                  number: 80

@@ -242,6 +242,15 @@ releases:
     values:
       - values/secrets/forward-auth.yaml
 
+  - name: navidrome
+    namespace: default
+    chart: ./charts/navidrome
+    needs:
+      - default/cluster-tls
+      - default/forward-auth
+    values:
+      - values/secrets/navidrome.yaml
+
   - name: paperless
     namespace: default
     chart: ./charts/paperless

@@ -1,0 +1,10 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ .Chart.Name }}-drop-auth-header
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  headers:
+    customRequestHeaders:
+      X-Forwarded-User: ""

@@ -374,12 +374,6 @@ in {
                 reverse_proxy jubilife:8686
               '';
 
-              "navidrome.${tnet}".extraConfig = ''
-                bind tailscale/navidrome
-                encode zstd gzip
-                reverse_proxy snowpoint:4533
-              '';
-
               "ollama.${tnet}".extraConfig = ''
                 bind tailscale/ollama
                 encode zstd gzip
