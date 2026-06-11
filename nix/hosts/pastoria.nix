@@ -6,25 +6,23 @@
 }: {
   flake.nixosConfigurations.pastoria = inputs.nixpkgs.lib.nixosSystem {
     modules = with config.flake.modules.nixos; [
+      alloy
+      backups
       base
       fail2ban
-      flake-url
+      k3s-node
       known-hosts
       locale-en-us
-      njust
-      recipes
-      performance
-      ssh-keys
-      users
-      alloy
-      auto-upgrade
-      backups
-      k3s-node
       nix-config
+      njust
+      performance
       podman
       prometheus-node
+      recipes
+      ssh-keys
       swap
       tailscale
+      users
       vps
       zram
 
@@ -46,7 +44,7 @@
           nixpkgs.hostPlatform = "x86_64-linux";
           system.stateVersion = "26.05";
           myDisko.installDrive = "/dev/sda";
-          myAutoUpgrade.dates = "01:45";
+          system.autoUpgrade.dates = "01:45";
 
           myK3s = {
             role = "server";

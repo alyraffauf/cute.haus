@@ -8,36 +8,34 @@
 in {
   flake.nixosConfigurations.eterna = inputs.nixpkgs.lib.nixosSystem {
     modules = with config.flake.modules.nixos; [
-      base
-      fail2ban
-      flake-url
-      known-hosts
-      locale-en-us
-      njust
-      recipes
-      performance
-      ssh-keys
-      users
       alloy
       atbbs
-      auto-upgrade
       b2-mounts
       backups
+      base
       btrfs
-      caddy
       cachefilesd
+      caddy
       data-share
+      fail2ban
       intel-cpu
       intel-gpu
       k3s-node
+      known-hosts
       lanzaboote
+      locale-en-us
       media-share
       nix-config
+      njust
+      performance
       podman
       prometheus-node
+      recipes
+      ssh-keys
       swap
       syncthing
       tailscale
+      users
       vps
       zram
 
@@ -73,7 +71,7 @@ in {
 
           system.stateVersion = "25.11";
 
-          myAutoUpgrade.dates = "05:00";
+          system.autoUpgrade.dates = "05:00";
 
           myBackups.jobs = {
             syncthing-sync = {

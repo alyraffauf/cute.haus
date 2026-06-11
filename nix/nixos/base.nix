@@ -1,64 +1,90 @@
 {self, ...}: {
   flake.modules.nixos.base = {
     config,
+    lib,
     pkgs,
     ...
   }: {
-    environment = {
-      etc."nixos".source = self;
-
-      systemPackages = with pkgs; [
-        (inxi.override {withRecommends = true;})
-        helix
-        lm_sensors
-        python314
-        rclone
-        wget
-        zellij
-      ];
-
-      variables = {
-        FLAKE = config.myFlakeUrl;
-        NH_FLAKE = config.myFlakeUrl;
-      };
+    options.myFlakeUrl = lib.mkOption {
+      type = lib.types.str;
+      default = "github:alyraffauf/cute.haus";
+      description = "Default flake URL for this NixOS configuration.";
     };
 
-    hardware.enableAllFirmware = true;
+    config = {
+      environment = {
+        etc."nixos".source = self;
 
-    programs = {
-      direnv = {
-        enable = true;
-        nix-direnv.enable = true;
-        silent = true;
+        systemPackages = with pkgs; [
+          (inxi.override {withRecommends = true;})
+          helix
+          lm_sensors
+          python314
+          rclone
+          wget
+          zellij
+        ];
+
+        variables = {
+          FLAKE = config.myFlakeUrl;
+          NH_FLAKE = config.myFlakeUrl;
+        };
       };
 
-      git.enable = true;
-      htop.enable = true;
-      nh.enable = true;
-    };
+      hardware.enableAllFirmware = true;
+      networking.networkmanager.enable = true;
+      security.sudo-rs.enable = true;
 
-    networking.networkmanager.enable = true;
-    security.sudo-rs.enable = true;
+      programs = {
+        direnv = {
+          enable = true;
+          nix-direnv.enable = true;
+          silent = true;
+        };
 
-    services = {
-      fstrim.enable = true;
-
-      openssh = {
-        enable = true;
-        openFirewall = true;
-        settings.PasswordAuthentication = false;
+        git.enable = true;
+        htop.enable = true;
+        nh.enable = true;
       };
 
-      timesyncd.enable = true;
-    };
+      services = {
+        fstrim.enable = true;
 
-    sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+        openssh = {
+          enable = true;
+          openFirewall = true;
+          settings.PasswordAuthentication = false;
+        };
 
-    system.configurationRevision = self.rev or self.dirtyRev or null;
+        timesyncd.enable = true;
+      };
 
-    systemd = {
-      coredump.enable = false;
-      enableEmergencyMode = false;
+      sops.age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+
+      system = {
+        autoUpgrade = {
+          enable = true;
+          allowReboot = true;
+          flags = ["--accept-flake-config"];
+          flake = config.myFlakeUrl;
+          operation = "switch";
+          dates = "02:00";
+          randomizedDelaySec = "0";
+          persistent = true;
+
+          rebootWindow = {
+            lower = "02:00";
+            upper = "06:00";
+          };
+        };
+
+        configurationRevision = self.rev or self.dirtyRev or null;
+      };
+
+      systemd = {
+        coredump.enable = false;
+        enableEmergencyMode = false;
+      };
     };
   };
 }

@@ -6,30 +6,28 @@
 }: {
   flake.nixosConfigurations.snowpoint = inputs.nixpkgs.lib.nixosSystem {
     modules = with config.flake.modules.nixos; [
-      base
-      fail2ban
-      flake-url
-      known-hosts
-      locale-en-us
-      njust
-      recipes
-      performance
-      ssh-keys
-      users
       alloy
-      auto-upgrade
       b2-mounts
       backups
+      base
       cachefilesd
       data-share
+      fail2ban
       k3s-node
+      known-hosts
+      locale-en-us
       media-share
       nix-config
+      njust
+      performance
       plex
       prometheus-node
+      recipes
+      ssh-keys
       swap
       syncthing
       tailscale
+      users
       vps
 
       inputs.disko.nixosModules.disko
@@ -108,7 +106,7 @@
           };
           myDisko.installDrive = "/dev/vda";
 
-          myAutoUpgrade.dates = "03:30";
+          system.autoUpgrade.dates = "03:30";
 
           myB2Mounts.cacheDir = "/mnt/Backblaze/.rclone-cache";
 

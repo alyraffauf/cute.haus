@@ -6,25 +6,23 @@
 }: {
   flake.nixosConfigurations.solaceon = inputs.nixpkgs.lib.nixosSystem {
     modules = with config.flake.modules.nixos; [
+      alloy
+      backups
       base
       fail2ban
-      flake-url
+      k3s-node
       known-hosts
       locale-en-us
-      njust
-      recipes
-      performance
-      ssh-keys
-      users
-      alloy
-      auto-upgrade
-      backups
-      k3s-node
       nix-config
+      njust
+      performance
       podman
       prometheus-node
+      recipes
+      ssh-keys
       swap
       tailscale
+      users
       vps
       zram
 
@@ -67,7 +65,7 @@
           time.timeZone = "America/New_York";
           myDisko.installDrive = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_62292463";
 
-          myAutoUpgrade.dates = "02:00";
+          system.autoUpgrade.dates = "02:00";
 
           myK3s = {
             role = "server";

@@ -8,35 +8,6 @@
     cfg = config.myNjust;
 
     defaultRecipes = {
-      system = ''
-        # Show system info
-        [group('system')]
-        info:
-            @echo "Hostname: $(hostname)"
-            @echo "NixOS Version: $(nixos-version)"
-            @echo "Kernel: $(uname -r)"
-            @echo "Generation: $(sudo nix-env --list-generations -p /nix/var/nix/profiles/system | tail -1 | awk '{print $1}')"
-            @echo "Revision: $(nixos-version --json | jq -r '.configurationRevision // "unknown"')"
-      '';
-
-      updates = ''
-        # Update everything
-        [group('system')]
-        update: update-nixos update-nix-profile
-
-        # Update NixOS system
-        [group('nix')]
-        update-nixos action="switch":
-            @echo "Updating NixOS..."
-            sudo nixos-rebuild {{action}} --flake "${config.myFlakeUrl}"
-
-        # Update Nix user profile
-        [group('nix')]
-        update-nix-profile:
-            @echo "Updating Nix user profile..."
-            nix profile upgrade --all
-      '';
-
       secureboot = ''
         # Check Secure Boot status
         [group('secureboot')]

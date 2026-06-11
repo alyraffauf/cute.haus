@@ -9,37 +9,35 @@
 in {
   flake.nixosConfigurations.jubilife = inputs.nixpkgs.lib.nixosSystem {
     modules = with config.flake.modules.nixos; [
-      base
-      fail2ban
-      flake-url
-      known-hosts
-      locale-en-us
-      njust
-      recipes
-      performance
-      ssh-keys
-      users
       alloy
       amd-cpu
       arr
-      auto-upgrade
       b2-mounts
       backups
+      base
       btrfs
       caddy
+      fail2ban
       forgejo-runner
       intel-gpu
       k3s-node
+      known-hosts
       lanzaboote
+      locale-en-us
       nix-config
+      njust
+      performance
       plex
       podman
       prometheus-node
       qbittorrent
+      recipes
+      ssh-keys
       swap
       syncthing
       tailscale
       tautulli
+      users
       vps
       zram
 
@@ -118,7 +116,7 @@ in {
           myDisko.installDrive = "/dev/disk/by-id/nvme-PNY_CS2130_1TB_SSD_PNY211821050701050CC";
 
           myArr.dataDir = "/mnt/Data";
-          myAutoUpgrade.dates = "04:15";
+          system.autoUpgrade.dates = "04:15";
 
           myB2Mounts = {
             cacheDir = "/mnt/Data/.rclone-cache";
