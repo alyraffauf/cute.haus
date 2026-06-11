@@ -24,22 +24,18 @@ _: {
         config.myAtbbs.telnetPort
       ];
 
-      virtualisation.oci-containers = {
-        backend = "podman";
+      virtualisation.oci-containers.containers = {
+        atbbs = {
+          extraOptions = ["--pull=always"];
+          image = "ghcr.io/alyraffauf/atbbs";
+          environment.PUBLIC_URL = "https://atbbs.xyz";
+          ports = ["0.0.0.0:${toString config.myAtbbs.port}:80"];
+        };
 
-        containers = {
-          atbbs = {
-            extraOptions = ["--pull=always"];
-            image = "ghcr.io/alyraffauf/atbbs";
-            environment.PUBLIC_URL = "https://atbbs.xyz";
-            ports = ["0.0.0.0:${toString config.myAtbbs.port}:80"];
-          };
-
-          atbbs-telnet = {
-            extraOptions = ["--pull=always"];
-            image = "ghcr.io/alyraffauf/atbbs-telnet";
-            ports = ["0.0.0.0:${toString config.myAtbbs.telnetPort}:2323"];
-          };
+        atbbs-telnet = {
+          extraOptions = ["--pull=always"];
+          image = "ghcr.io/alyraffauf/atbbs-telnet";
+          ports = ["0.0.0.0:${toString config.myAtbbs.telnetPort}:2323"];
         };
       };
     };
