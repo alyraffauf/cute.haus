@@ -36,7 +36,6 @@ in {
       tautulli
       users
       vps
-      zram
 
       inputs.disko.nixosModules.disko
       inputs.sops-nix.nixosModules.sops
