@@ -2,7 +2,6 @@ _: {
   flake.modules.nixos.users = {
     config,
     lib,
-    options,
     pkgs,
     ...
   }: {
@@ -31,28 +30,27 @@ _: {
       };
     };
 
-    config = lib.mkMerge [
-      {
-        programs.fish.enable = true;
+    config = {
+      programs.fish.enable = true;
+
+      users = {
+        defaultUserShell = pkgs.fish;
+        mutableUsers = false;
 
         users = {
-          defaultUserShell = pkgs.fish;
-          mutableUsers = false;
-
-          users = {
-            aly = {
-              description = "Aly Raffauf";
-              extraGroups = config.myUsers.defaultGroups;
-              hashedPassword = config.myUsers.aly.password;
-              isNormalUser = true;
-              uid = 1000;
-            };
+          aly = {
+            description = "Aly Raffauf";
+            extraGroups = config.myUsers.defaultGroups;
+            hashedPassword = config.myUsers.aly.password;
+            isNormalUser = true;
+            uid = 1000;
           };
         };
-      }
-      (lib.optionalAttrs (options ? mySshKeys) {
-        mySshKeys.authorizedUsers.aly = ["aly"];
-      })
-    ];
+      };
+    };
+  };
+
+  flake.modules.nixos.ssh-keys = {
+    mySshKeys.authorizedUsers.aly = ["aly"];
   };
 }

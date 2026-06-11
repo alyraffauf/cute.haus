@@ -2,7 +2,6 @@ _: {
   flake.modules.nixos.nix-config = {
     config,
     lib,
-    options,
     ...
   }: let
     buildMachines = [
@@ -93,10 +92,6 @@ _: {
         users.groups.nixbuild = lib.mkIf isBuildMachine {};
       }
 
-      (lib.optionalAttrs (options ? mySshKeys) {
-        mySshKeys.authorizedUsers.nixbuild = lib.mkIf isBuildMachine ["aly" "root"];
-      })
-
       {
         myRecipes.nix = ''
           # Garbage collect Nix store
@@ -122,4 +117,12 @@ _: {
         '';
       }
     ];
+  flake.modules.nixos.ssh-keys = {config, lib, ...}: let
+    buildMachineHosts = ["jubilife"];
+    isBuildMachine = lib.elem config.networking.hostName buildMachineHosts;
+  in {
+    config = lib.mkIf isBuildMachine {
+      mySshKeys.authorizedUsers.nixbuild = ["aly" "root"];
+    };
+  };
 }
