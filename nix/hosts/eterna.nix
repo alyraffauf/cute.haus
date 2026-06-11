@@ -21,7 +21,6 @@ in {
       intel-cpu
       intel-gpu
       k3s-node
-      known-hosts
       lanzaboote
       locale-en-us
       media-share

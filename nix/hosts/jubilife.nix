@@ -21,7 +21,6 @@ in {
       forgejo-runner
       intel-gpu
       k3s-node
-      known-hosts
       lanzaboote
       locale-en-us
       njust

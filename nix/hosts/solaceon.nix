@@ -11,7 +11,6 @@
       base
       fail2ban
       k3s-node
-      known-hosts
       locale-en-us
       njust
       podman

@@ -2,7 +2,7 @@
   tnet = "narwhal-snapper.ts.net";
   pub = host: "${self}/keys/root_${host}.pub";
 in {
-  flake.modules.nixos.known-hosts = {
+  flake.modules.nixos.base = {
     programs.ssh.knownHosts = {
       snowpoint = {
         hostNames = ["snowpoint" "snowpoint.local" "snowpoint.${tnet}" "dewford" "dewford.local" "dewford.${tnet}"];

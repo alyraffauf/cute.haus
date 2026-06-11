@@ -14,7 +14,6 @@
       data-share
       fail2ban
       k3s-node
-      known-hosts
       locale-en-us
       media-share
       njust
