@@ -30,7 +30,7 @@ spec:
           tolerationSeconds: 60
       containers:
         - name: {{ .Chart.Name }}
-          image: deluan/navidrome:0.61.2
+          image: deluan/navidrome:0.62.0@sha256:c4b5cb36a790b3eb63ca6a68bbe2fe149c2d7fa2e586f7a480e61db630e6664b
           imagePullPolicy: IfNotPresent
           command:
             - /bin/sh
