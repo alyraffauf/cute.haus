@@ -117,7 +117,11 @@ _: {
         '';
       }
     ];
-  flake.modules.nixos.ssh-keys = {config, lib, ...}: let
+  flake.modules.nixos.ssh-keys = {
+    config,
+    lib,
+    ...
+  }: let
     buildMachineHosts = ["jubilife"];
     isBuildMachine = lib.elem config.networking.hostName buildMachineHosts;
   in {
