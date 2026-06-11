@@ -1,51 +1,7 @@
 {
-  flake.modules.nixos.qbittorrent = {
-    config,
-    lib,
-    pkgs,
-    ...
-  }: let
-    cfg = config.myQbittorrent;
-  in {
-    options.myQbittorrent = {
-      dataDir = lib.mkOption {
-        type = lib.types.path;
-        default = "/var/lib/qbittorrent";
-      };
-
-      user = lib.mkOption {
-        type = lib.types.str;
-        default = "qbittorrent";
-      };
-
-      group = lib.mkOption {
-        type = lib.types.str;
-        default = "qbittorrent";
-      };
-
-      port = lib.mkOption {
-        type = lib.types.port;
-        default = 8080;
-      };
-
-      openFirewall = lib.mkOption {
-        type = lib.types.bool;
-        default = false;
-      };
-
-      package = lib.mkOption {
-        type = lib.types.package;
-        default = pkgs.qbittorrent-nox;
-        defaultText = lib.literalExpression "pkgs.qbittorrent-nox";
-      };
-    };
-
-    config.services.qbittorrent = {
-      inherit (cfg) openFirewall user group package;
-      enable = true;
-      profileDir = cfg.dataDir;
-      webuiPort = cfg.port;
-    };
+  flake.modules.nixos.qbittorrent.services.qbittorrent = {
+    enable = true;
+    profileDir = "/var/lib/qbittorrent";
   };
 
   flake.modules.nixos.backups = {

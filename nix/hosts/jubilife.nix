@@ -135,8 +135,6 @@ in {
 
           myPlex.dataDir = "/mnt/Data";
 
-          myQbittorrent.port = 8080;
-
           mySyncthing = {
             certFile = config.sops.secrets.syncthingCert.path;
             keyFile = config.sops.secrets.syncthingKey.path;
