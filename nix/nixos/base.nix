@@ -67,9 +67,9 @@
           allowReboot = true;
           flags = ["--accept-flake-config"];
           flake = config.myFlakeUrl;
-          operation = "switch";
-          dates = "02:00";
-          randomizedDelaySec = "0";
+          operation = lib.mkDefault "switch";
+          dates = lib.mkDefault "02:00";
+          randomizedDelaySec = lib.mkDefault "0";
           persistent = true;
 
           rebootWindow = {
