@@ -10,11 +10,9 @@ in {
     modules = with config.flake.modules.nixos; [
       alloy
       atbbs
-      b2-mounts
       backups
       base
       btrfs
-      cachefilesd
       caddy
       data-share
       fail2ban
@@ -23,7 +21,6 @@ in {
       k3s-node
       lanzaboote
       locale-en-us
-      media-share
       njust
       podman
       prometheus-node
@@ -63,30 +60,21 @@ in {
             '';
           };
 
-          powerManagement.powertop.enable = true;
-
-          system.stateVersion = "25.11";
-
-          system.autoUpgrade.dates = "05:00";
+          system = {
+            autoUpgrade.dates = "05:00";
+            stateVersion = "25.11";
+          };
 
           myBackups.jobs = {
             syncthing-sync = {
               paths = ["/home/aly/sync"];
               repository = "rclone:b2:aly-backups/syncthing/sync";
             };
+
             syncthing-roms = {
               paths = [config.mySyncthing.romsPath];
               repository = "rclone:b2:aly-backups/syncthing/roms";
             };
-          };
-
-          myB2Mounts = {
-            cacheDir = "/mnt/Storage/.rclone-cache";
-            audioCacheSize = "10G";
-            audioReadAhead = "3G";
-            videoCacheSize = "200G";
-            videoReadAhead = "5G";
-            shares = ["Anime" "Audiobooks" "Movies" "Shows"];
           };
 
           myK3s = {
