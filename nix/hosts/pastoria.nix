@@ -13,7 +13,6 @@
       k3s-node
       known-hosts
       locale-en-us
-      nix-config
       njust
       performance
       podman

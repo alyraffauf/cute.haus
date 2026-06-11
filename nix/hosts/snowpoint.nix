@@ -17,7 +17,6 @@
       known-hosts
       locale-en-us
       media-share
-      nix-config
       njust
       performance
       plex

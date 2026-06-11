@@ -1,5 +1,5 @@
 {
-  flake.modules.nixos.nix-config = {
+  flake.modules.nixos.base = {
     config,
     lib,
     ...
@@ -30,10 +30,12 @@
 
           gc = {
             automatic = true;
+
             options =
               if isBuildMachine
               then "--delete-older-than 20d"
               else "--delete-older-than 3d";
+
             persistent = true;
             randomizedDelaySec = "60min";
           };
@@ -60,20 +62,12 @@
 
             substituters = [
               "https://cache.nixos.org/"
-              "https://alyraffauf.cachix.org"
-              "https://catppuccin.cachix.org"
-              "https://chaotic-nyx.cachix.org/"
               "https://cutehaus.cachix.org"
-              "https://nix-community.cachix.org"
             ];
 
             trusted-public-keys = [
-              "alyraffauf.cachix.org-1:GQVrRGfjTtkPGS8M6y7Ik0z4zLt77O0N25ynv2gWzDM="
               "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-              "catppuccin.cachix.org-1:noG/4HkbhJb+lUAdKrph6LaozJvAeEEZj4N732IysmU="
-              "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8"
               "cutehaus.cachix.org-1:KiifTsseQBitoaHH8rkDUDwzyz9akLeOM+K+e2eK8dA="
-              "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
             ];
 
             trusted-users = ["aly" "@admin" "@wheel" "nixbuild"];
@@ -92,41 +86,8 @@
         users.groups.nixbuild = lib.mkIf isBuildMachine {};
       }
 
-      {
-        myRecipes.nix = ''
-          # Garbage collect Nix store
-          [group('nix')]
-          gc-nix days="3":
-              @echo "Cleaning up Nix generations older than {{days}} days..."
-              sudo nix-collect-garbage --delete-older-than {{days}}d
-
-          # Optimize Nix store
-          [group('nix')]
-          optimize-nix:
-              @echo "Optimizing Nix store..."
-              sudo nix-store --optimise
-
-          # Free space from Nix store
-          [group('nix')]
-          cleanup-nix: gc-nix && optimize-nix
-
-          # Repair Nix store
-          [group('nix')]
-          repair-nix:
-              sudo nix-store --repair --verify --check-contents
-        '';
-      }
+      (lib.mkIf isBuildMachine {
+        mySshKeys.authorizedUsers.nixbuild = ["aly" "root"];
+      })
     ];
-  flake.modules.nixos.ssh-keys = {
-    config,
-    lib,
-    ...
-  }: let
-    buildMachineHosts = ["jubilife"];
-    isBuildMachine = lib.elem config.networking.hostName buildMachineHosts;
-  in {
-    config = lib.mkIf isBuildMachine {
-      mySshKeys.authorizedUsers.nixbuild = ["aly" "root"];
-    };
-  };
 }

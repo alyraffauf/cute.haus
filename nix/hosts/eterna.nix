@@ -25,7 +25,6 @@ in {
       lanzaboote
       locale-en-us
       media-share
-      nix-config
       njust
       performance
       podman

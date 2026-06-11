@@ -24,7 +24,6 @@ in {
       known-hosts
       lanzaboote
       locale-en-us
-      nix-config
       njust
       performance
       plex
