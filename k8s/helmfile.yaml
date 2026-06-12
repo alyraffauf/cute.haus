@@ -14,6 +14,10 @@ repositories:
     url: https://pkgs.tailscale.com/helmcharts
   - name: jetstack
     url: https://charts.jetstack.io
+  - name: nfd
+    url: https://kubernetes-sigs.github.io/node-feature-discovery/charts
+  - name: intel
+    url: https://intel.github.io/helm-charts/
 
 releases:
   # ─── Cluster infra ──────────────────────────────────────────────────────
@@ -148,6 +152,27 @@ releases:
     version: 1.98.4
     values:
       - values/secrets/tailscale-operator.yaml
+
+  - name: node-feature-discovery
+    namespace: node-feature-discovery
+    createNamespace: true
+    chart: nfd/node-feature-discovery
+    version: 0.18.3
+
+  - name: intel-device-plugins-operator
+    namespace: intel-device-plugin
+    createNamespace: true
+    chart: intel/intel-device-plugins-operator
+    version: 0.36.0
+    needs:
+      - node-feature-discovery/node-feature-discovery
+
+  - name: intel-gpu-plugin
+    namespace: intel-device-plugin
+    chart: intel/intel-device-plugins-gpu
+    version: 0.36.0
+    needs:
+      - intel-device-plugin/intel-device-plugins-operator
 
   # ─── Shared platform services ───────────────────────────────────────────
 
