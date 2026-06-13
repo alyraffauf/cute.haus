@@ -13,6 +13,10 @@
         ansible-core
         kubernetes
       ]);
+
+    helmWithDiff = pkgs.wrapHelm pkgs.kubernetes-helm {
+      plugins = [pkgs.kubernetes-helmPlugins.helm-diff];
+    };
   in {
     devShells.default = pkgs.mkShell {
       packages =
@@ -24,7 +28,7 @@
           helmfile
           just
           kubectl
-          kubernetes-helm
+          helmWithDiff
           nh
           skopeo
           sops
