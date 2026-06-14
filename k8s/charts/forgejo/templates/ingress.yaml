@@ -4,6 +4,8 @@ metadata:
   name: {{ .Chart.Name }}
   labels:
     app: {{ .Chart.Name }}
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: default-{{ .Chart.Name }}-ratelimit@kubernetescrd
 spec:
   ingressClassName: traefik
   tls:
