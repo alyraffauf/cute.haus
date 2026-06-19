@@ -34,11 +34,6 @@ in {
         publicKeyFile = pub "eterna";
       };
 
-      solaceon = {
-        hostNames = ["solaceon" "solaceon.local" "solaceon.${tnet}" "mossdeep" "mossdeep.local" "mossdeep.${tnet}"];
-        publicKeyFile = pub "solaceon";
-      };
-
       petalburg = {
         hostNames = ["petalburg" "petalburg.local" "petalburg.${tnet}"];
         publicKeyFile = pub "petalburg";
