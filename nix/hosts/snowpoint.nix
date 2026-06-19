@@ -63,7 +63,7 @@
           system.autoUpgrade.dates = "03:30";
 
           myK3s = {
-            role = "agent";
+            role = "server";
             serverAddr = "https://pastoria:6443";
             zone = "cloud-netcup";
             ingress = true;
