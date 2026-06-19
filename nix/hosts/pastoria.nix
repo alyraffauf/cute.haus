@@ -22,7 +22,11 @@
       inputs.sops-nix.nixosModules.sops
       config.flake.diskoConfigurations.lvm-ext4
       (
-        {modulesPath, ...}: {
+        {
+          modulesPath,
+          pkgs,
+          ...
+        }: {
           imports = [
             "${modulesPath}/profiles/qemu-guest.nix"
           ];
@@ -32,15 +36,30 @@
             efiInstallAsRemovable = true;
           };
 
-          networking.hostName = "pastoria";
+          networking = {
+            firewall.allowedTCPPorts = [23];
+            hostName = "pastoria";
+          };
+
           nixpkgs.hostPlatform = "x86_64-linux";
           system.stateVersion = "26.05";
           myDisko.installDrive = "/dev/sda";
           system.autoUpgrade.dates = "01:45";
 
+          systemd.services.atbbs-telnet = {
+            description = "TCP proxy for atbbs telnet";
+            wantedBy = ["multi-user.target"];
+            after = ["network.target"];
+
+            serviceConfig = {
+              ExecStart = "${pkgs.socat}/bin/socat TCP-LISTEN:23,fork,reuseaddr TCP:eterna:2323";
+              Restart = "always";
+            };
+          };
+
           myK3s = {
             role = "server";
-            serverAddr = "https://solaceon:6443";
+            serverAddr = "https://eterna:6443";
             zone = "cloud-ovhcloud";
             ingress = true;
           };
