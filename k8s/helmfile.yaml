@@ -199,8 +199,8 @@ releases:
     namespace: default
     chart: ./charts/gotenberg
 
-  # Cloudflare Origin TLS Secrets per domain (aly-codes, aly-social,
-  # cute-haus, morsels-blue). Apps reference these by name in ingress.routes.
+  # Cloudflare Origin TLS Secrets per domain (morsels-blue). Apps reference
+  # these by name in ingress.routes.
   - name: cluster-tls
     namespace: default
     chart: ./charts/cluster-tls
@@ -218,6 +218,12 @@ releases:
   - name: aly-codes
     namespace: default
     chart: ./charts/aly-codes
+    needs:
+      - default/cluster-tls
+
+  - name: switchyard
+    namespace: default
+    chart: ./charts/switchyard
     needs:
       - default/cluster-tls
 

@@ -15,3 +15,6 @@ wildcards:
   - name: aly-social-tls
     namespace: default
     domain: aly.social
+  - name: aly-codes-tls
+    namespace: default
+    domain: aly.codes

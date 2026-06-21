@@ -3,6 +3,7 @@ locals {
     "aly.codes",
     "git.aly.codes",
     "status.aly.codes",
+    "switchyard.aly.codes",
     "vibes.aly.codes",
   ])
   aly_codes_fm_dkim = toset(["fm1", "fm2", "fm3"])
@@ -40,19 +41,6 @@ resource "cloudflare_dns_record" "aly_codes_fm_dkim_cname" {
   proxied  = false
   ttl      = 1
   tags     = []
-  settings = {
-    flatten_cname = false
-  }
-}
-
-resource "cloudflare_dns_record" "aly_codes_switchyard_cname" {
-  zone_id = local.zones.aly_codes
-  name    = "switchyard.aly.codes"
-  type    = "CNAME"
-  content = "alyraffauf.github.io"
-  proxied = false
-  ttl     = 1
-  tags    = []
   settings = {
     flatten_cname = false
   }
