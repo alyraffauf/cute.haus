@@ -23,7 +23,7 @@ spec:
               app: {{ .Chart.Name }}
       containers:
         - name: {{ .Chart.Name }}
-          image: ghcr.io/alyraffauf/switchyard-website:latest@sha256:3a19fd38d7d03c5eb36bb3569b1ab1371f00bba19459a0e68e33135f9e899c29
+          image: ghcr.io/alyraffauf/switchyard-website:latest@sha256:d09d176a120a239285f8f8989ab8c6b494d7627fce35356c6227ac7d6781f90b
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
