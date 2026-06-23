@@ -65,7 +65,7 @@
           myK3s = {
             role = "server";
             serverAddr = "https://pastoria:6443";
-            zone = "cloud-netcup";
+            zone = "cloud";
             ingress = true;
           };
 

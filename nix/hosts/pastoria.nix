@@ -60,7 +60,7 @@
           myK3s = {
             role = "server";
             serverAddr = "https://eterna:6443";
-            zone = "cloud-ovhcloud";
+            zone = "cloud";
             ingress = true;
           };
 

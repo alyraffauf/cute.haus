@@ -36,7 +36,7 @@
       zone = lib.mkOption {
         type = lib.types.nullOr lib.types.str;
         default = null;
-        example = "cloud-hetzner";
+        example = "cloud";
       };
 
       ingress = lib.mkEnableOption "cute.haus/ingress=true node label";
