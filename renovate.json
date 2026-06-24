@@ -5,6 +5,15 @@
   "schedule": ["* 22-23,0-5 * * *"],
   "labels": ["dependencies"],
 
+  "nix": {
+    "enabled": true
+  },
+
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true
+  },
+
   "helmfile": {
     "managerFilePatterns": ["/k8s/helmfile\\.yaml$/"]
   },
