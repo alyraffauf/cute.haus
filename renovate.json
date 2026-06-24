@@ -3,8 +3,6 @@
   "extends": ["config:recommended", ":dependencyDashboard"],
   "timezone": "America/New_York",
   "schedule": ["* 22-23,0-5 * * *"],
-  "prConcurrentLimit": 4,
-  "prHourlyLimit": 2,
   "labels": ["dependencies"],
 
   "helmfile": {
