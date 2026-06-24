@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: immich
+  labels:
+    app: immich
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: immich
+  template:
+    metadata:
+      labels:
+        app: immich
+    spec:
+      terminationGracePeriodSeconds: 30
+      enableServiceLinks: false
+      nodeSelector:
+        kubernetes.io/hostname: jubilife
+      tolerations:
+        - key: node.kubernetes.io/not-ready
+          operator: Exists
+          effect: NoExecute
+          tolerationSeconds: 60
+        - key: node.kubernetes.io/unreachable
+          operator: Exists
+          effect: NoExecute
+          tolerationSeconds: 60
+      containers:
+        - name: immich
+          image: ghcr.io/immich-app/immich-server:v2.7.5@sha256:cd4aaf5d917fe19b942bba0df4e50eed8e6766190b381e85687cc7880255674e
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: DB_HOSTNAME
+              value: "immich-postgres"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_DATABASE_NAME
+              value: "immich"
+            - name: DB_USERNAME
+              value: "immich"
+            - name: REDIS_HOSTNAME
+              value: "valkey.default.svc"
+            - name: REDIS_DBINDEX
+              value: "4"
+            - name: IMMICH_MACHINE_LEARNING_URL
+              value: "http://immich-ml:3003"
+            - name: IMMICH_CONFIG_FILE
+              value: "/etc/immich/config.json"
+            - name: TZ
+              value: "America/New_York"
+          envFrom:
+            - secretRef:
+                name: immich-env
+          ports:
+            - name: http
+              containerPort: 2283
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              cpu: "4"
+              memory: 4Gi
+          volumeMounts:
+            - name: uploads
+              mountPath: /data
+            - name: config
+              mountPath: /etc/immich
+              readOnly: true
+          startupProbe:
+            httpGet:
+              path: /api/server/ping
+              port: http
+            periodSeconds: 10
+            failureThreshold: 30
+          livenessProbe:
+            httpGet:
+              path: /api/server/ping
+              port: http
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /api/server/ping
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: immich-uploads
+        - name: config
+          secret:
+            secretName: immich-config

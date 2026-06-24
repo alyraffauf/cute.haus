@@ -282,13 +282,11 @@ in {
         in {
           myBackups.jobs = {
             immich = {
-              backupCleanupCommand = start "immich-server";
-              backupPrepareCommand = stop "immich-server";
               paths = [
-                "${config.services.immich.mediaLocation}/library"
-                "${config.services.immich.mediaLocation}/profile"
-                "${config.services.immich.mediaLocation}/upload"
-                "${config.services.immich.mediaLocation}/backups"
+                "${dataDirectory}/immich/library"
+                "${dataDirectory}/immich/profile"
+                "${dataDirectory}/immich/upload"
+                "${dataDirectory}/immich/backups"
               ];
             };
 
@@ -297,49 +295,10 @@ in {
               backupPrepareCommand = stop "jellyfin";
               paths = [config.services.jellyfin.dataDir];
             };
-
-            postgresql = {
-              backupCleanupCommand = ''
-                ${start "postgresql"}
-                ${start "immich-server"}
-              '';
-              backupPrepareCommand = stop "postgresql";
-              paths = [config.services.postgresql.dataDir];
-            };
           };
 
           sops = {
-            templates."immich-config.json" = {
-              owner = "immich";
-              content = ''
-                {
-                  "oauth": {
-                    "enabled": true,
-                    "issuerUrl": "https://id.cute.haus",
-                    "clientId": "${config.sops.placeholder.immichOauthClientId}",
-                    "clientSecret": "${config.sops.placeholder.immichOauthClientSecret}",
-                    "scope": "openid email profile",
-                    "buttonText": "Sign in with cute.haus",
-                    "autoRegister": true,
-                    "autoLaunch": false,
-                    "mobileOverrideEnabled": false,
-                    "mobileRedirectUri": ""
-                  }
-                }
-              '';
-            };
-
             secrets = {
-              immichOauthClientId = {
-                sopsFile = ../../secrets/immich.yaml;
-                key = "oauth/client_id";
-                owner = "immich";
-              };
-              immichOauthClientSecret = {
-                sopsFile = ../../secrets/immich.yaml;
-                key = "oauth/client_secret";
-                owner = "immich";
-              };
               photoprismAdminPass = {
                 sopsFile = ../../secrets/photoprism.yaml;
                 key = "ADMIN_PASSWORD";
@@ -412,15 +371,6 @@ in {
                 encode zstd gzip
                 reverse_proxy jubilife:8181
               '';
-            };
-
-            immich = {
-              enable = true;
-              host = "0.0.0.0";
-              mediaLocation = "${dataDirectory}/immich";
-              openFirewall = true;
-              port = 2283;
-              environment.IMMICH_CONFIG_FILE = config.sops.templates."immich-config.json".path;
             };
 
             jellyfin = {

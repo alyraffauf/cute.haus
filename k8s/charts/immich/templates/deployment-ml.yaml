@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: immich-ml
+  labels:
+    app: immich-ml
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: immich-ml
+  template:
+    metadata:
+      labels:
+        app: immich-ml
+    spec:
+      terminationGracePeriodSeconds: 30
+      enableServiceLinks: false
+      nodeSelector:
+        kubernetes.io/hostname: jubilife
+      tolerations:
+        - key: node.kubernetes.io/not-ready
+          operator: Exists
+          effect: NoExecute
+          tolerationSeconds: 60
+        - key: node.kubernetes.io/unreachable
+          operator: Exists
+          effect: NoExecute
+          tolerationSeconds: 60
+      containers:
+        - name: immich-ml
+          image: ghcr.io/immich-app/immich-machine-learning:v2.7.5-openvino@sha256:619b43773d4f050d7504a236061034c06ef653f28693813ebccb1ab5d1e77512
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MACHINE_LEARNING_CACHE_FOLDER
+              value: "/cache"
+          ports:
+            - name: http
+              containerPort: 3003
+          resources:
+            requests:
+              cpu: 200m
+              memory: 1Gi
+              gpu.intel.com/i915: "1"
+            limits:
+              cpu: "4"
+              memory: 4Gi
+              gpu.intel.com/i915: "1"
+          volumeMounts:
+            - name: model-cache
+              mountPath: /cache
+          startupProbe:
+            httpGet:
+              path: /ping
+              port: http
+            periodSeconds: 10
+            failureThreshold: 60
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: http
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+      volumes:
+        - name: model-cache
+          persistentVolumeClaim:
+            claimName: immich-ml-cache

@@ -270,6 +270,15 @@ releases:
     values:
       - values/secrets/forward-auth.yaml
 
+  - name: immich
+    namespace: default
+    chart: ./charts/immich
+    needs:
+      - default/cluster-tls
+      - default/valkey
+    values:
+      - values/secrets/immich.yaml
+
   - name: navidrome
     namespace: default
     chart: ./charts/navidrome
