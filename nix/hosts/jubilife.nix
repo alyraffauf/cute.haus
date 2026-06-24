@@ -299,7 +299,10 @@ in {
             };
 
             postgresql = {
-              backupCleanupCommand = start "postgresql";
+              backupCleanupCommand = ''
+                ${start "postgresql"}
+                ${start "immich-server"}
+              '';
               backupPrepareCommand = stop "postgresql";
               paths = [config.services.postgresql.dataDir];
             };
