@@ -32,7 +32,10 @@ jobs:
       run: nix build --accept-flake-config --print-out-paths .#packages.x86_64-linux.gen-files
 name: build-nix
 'on':
+  pull_request:
   push:
+    branches:
+    - master
     paths:
     - flake.lock
     - flake.nix

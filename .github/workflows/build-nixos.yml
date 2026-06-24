@@ -76,7 +76,10 @@ jobs:
       run: nix build --accept-flake-config --print-out-paths .#nixosConfigurations.snowpoint.config.system.build.toplevel
 name: build-nixos
 'on':
+  pull_request:
   push:
+    branches:
+    - master
     paths-ignore:
     - '**/*.md'
     - .github/**
