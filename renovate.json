@@ -2,7 +2,9 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", ":dependencyDashboard"],
   "timezone": "America/New_York",
-  "schedule": ["every weekend"],
+  "schedule": ["* 22-23,0-5 * * *"],
+  "prConcurrentLimit": 4,
+  "prHourlyLimit": 2,
   "labels": ["dependencies"],
 
   "helmfile": {
@@ -26,15 +28,9 @@
       "matchPackageNames": ["/tranquil/"]
     },
     {
-      "description": "Auto-merge patch + digest updates after CI passes",
-      "matchUpdateTypes": ["patch", "digest", "pin", "pinDigest"],
+      "description": "Auto-merge routine updates after CI passes",
+      "matchUpdateTypes": ["minor", "patch", "digest", "pin", "pinDigest"],
       "automerge": true
-    },
-    {
-      "description": "Group helm chart minor bumps into one PR per week",
-      "matchManagers": ["helmfile"],
-      "matchUpdateTypes": ["minor"],
-      "groupName": "helm chart minor updates"
     },
     {
       "description": "Major bumps stay manual",
