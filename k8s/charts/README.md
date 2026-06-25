@@ -1,119 +1,142 @@
-# 🪐 Charts
+# Charts
 
 In-tree Helm charts deployed by [`../helmfile.yaml`](../helmfile.yaml).
 
-App charts share a library chart (`common/`); their `templates/*.yaml` files
-are one-line includes of `common.deployment` / `common.service` / etc., and
-all per-app config lives in `values.yaml`.
+Most app charts use explicit Kubernetes manifests. Helm is used for light
+substitution, mostly `.Chart.Name` and secret values passed by helmfile. Avoid
+shared Deployment/Service/PVC helpers; app-specific behavior should stay visible
+in the app chart.
 
----
+## Layout
 
-## 📂 Layout
-
-```plaintext
+```text
 charts/
 ├── aly-codes/              # Static site (aly.codes)
+├── audiobookshelf/         # Audiobook library with rclone-mounted media
 ├── bluesky-pds/            # Reference atproto Personal Data Server
-├── cert-manager-issuers/   # Let's Encrypt ClusterIssuer + wildcard Certificates (Cloudflare DNS-01)
+├── cert-manager-issuers/   # Let's Encrypt ClusterIssuer + wildcard Certificates
 ├── cluster-tls/            # Cloudflare Origin TLS Secrets per domain
-├── common/                 # Library chart with shared partials
 ├── external-routes/        # Ingress + Service + EndpointSlice for off-cluster targets
 ├── forgejo/                # Git hosting (git.aly.codes)
-├── longhorn-creds/         # B2 backup-target Secret + recurring backup job + UI ingress
-├── morsels/                # atproto pastebin (morsels.blue)
+├── forward-auth/           # Per-app traefik-forward-auth frontends
+├── immich/                 # Photo library + ML + app-specific Postgres
+├── longhorn-creds/         # B2 backup Secret + recurring backup job + UI ingress
+├── paperless/              # Document management with rclone media mount
 ├── pg-shared/              # CloudNativePG cluster using local-path replicas
-├── tranquil-pds/           # TRanquil atproto Personal Data Server
-├── uptime-kuma/            # Uptime monitoring + status pages
-├── vaultwarden/            # Bitwarden-compatible vault
-└── watsup/                 # Homelab dashboard (cute.haus)
+└── ...
 ```
 
----
+## Chart Style
 
-## 🔐 Secret flow
-
-```
-secrets/foo.yaml         (SOPS-encrypted, multi-recipient age)
-        │
-        ▼ vals reads ref+sops:// at render time
-values/foo.yaml          (plain yaml of ref+sops://... refs)
-        │
-        ▼ helmfile passes it as values: to the release
-chart's values.yaml      (.Values.secret.* now plaintext during render)
-        │
-        ▼
-common.secret partial    → kind: Secret with stringData
-        │
-        ▼
-deployment.envFrom       → env vars in the container
-```
-
-`vals` resolves `ref+sops://` URLs at render time using whichever age key
-is at `~/.config/sops/age/keys.txt` (run `just sops-bootstrap` once on a
-new machine to derive that from the SSH host key).
-
----
-
-## 🆕 Add a new app
-
-```bash
-just new-app <name>
-```
-
-Then:
-
-1. Edit `charts/<name>/values.yaml` — image, ports, env, ingress routes,
-   persistence.
-2. Add a release block to `helmfile.yaml`:
-   ```yaml
-   - name: <name>
-     namespace: default
-     chart: ./charts/<name>
-   ```
-3. If the app needs secrets:
-   - `just sops-edit <name>.yaml` — write the encrypted file
-   - Create `values/<name>.yaml` with `ref+sops://../secrets/<name>.yaml#/...`
-     refs for each key (path is relative to `k8s/`, where helmfile runs)
-   - Add `values: [values/<name>.yaml]` to the helmfile release
-4. `helmfile -l name=<name> apply`
-
----
-
-## 🧱 Library chart
-
-App templates are thin includes:
+Prefer direct manifests:
 
 ```yaml
-# charts/<app>/templates/deployment.yaml
-{ { - include "common.deployment" . } }
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: { { .Chart.Name } }
+  labels:
+    app: { { .Chart.Name } }
+spec:
+  selector:
+    matchLabels:
+      app: { { .Chart.Name } }
+  template:
+    metadata:
+      labels:
+        app: { { .Chart.Name } }
+    spec:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      containers:
+        - name: { { .Chart.Name } }
+          image: example/app:1.0.0@sha256:...
 ```
 
-The library defines `common.deployment`, `common.service`, `common.ingress`,
-`common.pvc`, `common.secret`. See [`common/README.md`](common/README.md) for
-each partial's values reference.
+Use this pod-spec order when practical:
 
----
+```yaml
+automountServiceAccountToken: false
+enableServiceLinks: false
+terminationGracePeriodSeconds: 30
+securityContext:
+tolerations:
+hostNetwork:
+dnsPolicy:
+nodeSelector:
+imagePullSecrets:
+topologySpreadConstraints:
+initContainers:
+containers:
+volumes:
+```
 
-## 🚫 Charts that don't use `common/`
+Only include fields that the app actually needs. Do not add shared helpers just
+to make every chart identical.
 
-These have unique enough shape that the library wouldn't help:
+## Templating Rules
 
-- **`cluster-tls`** — renders one `kubernetes.io/tls` Secret per entry in
-  `.Values.secret`, sourced from `secrets/cluster-tls.yaml`.
-- **`pg-shared`** — a CNPG `Cluster` using `local-path` volumes for Postgres
-  data. CNPG provides HA with streaming replication across instances; B2
-  backups and WAL archiving cover recovery. A `longhorn-pg` StorageClass is
-  rendered for experiments or a future migration, but the live cluster does not
-  use it. Apps that need a database get a role + database created manually in
-  this cluster; there's no per-app provisioning yet.
-- **`external-routes`** — for each entry in `.Values.routes`, renders a
-  `Service` + `EndpointSlice` + `Ingress` pointing at an external IP
-  (typically a Tailscale IP for a service running on jubilife or eterna).
-  Supports both traefik and tailscale ingress classes.
-- **`cert-manager-issuers`** — one `ClusterIssuer` (Let's Encrypt + Cloudflare
-  DNS-01) plus one wildcard `Certificate` per entry in `.Values.wildcards`.
-  Each cert lands as a Secret apps reference via `tlsSecret` in ingress routes.
-- **`longhorn-creds`** — the B2 credentials Secret that Longhorn references via
-  `defaultBackupStore.backupTargetCredentialSecret`, plus a daily `RecurringJob`
-  for the `default` volume group and an Ingress exposing the Longhorn UI on the
-  tailnet. Must apply before `longhorn` (the `needs:` chain enforces this).
+Keep these:
+
+- `.Chart.Name` for names, labels, selectors, and PVC names.
+- `if .Values.secret` around Secret manifests populated by vals/SOPS.
+- Small `range` loops for charts that are naturally data-driven.
+
+Avoid these:
+
+- Common Deployment/Service/PVC helper templates.
+- Values that model arbitrary pod specs, containers, sidecars, volumes, or env.
+- Large `_helpers.tpl` files for simple app charts.
+
+## Data-Driven Exceptions
+
+Some charts intentionally render repeated resources from values:
+
+- **`forward-auth`** renders one auth Deployment/Service/Ingress/Middleware set
+  per `.Values.apps` entry.
+- **`external-routes`** renders off-cluster Service, EndpointSlice, and Ingress
+  resources from `.Values.routes`.
+- **`pg-shared`** renders CNPG roles/databases and backup resources from chart
+  values.
+- **`cluster-tls`** and **`cert-manager-issuers`** render repeated TLS or
+  certificate resources from values.
+
+Those are data charts rather than app workload charts, so a little looping is
+acceptable there.
+
+## Secret Flow
+
+```text
+secrets/foo.yaml         SOPS-encrypted, multi-recipient age
+        |
+        v
+values/foo.yaml          ref+sops://... refs read by vals
+        |
+        v
+helmfile values:         passes plaintext values during render
+        |
+        v
+templates/secret.yaml    renders a chart-local Secret
+        |
+        v
+deployment envFrom       app consumes the Secret
+```
+
+`vals` resolves `ref+sops://` URLs at render time using the local age key.
+
+## Adding An App
+
+1. Create `charts/<name>/Chart.yaml`.
+2. Add explicit templates for only the resources the app needs, usually
+   `deployment.yaml`, `service.yaml`, `ingress.yaml`, optional `pvc.yaml`, and
+   optional `secret.yaml`.
+3. Put app-specific behavior directly in those manifests.
+4. If the app needs secrets, create `secrets/<name>.yaml` and
+   `values/<name>.yaml`, then add that values file to the helmfile release.
+5. Add the release to `../helmfile.yaml`.
+6. Render before applying:
+
+```bash
+helm template <name> charts/<name>
+helmfile -l name=<name> apply
+```

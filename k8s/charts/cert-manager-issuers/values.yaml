@@ -2,7 +2,7 @@ letsencrypt:
   email: aly@aly.codes
   server: https://acme-v02.api.letsencrypt.org/directory # use https://acme-staging-v02.api.letsencrypt.org/directory for testing
 
-# Templated by common.secret pattern; populated from values/secrets/cert-manager.yaml.
+# Populated from values/secrets/cert-manager.yaml.
 cloudflare:
   apiToken: ""
 
