@@ -37,6 +37,40 @@ spec:
           operator: Exists
           effect: NoExecute
           tolerationSeconds: 60
+      initContainers:
+        # Add custom plugins/scanners
+        - name: plugins
+          image: {{ .Values.pluginImage }}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              set -euo pipefail
+              PMS="/config/Library/Application Support/Plex Media Server"
+              PLUGINS="$PMS/Plug-ins"; SCANNERS="$PMS/Scanners"; STAGE="$PMS/.plugin-staging"
+              mkdir -p "$PLUGINS" "$SCANNERS"
+              rm -rf "$STAGE"; mkdir -p "$STAGE"
+              fetch() { echo "==> $1 @ $2"; wget -qO- "https://github.com/$1/archive/$2.tar.gz" | tar -xz -C "$STAGE"; }
+              {{- range .Values.plugins.bundles }}
+              fetch "{{ .repo }}" "{{ .rev }}"
+              rm -rf "$PLUGINS/{{ .name }}"
+              mv "$STAGE"/*-{{ .rev }} "$PLUGINS/{{ .name }}"
+              {{- end }}
+              {{- range .Values.plugins.scanners }}
+              fetch "{{ .repo }}" "{{ .rev }}"
+              cp -rf "$STAGE"/*-{{ .rev }}/Scanners/. "$SCANNERS/"
+              rm -rf "$STAGE"/*-{{ .rev }}
+              {{- end }}
+              rm -rf "$STAGE"
+          volumeMounts:
+            - name: config
+              mountPath: /config
       containers:
         - name: {{ .Chart.Name }}
           image: docker.io/plexinc/pms-docker:1.43.2.10687-563d026ea@sha256:c37106c57fed7a6624f5dee5a3ce460ff011f09a2aa7f4ee9e8dbbd08ae1b87e

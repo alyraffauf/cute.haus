@@ -23,7 +23,7 @@
       "customType": "regex",
       "managerFilePatterns": ["/^k8s/charts/.*\\.ya?ml$/"],
       "matchStrings": [
-        "^\\s*(?:image|imageName):\\s+[\"']?(?<depName>[^\\s\"'{}]+?):(?<currentValue>[^\\s\"'@{}]+)@(?<currentDigest>sha256:[a-f0-9]{64})[\"']?\\s*$"
+        "^\\s*(?:image|imageName|pluginImage):\\s+[\"']?(?<depName>[^\\s\"'{}]+?):(?<currentValue>[^\\s\"'@{}]+)@(?<currentDigest>sha256:[a-f0-9]{64})[\"']?\\s*$"
       ],
       "datasourceTemplate": "docker"
     },
@@ -34,6 +34,16 @@
         "repository:\\s+[\"']?(?<depName>[^\\s\"']+)[\"']?\\s+tag:\\s+[\"']?(?<currentValue>[^\\s\"'@]+)@(?<currentDigest>sha256:[a-f0-9]{64})[\"']?"
       ],
       "datasourceTemplate": "docker"
+    },
+    {
+      "description": "Plex plugin/scanner bundles pinned to a git commit (repo/branch/rev)",
+      "customType": "regex",
+      "managerFilePatterns": ["/^k8s/charts/.*\\.ya?ml$/"],
+      "matchStrings": [
+        "repo:\\s+[\"']?(?<depName>[^\\s\"']+)[\"']?\\s+branch:\\s+[\"']?(?<currentValue>[^\\s\"']+)[\"']?\\s+rev:\\s+[\"']?(?<currentDigest>[a-f0-9]{40})[\"']?"
+      ],
+      "packageNameTemplate": "https://github.com/{{{depName}}}",
+      "datasourceTemplate": "git-refs"
     }
   ],
 

@@ -1,0 +1,20 @@
+# Plex plugins/scanners are provisioned into the config volume by an initContainer
+# on every pod start, pinned to exact commits via GitHub archive tarballs
+pluginImage: docker.io/library/alpine:3.24@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b
+
+plugins:
+  # Cloned wholesale into "Plug-ins/<name>".
+  bundles:
+    - name: Audnexus.bundle
+      repo: djdembeck/Audnexus.bundle
+      branch: main
+      rev: 4d204bf387e1a6ae844ebd2cc73b61db7540c11e
+    - name: Hama.bundle
+      repo: ZeroQI/Hama.bundle
+      branch: master
+      rev: 81f72eb4bcc2d362ba6beea0f64abb976a30689c
+  # The repo's "Scanners/" subtree is merged into the Plex "Scanners/" dir.
+  scanners:
+    - repo: ZeroQI/Absolute-Series-Scanner
+      branch: master
+      rev: a72a58f764d1884a3007811576440a6cf3b7f21a
