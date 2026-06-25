@@ -15,7 +15,6 @@
       k3s-node
       locale-en-us
       media-share
-      plex
       prometheus-node
       swap
       syncthing

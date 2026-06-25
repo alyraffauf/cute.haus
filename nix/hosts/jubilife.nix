@@ -24,7 +24,6 @@ in {
       k3s-node
       lanzaboote
       locale-en-us
-      plex
       podman
       prometheus-node
       qbittorrent
@@ -132,8 +131,6 @@ in {
             zone = "home";
           };
 
-          myPlex.dataDir = "/mnt/Data";
-
           mySyncthing = {
             certFile = config.sops.secrets.syncthingCert.path;
             keyFile = config.sops.secrets.syncthingKey.path;
@@ -167,6 +164,7 @@ in {
           "d /mnt/Data/arm/config 0755 1000 1000 - -"
           "d /mnt/Data/arm 0755 1000 1000 - -"
           "d /mnt/Data/jellyfin 0700 1000 1000 - -"
+          "d /mnt/Data/plex 0755 1000 1000 - -"
         ];
 
         virtualisation.oci-containers.containers = {
@@ -288,6 +286,11 @@ in {
             jellyfin = {
               paths = ["${dataDirectory}/jellyfin"];
             };
+
+            plex = {
+              exclude = ["${dataDirectory}/plex/Library/Application Support/Plex Media Server/Plug-in Support/Databases"];
+              paths = ["${dataDirectory}/plex"];
+            };
           };
 
           sops = {
@@ -300,7 +303,22 @@ in {
           };
 
           networking.firewall = {
-            allowedTCPPorts = [6881];
+            allowedTCPPorts =
+              [6881]
+              ++ [
+                # Plex (hostNetwork): PMS, Companion, HTTPS
+                32400
+                8324
+                32443
+              ];
+            allowedUDPPorts = [
+              # Plex (hostNetwork): DLNA + GDM auto-discovery
+              1900
+              32410
+              32412
+              32413
+              32414
+            ];
             extraInputRules = ''
               -s ${k3sPodCidr} -p tcp --dport 2049 -j ACCEPT
               -s ${k3sPodCidr} -p udp --dport 2049 -j ACCEPT

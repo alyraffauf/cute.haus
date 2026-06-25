@@ -288,6 +288,12 @@ releases:
     needs:
       - default/cluster-tls
 
+  - name: plex
+    namespace: default
+    chart: ./charts/plex
+    needs:
+      - default/cluster-tls
+
   - name: navidrome
     namespace: default
     chart: ./charts/navidrome
