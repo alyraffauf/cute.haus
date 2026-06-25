@@ -31,7 +31,7 @@ spec:
           tolerationSeconds: 60
       containers:
         - name: immich
-          image: ghcr.io/immich-app/immich-server:v2.7.5@sha256:cd4aaf5d917fe19b942bba0df4e50eed8e6766190b381e85687cc7880255674e
+          image: ghcr.io/immich-app/immich-server:v2.7.5@sha256:c15bff75068effb03f4355997d03dc7e0fc58720c2b54ad6f7f10d1bc57efaa5
           imagePullPolicy: IfNotPresent
           env:
             - name: DB_HOSTNAME
