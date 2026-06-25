@@ -33,8 +33,8 @@ spec:
           tolerationSeconds: 60
       containers:
         - name: {{ .Chart.Name }}
-          image: ghcr.io/bluesky-social/pds:latest
-          imagePullPolicy: Always
+          image: ghcr.io/bluesky-social/pds:latest@sha256:1fa8bbceabb65d8e1710749b1ea92c1c20a7489ca38da4a0a5f64c0c10a70c29
+          imagePullPolicy: IfNotPresent
           env:
             - name: LOG_ENABLED
               value: "true"
