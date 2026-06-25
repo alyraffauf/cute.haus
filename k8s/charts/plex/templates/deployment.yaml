@@ -16,6 +16,10 @@ spec:
       labels:
         app: {{ .Chart.Name }}
     spec:
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       terminationGracePeriodSeconds: 30
       enableServiceLinks: false
       # hostNetwork so GDM auto-discovery, DLNA and the router-forwarded

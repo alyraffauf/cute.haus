@@ -14,6 +14,10 @@ spec:
       labels:
         app: {{ .Chart.Name }}
     spec:
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: {{ .Chart.Name }}
           image: ghcr.io/tarampampam/error-pages:4@sha256:978c1f83e8f26742743ec3b565214ed9f2296cb5171b592071a6569dceac8c26

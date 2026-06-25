@@ -16,6 +16,10 @@ spec:
       labels:
         app: {{ .Chart.Name }}
     spec:
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       terminationGracePeriodSeconds: 15
       tolerations:
         - key: node.kubernetes.io/not-ready

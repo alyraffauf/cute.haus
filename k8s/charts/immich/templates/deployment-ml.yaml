@@ -16,6 +16,10 @@ spec:
       labels:
         app: immich-ml
     spec:
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       terminationGracePeriodSeconds: 30
       enableServiceLinks: false
       nodeSelector:

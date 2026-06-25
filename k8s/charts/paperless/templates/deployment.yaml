@@ -16,6 +16,7 @@ spec:
       labels:
         app: {{ .Chart.Name }}
     spec:
+      automountServiceAccountToken: false
       initContainers:
         - name: wait-deps
           image: ghcr.io/paperless-ngx/paperless-ngx:latest@sha256:6c86cad803970ea782683a8e80e7403444c5bf3cf70de63b4d3c8e87500db92f

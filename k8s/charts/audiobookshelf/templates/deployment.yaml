@@ -16,6 +16,7 @@ spec:
       labels:
         app: {{ .Chart.Name }}
     spec:
+      automountServiceAccountToken: false
       terminationGracePeriodSeconds: 30
       tolerations:
         - key: node.kubernetes.io/not-ready
@@ -30,6 +31,9 @@ spec:
         - name: {{ .Chart.Name }}
           image: ghcr.io/advplyr/audiobookshelf:2.35.1@sha256:1eef6716183c52abafe5405e7d6be8390248ecd59c7488c44af871757ac8fc4d
           imagePullPolicy: IfNotPresent
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
           env:
             - name: TZ
               value: "America/New_York"

@@ -18,6 +18,10 @@ spec:
       labels:
         app: forward-auth-{{ $key }}
     spec:
+      automountServiceAccountToken: false
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       terminationGracePeriodSeconds: 15
       {{- with $.Values.failover }}
       tolerations:

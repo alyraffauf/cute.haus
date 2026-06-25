@@ -16,11 +16,14 @@ spec:
       labels:
         app: {{ .Chart.Name }}
     spec:
+      automountServiceAccountToken: false
       terminationGracePeriodSeconds: 30
       nodeSelector:
         kubernetes.io/hostname: jubilife
       securityContext:
         fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
       tolerations:
         - key: node.kubernetes.io/not-ready
           operator: Exists
