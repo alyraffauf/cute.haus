@@ -171,7 +171,7 @@ releases:
     needs:
       - intel-device-plugin/intel-device-plugins-operator
     values:
-      - sharedDevNum: 2
+      - sharedDevNum: 4
 
   # ─── Shared platform services ───────────────────────────────────────────
 
