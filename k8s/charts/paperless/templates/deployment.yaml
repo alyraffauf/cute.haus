@@ -17,6 +17,19 @@ spec:
         app: {{ .Chart.Name }}
     spec:
       automountServiceAccountToken: false
+      enableServiceLinks: false
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        fsGroup: 1000
+      tolerations:
+        - key: node.kubernetes.io/not-ready
+          operator: Exists
+          effect: NoExecute
+          tolerationSeconds: 60
+        - key: node.kubernetes.io/unreachable
+          operator: Exists
+          effect: NoExecute
+          tolerationSeconds: 60
       initContainers:
         - name: wait-deps
           image: ghcr.io/paperless-ngx/paperless-ngx:latest@sha256:6c86cad803970ea782683a8e80e7403444c5bf3cf70de63b4d3c8e87500db92f
@@ -30,19 +43,6 @@ spec:
               echo "waiting for gotenberg..."
               until curl -sf http://gotenberg:3000/health; do sleep 2; done
               echo "dependencies ready"
-      terminationGracePeriodSeconds: 30
-      enableServiceLinks: false
-      securityContext:
-        fsGroup: 1000
-      tolerations:
-        - key: node.kubernetes.io/not-ready
-          operator: Exists
-          effect: NoExecute
-          tolerationSeconds: 60
-        - key: node.kubernetes.io/unreachable
-          operator: Exists
-          effect: NoExecute
-          tolerationSeconds: 60
       containers:
         - name: {{ .Chart.Name }}
           image: ghcr.io/paperless-ngx/paperless-ngx:latest@sha256:6c86cad803970ea782683a8e80e7403444c5bf3cf70de63b4d3c8e87500db92f

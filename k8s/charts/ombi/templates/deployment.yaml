@@ -17,6 +17,7 @@ spec:
         app: {{ .Chart.Name }}
     spec:
       automountServiceAccountToken: false
+      enableServiceLinks: false
       terminationGracePeriodSeconds: 30
       securityContext:
         fsGroup: 1000

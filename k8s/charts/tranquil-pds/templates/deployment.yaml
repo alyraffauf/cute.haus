@@ -15,19 +15,11 @@ spec:
         app: {{ .Chart.Name }}
     spec:
       automountServiceAccountToken: false
+      enableServiceLinks: false
+      terminationGracePeriodSeconds: 15
       securityContext:
         seccompProfile:
           type: RuntimeDefault
-      terminationGracePeriodSeconds: 15
-      imagePullSecrets:
-        - name: atcr-pull
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app: {{ .Chart.Name }}
       tolerations:
         - key: node.kubernetes.io/not-ready
           operator: Exists
@@ -37,6 +29,15 @@ spec:
           operator: Exists
           effect: NoExecute
           tolerationSeconds: 60
+      imagePullSecrets:
+        - name: atcr-pull
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: {{ .Chart.Name }}
       containers:
         - name: {{ .Chart.Name }}
           image: atcr.io/tranquil.farm/tranquil-pds:latest@sha256:58b5bd2c29f49b2e735f13c957ace78c318551c4f982e653021e1b100a208716

@@ -17,9 +17,8 @@ spec:
         app: {{ .Chart.Name }}
     spec:
       automountServiceAccountToken: false
+      enableServiceLinks: false
       terminationGracePeriodSeconds: 30
-      nodeSelector:
-        kubernetes.io/hostname: jubilife
       securityContext:
         fsGroup: 1000
         seccompProfile:
@@ -33,6 +32,8 @@ spec:
           operator: Exists
           effect: NoExecute
           tolerationSeconds: 60
+      nodeSelector:
+        kubernetes.io/hostname: jubilife
       containers:
         - name: {{ .Chart.Name }}
           image: deluan/navidrome:0.62.0@sha256:c4b5cb36a790b3eb63ca6a68bbe2fe149c2d7fa2e586f7a480e61db630e6664b

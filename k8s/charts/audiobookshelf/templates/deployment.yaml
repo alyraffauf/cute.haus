@@ -17,6 +17,7 @@ spec:
         app: {{ .Chart.Name }}
     spec:
       automountServiceAccountToken: false
+      enableServiceLinks: false
       terminationGracePeriodSeconds: 30
       tolerations:
         - key: node.kubernetes.io/not-ready

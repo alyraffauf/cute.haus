@@ -15,6 +15,7 @@ spec:
         app: {{ .Chart.Name }}
     spec:
       automountServiceAccountToken: false
+      enableServiceLinks: false
       securityContext:
         seccompProfile:
           type: RuntimeDefault

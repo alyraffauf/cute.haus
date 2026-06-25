@@ -17,11 +17,11 @@ spec:
         app: {{ .Chart.Name }}
     spec:
       automountServiceAccountToken: false
+      enableServiceLinks: false
+      terminationGracePeriodSeconds: 30
       securityContext:
         seccompProfile:
           type: RuntimeDefault
-      terminationGracePeriodSeconds: 30
-      enableServiceLinks: false
       # hostNetwork so GDM auto-discovery, DLNA and the router-forwarded
       # remote-access port (32400) all reach Plex directly on jubilife.
       hostNetwork: true

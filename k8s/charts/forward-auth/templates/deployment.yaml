@@ -19,10 +19,11 @@ spec:
         app: forward-auth-{{ $key }}
     spec:
       automountServiceAccountToken: false
+      enableServiceLinks: false
+      terminationGracePeriodSeconds: 15
       securityContext:
         seccompProfile:
           type: RuntimeDefault
-      terminationGracePeriodSeconds: 15
       {{- with $.Values.failover }}
       tolerations:
         - key: node.kubernetes.io/not-ready

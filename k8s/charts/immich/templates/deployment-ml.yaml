@@ -17,13 +17,11 @@ spec:
         app: immich-ml
     spec:
       automountServiceAccountToken: false
+      enableServiceLinks: false
+      terminationGracePeriodSeconds: 30
       securityContext:
         seccompProfile:
           type: RuntimeDefault
-      terminationGracePeriodSeconds: 30
-      enableServiceLinks: false
-      nodeSelector:
-        kubernetes.io/hostname: jubilife
       tolerations:
         - key: node.kubernetes.io/not-ready
           operator: Exists
@@ -33,6 +31,8 @@ spec:
           operator: Exists
           effect: NoExecute
           tolerationSeconds: 60
+      nodeSelector:
+        kubernetes.io/hostname: jubilife
       containers:
         - name: immich-ml
           image: ghcr.io/immich-app/immich-machine-learning:v2.7.5-openvino@sha256:619b43773d4f050d7504a236061034c06ef653f28693813ebccb1ab5d1e77512
