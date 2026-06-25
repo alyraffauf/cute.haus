@@ -205,6 +205,12 @@ in {
                   url = "https://prometheus.${tnet}";
                 }
                 {
+                  name = "Kubernetes Prometheus";
+                  type = "prometheus";
+                  access = "proxy";
+                  url = "http://127.0.0.1:30220";
+                }
+                {
                   name = "Loki";
                   type = "loki";
                   access = "proxy";

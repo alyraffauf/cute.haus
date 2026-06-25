@@ -4,6 +4,10 @@ helmDefaults:
   historyMax: 3
 
 repositories:
+  - name: grafana
+    url: https://grafana.github.io/helm-charts
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
   - name: traefik
     url: https://traefik.github.io/charts
   - name: longhorn
@@ -172,6 +176,108 @@ releases:
       - intel-device-plugin/intel-device-plugins-operator
     values:
       - sharedDevNum: 4
+
+  # Cluster observability. Host-level Grafana/Prometheus/Loki still live on
+  # eterna; these releases restore Kubernetes-native metrics and pod logs.
+  - name: kubernetes-prometheus
+    namespace: monitoring
+    createNamespace: true
+    chart: prometheus-community/prometheus
+    version: 29.13.0
+    needs:
+      - longhorn-system/longhorn
+    values:
+      - alertmanager:
+          enabled: false
+        prometheus-pushgateway:
+          enabled: false
+        server:
+          global:
+            scrape_interval: 30s
+            evaluation_interval: 30s
+          persistentVolume:
+            storageClass: longhorn
+            size: 20Gi
+          retention: 30d
+          retentionSize: 15GB
+          service:
+            type: NodePort
+            nodePort: 30220
+        kube-state-metrics:
+          prometheusScrape: true
+        prometheus-node-exporter:
+          prometheus:
+            monitor:
+              enabled: false
+
+  - name: kubernetes-alloy
+    namespace: monitoring
+    createNamespace: true
+    chart: grafana/alloy
+    version: 1.10.0
+    values:
+      - alloy:
+          clustering:
+            enabled: true
+          configMap:
+            content: |
+              discovery.kubernetes "pods" {
+                role = "pod"
+              }
+
+              loki.relabel "pods" {
+                forward_to = [loki.write.default.receiver]
+
+                rule {
+                  source_labels = ["__meta_kubernetes_namespace"]
+                  target_label  = "namespace"
+                }
+
+                rule {
+                  source_labels = ["__meta_kubernetes_pod_name"]
+                  target_label  = "pod"
+                }
+
+                rule {
+                  source_labels = ["__meta_kubernetes_pod_container_name"]
+                  target_label  = "container"
+                }
+
+                rule {
+                  source_labels = ["__meta_kubernetes_pod_node_name"]
+                  target_label  = "node"
+                }
+
+                rule {
+                  source_labels = ["__meta_kubernetes_pod_label_app_kubernetes_io_name"]
+                  target_label  = "app"
+                }
+
+                rule {
+                  replacement  = "kubernetes-pods"
+                  target_label = "job"
+                }
+
+                rule {
+                  replacement  = "cute-haus"
+                  target_label = "cluster"
+                }
+              }
+
+              loki.source.kubernetes "pods" {
+                targets    = discovery.kubernetes.pods.targets
+                forward_to = [loki.relabel.pods.receiver]
+
+                clustering {
+                  enabled = true
+                }
+              }
+
+              loki.write "default" {
+                endpoint {
+                  url = "https://loki.narwhal-snapper.ts.net/loki/api/v1/push"
+                }
+              }
 
   # ─── Shared platform services ───────────────────────────────────────────
 
