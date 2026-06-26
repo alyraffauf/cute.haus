@@ -104,6 +104,29 @@ Some charts intentionally render repeated resources from values:
 Those are data charts rather than app workload charts, so a little looping is
 acceptable there.
 
+## Intel GPU Scheduling
+
+Intel GPU nodes are labeled from the NixOS `intel-gpu` module:
+
+```yaml
+nodeSelector:
+  cute.haus/intel-gpu: "true"
+```
+
+For pods that need actual GPU access, also request and limit the Intel device
+plugin resource:
+
+```yaml
+resources:
+  requests:
+    gpu.intel.com/i915: "1"
+  limits:
+    gpu.intel.com/i915: "1"
+```
+
+Do not use `gpu.intel.com/i915` as a `nodeSelector`; the Intel device plugin
+publishes that as node capacity/allocatable, not as a stable node label.
+
 ## Secret Flow
 
 ```text

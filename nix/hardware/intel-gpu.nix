@@ -33,6 +33,10 @@
       };
 
       services.xserver.videoDrivers = ["modesetting"];
+
+      services.k3s.extraFlags = lib.mkIf config.services.k3s.enable [
+        "--node-label=cute.haus/intel-gpu=true"
+      ];
     };
   };
 }
