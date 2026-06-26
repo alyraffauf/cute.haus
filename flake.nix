@@ -1,5 +1,5 @@
 {
-  description = "Aly's NixOS homelab flake with flake-parts";
+  description = "cute.haus infra";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";

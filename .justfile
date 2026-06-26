@@ -11,10 +11,10 @@ _default:
     @printf '\033[1;33mUsage:\033[0m just <recipe> [args...]\n\n'
     @just --list --list-heading $'Available recipes:\n\n'
 
-# Generate {ci,edconfig} files.
+# Regenerate editor config (.zed/settings.json).
 [group('flake')]
-gen target:
-    nix run .#{{ if target == "ci" { "render-workflows" } else if target == "edconfig" { "gen-files" } else { error("unknown target: " + target) } }}
+gen:
+    nix run .#gen-files
 
 # Update flake inputs.
 [group('flake')]
@@ -183,69 +183,3 @@ bump-tranquil:
     sed -i "s|@${CURRENT_DIGEST}|@${UPSTREAM}|" "$TEMPLATE"
     git add "$TEMPLATE"
     git commit -m "k8s/tranquil-pds: ${FLOAT_TAG}@${CURRENT_DIGEST:7:12} → ${FLOAT_TAG}@${UPSTREAM:7:12}"
-
-# Scaffold a new app chart under k8s/charts/<name>. After running, edit the
-# values.yaml and add a release block to k8s/helmfile.yaml. See k8s/charts/README.md.
-[group('kubes')]
-new-app NAME:
-    #!/usr/bin/env bash
-    set -euo pipefail
-    DIR="k8s/charts/{{ NAME }}"
-    if [[ -e "$DIR" ]]; then
-        echo "$DIR already exists; aborting." >&2
-        exit 1
-    fi
-    mkdir -p "$DIR/templates"
-    cat > "$DIR/Chart.yaml" <<EOF
-    apiVersion: v2
-    name: {{ NAME }}
-    description: TODO
-    type: application
-    version: 0.1.0
-    appVersion: "1.0.0"
-    dependencies:
-      - name: common
-        version: 0.1.0
-        repository: file://../common
-    EOF
-    cat > "$DIR/values.yaml" <<'EOF'
-    replicaCount: 1
-    strategy: Recreate
-
-    image:
-      repository: TODO
-      tag: TODO@sha256:TODO
-      pullPolicy: IfNotPresent
-
-    resources:
-      requests: { cpu: 50m, memory: 64Mi }
-      limits:   { cpu: "1", memory: 256Mi }
-
-    ports:
-      - name: http
-        containerPort: 80
-
-    service:
-      type: ClusterIP
-      ports:
-        - name: http
-          port: 80
-          targetPort: http
-
-    probes:
-      readiness:
-        httpGet: { path: /, port: http }
-        periodSeconds: 10
-
-    ingress:
-      enabled: true
-      className: traefik
-      routes:
-        - host: TODO.cute.haus
-          tlsSecret: cute-haus-tls
-    EOF
-    for kind in deployment service ingress; do
-        echo '{{{{- include "common.'"$kind"'" . }}}}' > "$DIR/templates/$kind.yaml"
-    done
-    helm dependency update "$DIR" >/dev/null
-    echo "scaffolded $DIR. next: edit values.yaml and add a release to k8s/helmfile.yaml."
