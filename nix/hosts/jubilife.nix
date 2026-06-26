@@ -50,6 +50,7 @@ in {
 
           environment.systemPackages = with pkgs; [
             abcde
+            age
             chezmoi
             claude-code
             codex
