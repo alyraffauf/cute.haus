@@ -15,18 +15,18 @@ SOPS+age secrets; Cloudflare/B2 via Terraform.
 
 ## Commands
 
-| Task | Command |
-| --- | --- |
-| Local pre-push gate | `just check` → `bun scripts/check.ts` + `nix flake check --impure` |
-| Build a NixOS host (no deploy) | `just build <host>` (`eterna` `jubilife` `pastoria` `snowpoint`) |
-| Deploy all hosts | `just deploy` (nynx `--operation switch`) |
-| Offline deploy + reboot | `just deploy-offline` |
-| Update flake inputs | `just update [inputs]` / `just update-nixpkgs` |
-| Regenerate editor config | `just gen` (writes `.zed/settings.json`) |
-| Edit a secret | `just sops-edit <file>` (`secrets/<file>`) |
-| Rekey after key change | `just sops-rekey` (after adding/removing `keys/*.pub`) |
-| Bump pinned image digests | `just bump <chart>` / `--all` / `--check` |
-| Bump private-registry image | `just bump-tranquil` (atcr.io, needs sops creds) |
+| Task                           | Command                                                            |
+| ------------------------------ | ------------------------------------------------------------------ |
+| Local pre-push gate            | `just check` → `bun scripts/check.ts` + `nix flake check --impure` |
+| Build a NixOS host (no deploy) | `just build <host>` (`eterna` `jubilife` `pastoria` `snowpoint`)   |
+| Deploy all hosts               | `just deploy` (nynx `--operation switch`)                          |
+| Offline deploy + reboot        | `just deploy-offline`                                              |
+| Update flake inputs            | `just update [inputs]` / `just update-nixpkgs`                     |
+| Regenerate editor config       | `just gen` (writes `.zed/settings.json`)                           |
+| Edit a secret                  | `just sops-edit <file>` (`secrets/<file>`)                         |
+| Rekey after key change         | `just sops-rekey` (after adding/removing `keys/*.pub`)             |
+| Bump pinned image digests      | `just bump <chart>` / `--all` / `--check`                          |
+| Bump private-registry image    | `just bump-tranquil` (atcr.io, needs sops creds)                   |
 
 `scripts/` is Bun + TypeScript (`bun scripts/<file>.ts`); `scripts/check.ts`
 runs three consistency checks (forward-auth, release-names, pinned-images).
