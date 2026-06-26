@@ -23,7 +23,7 @@
       "customType": "regex",
       "managerFilePatterns": ["/^k8s/charts/.*\\.ya?ml$/"],
       "matchStrings": [
-        "^\\s*(?:image|imageName|pluginImage):\\s+[\"']?(?<depName>[^\\s\"'{}]+?):(?<currentValue>[^\\s\"'@{}]+)@(?<currentDigest>sha256:[a-f0-9]{64})[\"']?\\s*$"
+        "\\s*(?:image|imageName|pluginImage):\\s+[\"']?(?<depName>[^\\s\"'{}]+?):(?<currentValue>[^\\s\"'@{}]+)@(?<currentDigest>sha256:[a-f0-9]{64})[\"']?"
       ],
       "datasourceTemplate": "docker"
     },
