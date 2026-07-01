@@ -7,6 +7,12 @@ spec:
   interval: 15m
   releaseName: pg-shared
   targetNamespace: cnpg-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/pg-shared
@@ -14,7 +20,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap

@@ -7,6 +7,12 @@ spec:
   interval: 15m
   releaseName: traefik
   targetNamespace: kube-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: traefik

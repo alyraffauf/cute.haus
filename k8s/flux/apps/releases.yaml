@@ -7,6 +7,12 @@ spec:
   interval: 15m
   releaseName: error-pages
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/error-pages
@@ -14,7 +20,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -30,6 +36,12 @@ spec:
   interval: 15m
   releaseName: aly-codes
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/aly-codes
@@ -37,7 +49,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -53,6 +65,12 @@ spec:
   interval: 15m
   releaseName: switchyard
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/switchyard
@@ -60,7 +78,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -76,6 +94,12 @@ spec:
   interval: 15m
   releaseName: audiobookshelf
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/audiobookshelf
@@ -83,7 +107,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -99,6 +123,12 @@ spec:
   interval: 15m
   releaseName: morsels
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/morsels
@@ -106,7 +136,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -122,6 +152,12 @@ spec:
   interval: 15m
   releaseName: ombi
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/ombi
@@ -129,7 +165,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -145,6 +181,12 @@ spec:
   interval: 15m
   releaseName: pocket-id
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/pocket-id
@@ -152,7 +194,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -168,6 +210,12 @@ spec:
   interval: 15m
   releaseName: forward-auth
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/forward-auth
@@ -175,7 +223,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -194,6 +242,12 @@ spec:
   interval: 15m
   releaseName: immich
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/immich
@@ -201,7 +255,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -217,6 +271,12 @@ spec:
   interval: 15m
   releaseName: jellyfin
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/jellyfin
@@ -224,7 +284,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -240,6 +300,12 @@ spec:
   interval: 15m
   releaseName: plex
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/plex
@@ -247,7 +313,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -265,6 +331,12 @@ spec:
   interval: 15m
   releaseName: navidrome
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/navidrome
@@ -272,7 +344,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -288,6 +360,12 @@ spec:
   interval: 15m
   releaseName: paperless
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/paperless
@@ -295,7 +373,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -311,6 +389,12 @@ spec:
   interval: 15m
   releaseName: nextcloud
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/nextcloud
@@ -318,7 +402,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -334,6 +418,12 @@ spec:
   interval: 15m
   releaseName: collabora
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/collabora
@@ -341,7 +431,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -357,6 +447,12 @@ spec:
   interval: 15m
   releaseName: uptime-kuma
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/uptime-kuma
@@ -364,7 +460,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -380,6 +476,12 @@ spec:
   interval: 15m
   releaseName: vaultwarden
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/vaultwarden
@@ -387,7 +489,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -403,6 +505,12 @@ spec:
   interval: 15m
   releaseName: forgejo
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/forgejo
@@ -410,7 +518,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
@@ -426,6 +534,12 @@ spec:
   interval: 15m
   releaseName: tranquil-pds
   targetNamespace: default
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/tranquil-pds
@@ -433,7 +547,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap

@@ -9,6 +9,12 @@ spec:
   interval: 15m
   releaseName: cert-manager-issuers
   targetNamespace: cert-manager
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/cert-manager-issuers
@@ -16,7 +22,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap

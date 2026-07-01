@@ -9,6 +9,11 @@ spec:
   targetNamespace: node-feature-discovery
   install:
     createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: node-feature-discovery

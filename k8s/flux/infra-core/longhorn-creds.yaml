@@ -12,6 +12,11 @@ spec:
   targetNamespace: longhorn-system
   install:
     createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   chart:
     spec:
       chart: ./k8s/charts/longhorn-creds
@@ -19,7 +24,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: cute-haus
+        name: flux-system
         namespace: flux-system
   valuesFrom:
     - kind: ConfigMap
