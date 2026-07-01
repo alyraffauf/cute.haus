@@ -32,7 +32,7 @@ jobs:
       - uses: actions/checkout@v7
         with: { fetch-depth: 1 }
       - uses: azure/setup-helm@v5
-      - uses: azure/setup-kubectl@v4
+      - uses: azure/setup-kubectl@v5
       - name: helm template each local chart with the generated global values
         run: |
           set -euo pipefail
@@ -60,7 +60,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with: { fetch-depth: 1 }
-      - uses: azure/setup-kubectl@v4
+      - uses: azure/setup-kubectl@v5
       - name: kubectl kustomize each flux layer
         run: |
           set -e
