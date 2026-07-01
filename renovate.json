@@ -9,7 +9,7 @@
     "enabled": true
   },
 
-  "helmrelease": {
+  "flux": {
     "managerFilePatterns": ["/^k8s/flux/.*\\.ya?ml$/"]
   },
 
@@ -36,11 +36,10 @@
       "datasourceTemplate": "docker"
     },
     {
-      "description": "Shared image pins in values/global.yaml and the Flux ConfigMap mirror",
+      "description": "Shared image pins in the global values file (the cute-haus-global ConfigMap is generated from it)",
       "customType": "regex",
       "managerFilePatterns": [
-        "/^k8s/values/global\\.ya?ml$/",
-        "/^k8s/flux/sources/global-configmap\\.ya?ml$/"
+        "/^k8s/flux/sources/global\\.values\\.ya?ml$/"
       ],
       "matchStrings": [
         "\\s+\\w+:\\s+(?<depName>[^:\\s]+(?:/[^:\\s]+)*):(?<currentValue>[^@\\s]+)@(?<currentDigest>sha256:[a-f0-9]{64})"

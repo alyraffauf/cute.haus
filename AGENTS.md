@@ -63,9 +63,10 @@ treefmt-nix). Enforced via `nix flake check` in `just check`.
   defines the Flux Kustomization DAG; `flux/*/*.yaml` hold HelmReleases;
   `flux/secrets/*.sops.yaml` are first-class Kubernetes Secrets decrypted by
   Flux. `charts/<name>/` are in-tree charts with **explicit manifests, no
-  shared helpers** (see `k8s/charts/README.md`). `values/global.yaml` holds
-  shared non-secret image pins + constants, mirrored into the Flux
-  `cute-haus-global` ConfigMap.
+  shared helpers** (see `k8s/charts/README.md`).
+  `flux/sources/global.values.yaml` holds shared non-secret image pins +
+  constants; kustomize generates the `cute-haus-global` ConfigMap from it
+  (`configMapGenerator` in `flux/sources/kustomization.yaml`).
 - `secrets/` — SOPS, multi-recipient age. `.sops.yaml` is generated; never
   hand-edit either.
 - `keys/` — `aly_<host>.pub` (user key) + `root_<host>.pub` (host key) age
@@ -90,7 +91,7 @@ treefmt-nix). Enforced via `nix flake check` in `just check`.
 - **Every deployed chart must sha256-pin its container images**
   (`image: repo:tag@sha256:...` or `image: {repository, tag: ...@sha256:...}`),
   enforced by `check-pinned-images.ts`. Shared images (alpine, rclone) live
-  in `k8s/values/global.yaml`. Renovate keeps digests fresh (skips
+  in `k8s/flux/sources/global.values.yaml`. Renovate keeps digests fresh (skips
   `tranquil`, which is on private atcr.io — use `just bump-tranquil`).
 - **forward-auth OIDC slugs** must be `forward-auth-<app>` and match a key in
   the plaintext `apps:` map in `k8s/flux/apps/releases.yaml` (enforced by
