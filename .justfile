@@ -187,10 +187,11 @@ check:
 bump TARGET:
     bun scripts/bump-image.ts {{ TARGET }}
 
-# Same-namespace real-release helper for local in-tree charts only.
-# Usage: just k8s {apply|diff|suspend|resume|reconcile} <release> [namespace]
+# Real-release helper for local in-tree charts only. Flux HelmRelease objects
+# live in flux-system; Helm installs into the target namespace.
+# Usage: just k8s {apply|diff|suspend|resume|reconcile} <release> [target-namespace] [helmrelease-namespace]
 [group('kubes')]
-k8s action release namespace='default':
+k8s action release namespace='default' hr_namespace='flux-system':
     #!/usr/bin/env bash
     set -euo pipefail
     chart="k8s/charts/{{release}}"
@@ -201,7 +202,7 @@ k8s action release namespace='default':
           echo "just k8s apply supports local charts only: $chart/Chart.yaml not found" >&2
           exit 2
         fi
-        flux suspend helmrelease "{{release}}" -n "{{namespace}}" || true
+        flux suspend helmrelease "{{release}}" -n "{{hr_namespace}}" || true
         helm upgrade --install "{{release}}" "$chart" \
           -n "{{namespace}}" -f k8s/values/global.yaml
         ;;
@@ -214,16 +215,16 @@ k8s action release namespace='default':
           -n "{{namespace}}" -f k8s/values/global.yaml
         ;;
       suspend)
-        flux suspend helmrelease "{{release}}" -n "{{namespace}}"
+        flux suspend helmrelease "{{release}}" -n "{{hr_namespace}}"
         ;;
       resume)
-        flux resume helmrelease "{{release}}" -n "{{namespace}}"
+        flux resume helmrelease "{{release}}" -n "{{hr_namespace}}"
         ;;
       reconcile)
-        flux reconcile helmrelease "{{release}}" -n "{{namespace}}" --with-source
+        flux reconcile helmrelease "{{release}}" -n "{{hr_namespace}}" --with-source
         ;;
       *)
-        echo "usage: just k8s {apply|diff|suspend|resume|reconcile} <release> [namespace]" >&2
+        echo "usage: just k8s {apply|diff|suspend|resume|reconcile} <release> [target-namespace] [helmrelease-namespace]" >&2
         exit 2
         ;;
     esac

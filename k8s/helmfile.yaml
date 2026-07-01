@@ -361,14 +361,6 @@ releases:
       - values/global.yaml
       - values/secrets/audiobookshelf.yaml
 
-  - name: watsup
-    namespace: default
-    chart: ./charts/watsup
-    needs:
-      - default/cluster-tls
-    values:
-      - values/global.yaml
-
   - name: morsels
     namespace: default
     chart: ./charts/morsels

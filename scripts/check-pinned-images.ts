@@ -5,10 +5,21 @@
 
 const HELMFILE = "k8s/helmfile.yaml";
 const GLOB = "k8s/charts/*/**/*.yaml";
+const FLUX_DIRS = [
+  "k8s/flux/infra-crds",
+  "k8s/flux/infra-core",
+  "k8s/flux/platform",
+  "k8s/flux/apps",
+  "k8s/flux/external-routes",
+];
 const ALLOW_FLOATING = new Set<string>();
 
 type Release = { chart: string };
 type Helmfile = { releases: Release[] };
+type HelmRelease = {
+  kind?: string;
+  spec?: { chart?: { spec?: { chart?: string } } };
+};
 
 function chartNameFromPath(templatePath: string): string {
   return templatePath.split("/")[2];
@@ -22,6 +33,26 @@ async function deployedChartNames(): Promise<Set<string>> {
       names.add(release.chart.replace(/^\.\/charts\//, ""));
     }
   }
+
+  for (const dir of FLUX_DIRS) {
+    const glob = new Bun.Glob(`${dir}/**/*.yaml`);
+    for await (const path of glob.scan(".")) {
+      const text = await Bun.file(path).text();
+      for (const doc of text
+        .split(/^---\s*$/m)
+        .map((doc) => doc.trim())
+        .filter(Boolean)) {
+        const parsed = Bun.YAML.parse(doc) as HelmRelease | null;
+        if (parsed?.kind !== "HelmRelease") continue;
+
+        const chart = parsed.spec?.chart?.spec?.chart;
+        if (chart?.startsWith("./k8s/charts/")) {
+          names.add(chart.replace(/^\.\/k8s\/charts\//, ""));
+        }
+      }
+    }
+  }
+
   return names;
 }
 

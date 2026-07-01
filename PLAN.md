@@ -98,6 +98,9 @@
 
 11. **Convert Helmfile Releases To Flux HelmReleases**
     - Convert releases layer-by-layer.
+    - Store Flux `HelmRelease` objects in `flux-system` and set
+      `spec.targetNamespace` to the workload namespace. This keeps shared
+      `valuesFrom` objects such as `cute-haus-global` in one namespace.
     - External charts use `HelmRepository`.
     - In-tree charts use `GitRepository` and `chart: ./k8s/charts/<name>`.
     - Inline non-secret values in `spec.values`.
@@ -156,6 +159,8 @@
       ```
 
     - Scope: local in-tree charts only where release name equals `k8s/charts/<release>`.
+    - Flux `HelmRelease` objects live in `flux-system`; the optional namespace
+      argument remains the Helm target namespace.
     - `apply` suspends Flux first, then runs `helm upgrade --install`.
     - `diff` uses `helm diff upgrade --allow-unreleased`.
     - External charts are managed through Flux only.
