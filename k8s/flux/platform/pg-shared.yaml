@@ -1,0 +1,35 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pg-shared
+  namespace: flux-system
+spec:
+  interval: 15m
+  releaseName: pg-shared
+  targetNamespace: cnpg-system
+  chart:
+    spec:
+      chart: ./k8s/charts/pg-shared
+      interval: 15m
+      sourceRef:
+        kind: GitRepository
+        name: cute-haus
+        namespace: flux-system
+  valuesFrom:
+    - kind: ConfigMap
+      name: cute-haus-global
+      valuesKey: values.yaml
+  values:
+    backup:
+      enabled: true
+    roles:
+      forgejo:
+        database: forgejo
+      tranquil:
+        database: tranquil
+      pocket-id:
+        database: pocket-id
+      paperless:
+        database: paperless
+      nextcloud:
+        database: nextcloud
