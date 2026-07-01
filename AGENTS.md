@@ -1,8 +1,8 @@
 # AGENTS.md
 
 NixOS + k3s cluster IaC for cute.haus. Single operator. Flake-parts
-NixOS configs on bare-metal/VPS hosts; an in-tree helm chart per app on k3s;
-SOPS+age secrets; Cloudflare/B2 via Terraform.
+NixOS configs on bare-metal/VPS hosts; Flux-managed in-tree Helm charts on
+k3s; SOPS+age secrets; Cloudflare/B2 via Terraform.
 
 ## Environment
 
@@ -59,12 +59,13 @@ treefmt-nix). Enforced via `nix flake check` in `just check`.
   `flake.modules.nixos.<name>` (see `nix/nixos/base/default.nix`). Disk
   profiles in `nix/disko.nix`. k3s node config in `nix/nixos/profiles/k3s.nix`
   (flannel on `tailscale0`; startup blocks until tailscale0 has an IP).
-- `k8s/` — `helmfile.yaml` is the ordered release graph (uses `needs:`).
-  `charts/<name>/` are in-tree charts with **explicit manifests, no shared
-  helpers** (see `k8s/charts/README.md`). `values/global.yaml` holds shared
-  image pins + constants; `values/secrets/<name>.yaml` holds `ref+sops://`
-  vals refs into `secrets/`. Secret flow: `secrets/*.yaml` → vals → helmfile
-  → chart `templates/secret.yaml` → app `envFrom`.
+- `k8s/` — `flux/` is the ordered release graph. `flux/system/layers.yaml`
+  defines the Flux Kustomization DAG; `flux/*/*.yaml` hold HelmReleases;
+  `flux/secrets/*.sops.yaml` are first-class Kubernetes Secrets decrypted by
+  Flux. `charts/<name>/` are in-tree charts with **explicit manifests, no
+  shared helpers** (see `k8s/charts/README.md`). `values/global.yaml` holds
+  shared non-secret image pins + constants, mirrored into the Flux
+  `cute-haus-global` ConfigMap.
 - `secrets/` — SOPS, multi-recipient age. `.sops.yaml` is generated; never
   hand-edit either.
 - `keys/` — `aly_<host>.pub` (user key) + `root_<host>.pub` (host key) age
@@ -92,7 +93,8 @@ treefmt-nix). Enforced via `nix flake check` in `just check`.
   in `k8s/values/global.yaml`. Renovate keeps digests fresh (skips
   `tranquil`, which is on private atcr.io — use `just bump-tranquil`).
 - **forward-auth OIDC slugs** must be `forward-auth-<app>` and match a key in
-  `k8s/values/secrets/forward-auth.yaml` (enforced by `check-forward-auth.ts`).
+  the plaintext `apps:` map in `k8s/flux/apps/releases.yaml` (enforced by
+  `check-forward-auth.ts`).
 - k3s node labels: `topology.kubernetes.io/zone` (cloud/home),
   `cute.haus/ingress=true`, and `cute.haus/intel-gpu=true` (NixOS module).
   For GPU pods request the `gpu.intel.com/i915` resource, not a nodeSelector.

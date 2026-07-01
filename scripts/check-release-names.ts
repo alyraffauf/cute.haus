@@ -51,6 +51,15 @@ async function fluxLocalReleases(): Promise<Release[]> {
   return releases;
 }
 
+async function helmfileLocalReleases(): Promise<Release[]> {
+  if (!(await Bun.file(HELMFILE).exists())) return [];
+
+  const helmfile = Bun.YAML.parse(await Bun.file(HELMFILE).text()) as Helmfile;
+  return helmfile.releases.filter((release) =>
+    release.chart.startsWith("./charts/"),
+  );
+}
+
 function chartYamlPath(chart: string): string {
   return (
     chart.replace(/^\.\/charts\//, "k8s/charts/").replace(/^\.\//, "") +
@@ -59,13 +68,10 @@ function chartYamlPath(chart: string): string {
 }
 
 export async function checkReleaseNames(): Promise<string[]> {
-  const helmfile = Bun.YAML.parse(await Bun.file(HELMFILE).text()) as Helmfile;
   const errors: string[] = [];
 
   const releases = [
-    ...helmfile.releases.filter((release) =>
-      release.chart.startsWith("./charts/"),
-    ),
+    ...(await helmfileLocalReleases()),
     ...(await fluxLocalReleases()),
   ];
 

@@ -26,11 +26,16 @@ function chartNameFromPath(templatePath: string): string {
 }
 
 async function deployedChartNames(): Promise<Set<string>> {
-  const helmfile = Bun.YAML.parse(await Bun.file(HELMFILE).text()) as Helmfile;
   const names = new Set<string>();
-  for (const release of helmfile.releases) {
-    if (release.chart.startsWith("./charts/")) {
-      names.add(release.chart.replace(/^\.\/charts\//, ""));
+
+  if (await Bun.file(HELMFILE).exists()) {
+    const helmfile = Bun.YAML.parse(
+      await Bun.file(HELMFILE).text(),
+    ) as Helmfile;
+    for (const release of helmfile.releases) {
+      if (release.chart.startsWith("./charts/")) {
+        names.add(release.chart.replace(/^\.\/charts\//, ""));
+      }
     }
   }
 

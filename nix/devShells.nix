@@ -26,7 +26,6 @@
           bun
           fluxcd
           git
-          helmfile
           just
           kustomize
           kubectl
@@ -36,7 +35,6 @@
           sops
           ssh-to-age
           opentofu
-          vals
         ])
         # ++ lib.attrValues config.treefmt.build.programs
         ++ [

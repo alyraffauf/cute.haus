@@ -1,11 +1,11 @@
 # Charts
 
-In-tree Helm charts deployed by [`../helmfile.yaml`](../helmfile.yaml).
+In-tree Helm charts deployed by Flux HelmReleases under [`../flux`](../flux).
 
 Most app charts use explicit Kubernetes manifests. Helm is used for light
-substitution, mostly `.Chart.Name` and secret values passed by helmfile. Avoid
-shared Deployment/Service/PVC helpers; app-specific behavior should stay visible
-in the app chart.
+substitution, mostly `.Chart.Name` and shared non-secret values passed by Flux.
+Avoid shared Deployment/Service/PVC helpers; app-specific behavior should stay
+visible in the app chart.
 
 ## Layout
 
@@ -79,7 +79,6 @@ to make every chart identical.
 Keep these:
 
 - `.Chart.Name` for names, labels, selectors, and PVC names.
-- `if .Values.secret` around Secret manifests populated by vals/SOPS.
 - Small `range` loops for charts that are naturally data-driven.
 
 Avoid these:
@@ -130,22 +129,20 @@ publishes that as node capacity/allocatable, not as a stable node label.
 ## Secret Flow
 
 ```text
-secrets/foo.yaml         SOPS-encrypted, multi-recipient age
+k8s/flux/secrets/foo.sops.yaml  SOPS-encrypted Kubernetes Secret
         |
         v
-values/foo.yaml          ref+sops://... refs read by vals
+Flux kustomize-controller        decrypts with flux-system/sops-age
         |
         v
-helmfile values:         passes plaintext values during render
+Kubernetes Secret                first-class object in target namespace
         |
         v
-templates/secret.yaml    renders a chart-local Secret
-        |
-        v
-deployment envFrom       app consumes the Secret
+Deployment envFrom/secretRef     app consumes the Secret
 ```
 
-`vals` resolves `ref+sops://` URLs at render time using the local age key.
+Flux decrypts only `k8s/flux/secrets/*.sops.yaml`; host/Terraform secrets under
+`secrets/*.yaml` remain user/host-key scoped.
 
 ## Adding An App
 
@@ -154,12 +151,12 @@ deployment envFrom       app consumes the Secret
    `deployment.yaml`, `service.yaml`, `ingress.yaml`, optional `pvc.yaml`, and
    optional `secret.yaml`.
 3. Put app-specific behavior directly in those manifests.
-4. If the app needs secrets, create `secrets/<name>.yaml` and
-   `values/<name>.yaml`, then add that values file to the helmfile release.
-5. Add the release to `../helmfile.yaml`.
+4. If the app needs secrets, create first-class SOPS Secret manifests under
+   `../flux/secrets/` and reference those Secret names from the chart.
+5. Add a HelmRelease under `../flux/apps/`.
 6. Render before applying:
 
 ```bash
 helm template <name> charts/<name>
-helmfile -l name=<name> apply
+flux reconcile kustomization apps -n flux-system
 ```

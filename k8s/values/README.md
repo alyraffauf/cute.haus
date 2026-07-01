@@ -1,19 +1,16 @@
 # 📋 values/
 
-Helmfile-provided value overrides.
+Shared non-secret Helm values.
 
 ```
 values/
-└── secrets/      # vals refs (ref+sops://) into ../../secrets/
+└── global.yaml   # image pins and operational constants mirrored into Flux
 ```
 
-Each file under `secrets/` is plain yaml containing only `vals` refs that
-point into [`../../secrets/`](../../secrets/) for the actual encrypted values.
-helmfile passes these as `values:` to a release; `vals` resolves the refs
-at render time (SOPS-decrypts → splices into the values stream → helm
-renders).
+Secret values are first-class SOPS-encrypted Kubernetes Secret manifests under
+[`../flux/secrets`](../flux/secrets). Do not put secret-like values here.
 
 The chart's own `values.yaml` (under `charts/<name>/values.yaml`) holds
-the in-tree, non-secret defaults. This dir holds only the secret overlay.
+the in-tree, non-secret defaults. This dir holds only shared non-secret values.
 
 See [`../charts/README.md`](../charts/README.md) for the full secret flow.

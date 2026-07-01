@@ -18,10 +18,10 @@ This repository contains NixOS configurations, along with whatever custom module
 ├── nix/                     # NixOS + flake modules
 │   ├── hosts/               # NixOS host configurations
 │   └── modules/             # NixOS / flake modules
-├── k8s/                     # k3s: helmfile + in-tree charts + vals overlays
-│   ├── helmfile.yaml        # release graph (helmfile + helm + vals)
+├── k8s/                     # k3s: Flux + in-tree Helm charts
+│   ├── flux/                # GitOps release graph (Flux Kustomizations/HelmReleases)
 │   ├── charts/              # In-tree helm charts (see k8s/charts/README.md)
-│   └── values/              # Per-chart vals refs into ../secrets/
+│   └── values/              # Shared non-secret Helm values
 ├── secrets/                 # SOPS-encrypted yaml (multi-recipient age)
 ├── keys/                    # Per-host + per-user age recipients
 ├── terraform/               # Cloudflare DNS, etc.

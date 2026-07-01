@@ -23,5 +23,5 @@ logLevel: warn
 
 # apps:
 #   <key>:
-#     signingSecret: ref+sops://...
+#     # signing Secret lives in k8s/flux/secrets/forward-auth-<key>-env.sops.yaml
 apps: {}

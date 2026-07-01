@@ -34,12 +34,12 @@ postgresql:
     random_page_cost: "1.1"
     effective_io_concurrency: "200"
 
-# Declarative CNPG roles + databases. Passwords come from
-# values/secrets/pg-shared.yaml via vals + sops.
+# Declarative CNPG roles + databases. Password Secrets are first-class SOPS
+# manifests under k8s/flux/secrets and are referenced by role name.
 roles: {}
 
 # B2 backup target for CNPG base backups + WAL archiving.
-# Filled by values/secrets/pg-shared.yaml.
+# Credentials come from the first-class pg-shared-b2 Secret.
 backup:
   enabled: false
   destinationPath: s3://aly-backups/cute.haus/cnpg
