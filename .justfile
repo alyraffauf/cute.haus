@@ -195,6 +195,13 @@ k8s action release namespace='default' hr_namespace='flux-system':
     #!/usr/bin/env bash
     set -euo pipefail
     chart="k8s/charts/{{release}}"
+    flux_cmd() {
+      if command -v flux >/dev/null 2>&1; then
+        flux "$@"
+      else
+        nix develop -c flux "$@"
+      fi
+    }
 
     case "{{action}}" in
       apply)
@@ -202,7 +209,7 @@ k8s action release namespace='default' hr_namespace='flux-system':
           echo "just k8s apply supports local charts only: $chart/Chart.yaml not found" >&2
           exit 2
         fi
-        flux suspend helmrelease "{{release}}" -n "{{hr_namespace}}" || true
+        flux_cmd suspend helmrelease "{{release}}" -n "{{hr_namespace}}" || true
         helm upgrade --install "{{release}}" "$chart" \
           -n "{{namespace}}" -f k8s/values/global.yaml
         ;;
@@ -215,13 +222,13 @@ k8s action release namespace='default' hr_namespace='flux-system':
           -n "{{namespace}}" -f k8s/values/global.yaml
         ;;
       suspend)
-        flux suspend helmrelease "{{release}}" -n "{{hr_namespace}}"
+        flux_cmd suspend helmrelease "{{release}}" -n "{{hr_namespace}}"
         ;;
       resume)
-        flux resume helmrelease "{{release}}" -n "{{hr_namespace}}"
+        flux_cmd resume helmrelease "{{release}}" -n "{{hr_namespace}}"
         ;;
       reconcile)
-        flux reconcile helmrelease "{{release}}" -n "{{hr_namespace}}" --with-source
+        flux_cmd reconcile helmrelease "{{release}}" -n "{{hr_namespace}}" --with-source
         ;;
       *)
         echo "usage: just k8s {apply|diff|suspend|resume|reconcile} <release> [target-namespace] [helmrelease-namespace]" >&2
