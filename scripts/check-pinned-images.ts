@@ -3,7 +3,6 @@
 // private registry with active dev where pinning would break the
 // push-and-redeploy loop.
 
-const HELMFILE = "k8s/helmfile.yaml";
 const GLOB = "k8s/charts/*/**/*.yaml";
 const FLUX_DIRS = [
   "k8s/flux/infra-crds",
@@ -14,8 +13,6 @@ const FLUX_DIRS = [
 ];
 const ALLOW_FLOATING = new Set<string>();
 
-type Release = { chart: string };
-type Helmfile = { releases: Release[] };
 type HelmRelease = {
   kind?: string;
   spec?: { chart?: { spec?: { chart?: string } } };
@@ -27,17 +24,6 @@ function chartNameFromPath(templatePath: string): string {
 
 async function deployedChartNames(): Promise<Set<string>> {
   const names = new Set<string>();
-
-  if (await Bun.file(HELMFILE).exists()) {
-    const helmfile = Bun.YAML.parse(
-      await Bun.file(HELMFILE).text(),
-    ) as Helmfile;
-    for (const release of helmfile.releases) {
-      if (release.chart.startsWith("./charts/")) {
-        names.add(release.chart.replace(/^\.\/charts\//, ""));
-      }
-    }
-  }
 
   for (const dir of FLUX_DIRS) {
     const glob = new Bun.Glob(`${dir}/**/*.yaml`);

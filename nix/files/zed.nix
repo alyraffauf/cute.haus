@@ -21,8 +21,6 @@
               "**/templates/**/*.tpl"
               "**/templates/**/*.yaml"
               "**/templates/**/*.yml"
-              "**/helmfile.d/**/*.yaml"
-              "**/helmfile.d/**/*.yml"
               "**/values*.yaml"
             ];
           };

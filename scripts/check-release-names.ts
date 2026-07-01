@@ -1,8 +1,6 @@
 // Every deployed local Helm chart must reference an actual
-// k8s/charts/<name>/Chart.yaml. During the Flux migration, deployed charts can
-// be declared in helmfile.yaml or Flux HelmRelease manifests.
+// k8s/charts/<name>/Chart.yaml.
 
-const HELMFILE = "k8s/helmfile.yaml";
 const FLUX_DIRS = [
   "k8s/flux/infra-crds",
   "k8s/flux/infra-core",
@@ -12,7 +10,6 @@ const FLUX_DIRS = [
 ];
 
 type Release = { name: string; chart: string };
-type Helmfile = { releases: Release[] };
 type HelmRelease = {
   kind?: string;
   metadata?: { name?: string };
@@ -51,29 +48,14 @@ async function fluxLocalReleases(): Promise<Release[]> {
   return releases;
 }
 
-async function helmfileLocalReleases(): Promise<Release[]> {
-  if (!(await Bun.file(HELMFILE).exists())) return [];
-
-  const helmfile = Bun.YAML.parse(await Bun.file(HELMFILE).text()) as Helmfile;
-  return helmfile.releases.filter((release) =>
-    release.chart.startsWith("./charts/"),
-  );
-}
-
 function chartYamlPath(chart: string): string {
-  return (
-    chart.replace(/^\.\/charts\//, "k8s/charts/").replace(/^\.\//, "") +
-    "/Chart.yaml"
-  );
+  return chart.replace(/^\.\//, "") + "/Chart.yaml";
 }
 
 export async function checkReleaseNames(): Promise<string[]> {
   const errors: string[] = [];
 
-  const releases = [
-    ...(await helmfileLocalReleases()),
-    ...(await fluxLocalReleases()),
-  ];
+  const releases = await fluxLocalReleases();
 
   for (const release of releases) {
     const chartYaml = chartYamlPath(release.chart);
