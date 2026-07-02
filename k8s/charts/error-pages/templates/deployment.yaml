@@ -19,6 +19,15 @@ spec:
       securityContext:
         seccompProfile:
           type: RuntimeDefault
+      tolerations:
+        - key: node.kubernetes.io/not-ready
+          operator: Exists
+          effect: NoExecute
+          tolerationSeconds: {{ $.Values.global.failover.fastTolerationSeconds | default 60 }}
+        - key: node.kubernetes.io/unreachable
+          operator: Exists
+          effect: NoExecute
+          tolerationSeconds: {{ $.Values.global.failover.fastTolerationSeconds | default 60 }}
       containers:
         - name: {{ .Chart.Name }}
           image: ghcr.io/tarampampam/error-pages:4@sha256:978c1f83e8f26742743ec3b565214ed9f2296cb5171b592071a6569dceac8c26

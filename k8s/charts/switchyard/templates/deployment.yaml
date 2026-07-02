@@ -19,6 +19,15 @@ spec:
       securityContext:
         seccompProfile:
           type: RuntimeDefault
+      tolerations:
+        - key: node.kubernetes.io/not-ready
+          operator: Exists
+          effect: NoExecute
+          tolerationSeconds: {{ $.Values.global.failover.fastTolerationSeconds | default 60 }}
+        - key: node.kubernetes.io/unreachable
+          operator: Exists
+          effect: NoExecute
+          tolerationSeconds: {{ $.Values.global.failover.fastTolerationSeconds | default 60 }}
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: topology.kubernetes.io/zone
