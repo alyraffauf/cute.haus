@@ -25,7 +25,7 @@ spec:
             matchExpressions:
               - key: topology.kubernetes.io/zone
                 operator: In
-                values: [cloud-ovhcloud, cloud-netcup]
+                values: [cloud]
         - weight: 50
           preference:
             matchExpressions:
