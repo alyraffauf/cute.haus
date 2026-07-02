@@ -47,6 +47,3 @@ backup:
   # Quartz cron (6 fields: sec min hour dom mon dow). Daily at 04:00 UTC.
   schedule: "0 0 4 * * *"
   retentionPolicy: "30d"
-  b2:
-    keyId: ""
-    appKey: ""
