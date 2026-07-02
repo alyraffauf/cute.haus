@@ -15,7 +15,6 @@ charts/
 ├── audiobookshelf/         # Audiobook library with rclone-mounted media
 ├── tranquil-pds/           # Reference atproto Personal Data Server
 ├── cert-manager-issuers/   # Let's Encrypt ClusterIssuer + wildcard Certificates
-├── cluster-tls/            # Cloudflare Origin TLS Secrets per domain
 ├── external-routes/        # Ingress + Service + EndpointSlice for off-cluster targets
 ├── forgejo/                # Git hosting (git.aly.codes)
 ├── forward-auth/           # Per-app traefik-forward-auth frontends
@@ -97,8 +96,7 @@ Some charts intentionally render repeated resources from values:
   resources from `.Values.routes`.
 - **`pg-shared`** renders CNPG roles/databases and backup resources from chart
   values.
-- **`cluster-tls`** and **`cert-manager-issuers`** render repeated TLS or
-  certificate resources from values.
+- **`cert-manager-issuers`** renders repeated certificate resources from values.
 
 Those are data charts rather than app workload charts, so a little looping is
 acceptable there.
