@@ -7,6 +7,14 @@ metadata:
   namespace: {{ .namespace }}
 spec:
   secretName: {{ .name }}
+  {{- with .replicateTo }}
+  secretTemplate:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: {{ join "," . | quote }}
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: {{ join "," . | quote }}
+  {{- end }}
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer

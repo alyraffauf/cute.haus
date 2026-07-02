@@ -69,3 +69,11 @@ metadata:
 spec:
   interval: 15m
   url: https://intel.github.io/helm-charts/
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: emberstack
+spec:
+  interval: 15m
+  url: https://emberstack.github.io/helm-charts

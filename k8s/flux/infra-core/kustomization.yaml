@@ -7,5 +7,6 @@ resources:
   - longhorn-creds.yaml
   - longhorn.yaml
   - node-feature-discovery.yaml
+  - reflector.yaml
   - tailscale-operator.yaml
   - traefik.yaml

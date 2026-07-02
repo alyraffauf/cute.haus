@@ -7,26 +7,23 @@ cloudflare:
   apiToken: ""
 
 # Wildcard certs to issue, one per zone. Each becomes a Secret in the named
-# namespace, referenced by ingresses via tlsSecret.
+# namespace; reflector mirrors it into the replicateTo namespaces so their
+# ingresses can reference the same secretName without a second issuance.
 wildcards:
   - name: cute-haus-tls
     namespace: default
     domain: cute.haus
-  - name: cute-haus-tls
-    namespace: nextcloud
-    domain: cute.haus
+    replicateTo:
+      - nextcloud
+      - websites
   - name: aly-social-tls
     namespace: default
     domain: aly.social
   - name: aly-codes-tls
     namespace: default
     domain: aly.codes
-  - name: cute-haus-tls
-    namespace: websites
-    domain: cute.haus
-  - name: aly-codes-tls
-    namespace: websites
-    domain: aly.codes
+    replicateTo:
+      - websites
   - name: morsels-blue-tls
     namespace: websites
     domain: morsels.blue
