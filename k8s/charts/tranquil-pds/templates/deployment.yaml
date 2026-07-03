@@ -69,6 +69,8 @@ spec:
               value: "implicit"
             - name: MAIL_SMARTHOST_USERNAME
               value: "resend"
+            - name: MAX_CONCURRENT_REPO_EXPORTS
+              value: "8"
             - name: PDS_HOSTNAME
               value: "pds.cute.haus"
             - name: PDS_USER_HANDLE_DOMAINS
