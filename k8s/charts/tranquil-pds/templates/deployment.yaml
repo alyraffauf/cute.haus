@@ -49,10 +49,10 @@ spec:
               value: "s3"
             - name: CRAWLERS
               value: "https://bsky.network"
-            - name: DATABASE_ACQUIRE_TIMEOUT_SECS
-              value: "60"
-            - name: DATABASE_MIN_CONNECTIONS
-              value: "1"
+            # - name: DATABASE_ACQUIRE_TIMEOUT_SECS
+            #   value: "60"
+            # - name: DATABASE_MIN_CONNECTIONS
+            #   value: "1"
             - name: INVITE_CODE_REQUIRED
               value: "true"
             - name: MAIL_FROM_ADDRESS
