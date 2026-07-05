@@ -51,7 +51,14 @@
       # systemd-oomd fights kubelet's eviction manager
       systemd.oomd.enable = lib.mkForce false;
 
-      networking.firewall.allowedTCPPorts = lib.mkIf cfg.ingress [80 443 2222];
+      networking.firewall = {
+        allowedTCPPorts = lib.mkIf cfg.ingress [80 443 2222];
+
+        # Let a pod reach kubelet:10250 on its own host. Same-node traffic to
+        # the node's Tailscale IP is delivered locally and arrives via cni0, so
+        # metrics-server can't scrape the node it runs on without this.
+        trustedInterfaces = ["cni0"];
+      };
 
       services = {
         k3s = {
