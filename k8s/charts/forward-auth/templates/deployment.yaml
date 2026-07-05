@@ -33,6 +33,16 @@ spec:
           operator: Exists
           effect: NoExecute
           tolerationSeconds: {{ $.Values.global.failover.fastTolerationSeconds | default 60 }}
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: topology.kubernetes.io/zone
+                    operator: In
+                    values:
+                      - cloud
       containers:
         - name: forward-auth
           image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
