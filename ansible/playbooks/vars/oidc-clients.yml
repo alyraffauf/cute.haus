@@ -29,16 +29,18 @@ oidc_clients:
     pkceEnabled: false
     integration: forward-auth
 
-  # immich runs on jubilife (NixOS), not k8s — no integration task. Read
-  # creds from the oidc-client-immich K8s Secret and feed them into the
-  # immich NixOS module via sops.
+  # immich runs in k3s (moved off NixOS in b524c29c). No integration task —
+  # OAuth creds live in the immich-config / immich-env SOPS secrets and are
+  # wired into the chart manually (OIDC client config is baked into
+  # config.json, not env-driven).
   - slug: immich
     name: Immich
     logoUrl: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/immich.png
     launchURL: https://immich.cute.haus/
     callbackURLs:
       - https://immich.cute.haus/auth/login
-      - app.immich:/
+      - https://immich.cute.haus/user-settings
+      - app.immich:///oauth-callback
     isPublic: false
     pkceEnabled: true
 
