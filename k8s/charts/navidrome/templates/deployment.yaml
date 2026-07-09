@@ -36,7 +36,7 @@ spec:
         kubernetes.io/hostname: jubilife
       containers:
         - name: {{ .Chart.Name }}
-          image: deluan/navidrome:0.63.0@sha256:60080f8f7bfa039348820852a7f06a5615a0bb4f83bfe541e57cbb0a8650ec9e
+          image: deluan/navidrome:0.63.1@sha256:7c43af9f651654e97278be871705aae85a4ee0fa4b310337989699a8ada9b3ed
           imagePullPolicy: IfNotPresent
           command:
             - /bin/sh
