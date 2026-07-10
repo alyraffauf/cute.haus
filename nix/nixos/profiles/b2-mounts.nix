@@ -42,6 +42,9 @@
         device = "b2:${remote}";
         fsType = "rclone";
         options = b2Options ++ b2ProfileOptions.${profile};
+        unitConfig = {
+          StartLimitIntervalSec = "0";
+        };
       };
     };
 
@@ -98,6 +101,32 @@
         })
         cfg.shares))
       allShares));
+
+      systemd.services.b2-mount-health = let
+        healthScript = pkgs.writeShellScript "b2-mount-health" ''
+          for share in ${toString cfg.shares}; do
+            if ! mountpoint -q "/mnt/Backblaze/$share"; then
+              systemctl reset-failed "mnt-Backblaze-$share.mount" "mnt-Backblaze-$share.automount"
+              systemctl start "mnt-Backblaze-$share.mount" || true
+            fi
+          done
+        '';
+      in {
+        description = "B2 FUSE mount health check — restarts failed mounts";
+        after = ["network-online.target"];
+        wants = ["network-online.target"];
+        serviceConfig.Type = "oneshot";
+        serviceConfig.ExecStart = "${healthScript}";
+      };
+
+      systemd.timers.b2-mount-health = {
+        description = "Periodic B2 mount health check";
+        timerConfig = {
+          OnCalendar = "*:0/5";
+          Persistent = true;
+        };
+        wantedBy = ["timers.target"];
+      };
     };
   };
 }
