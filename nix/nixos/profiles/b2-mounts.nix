@@ -99,10 +99,15 @@
         cfg.shares))
       allShares));
 
-      systemd.mounts =
+      # Drop-in overrides: remove the StartLimitBurst cap so automount
+      # retries indefinitely after a transient network failure.
+      # These merge into the fileSystems-generated mount units without
+      # redefining them.
+      systemd.units =
         builtins.foldl' (a: b: a // b) {}
         (map (share: {
-          "/mnt/Backblaze/${share}" = {
+          "mnt-Backblaze-${share}.mount" = {
+            overrideStrategy = "asDropin";
             unitConfig = {
               StartLimitIntervalSec = "0";
             };
@@ -110,16 +115,27 @@
         }) cfg.shares);
 
       systemd.services.b2-mount-health = let
+        # Bash will iterate over cfg.shares — names are enum-constrained
+        # so no spaces or special characters are possible.
         healthScript = pkgs.writeShellScript "b2-mount-health" ''
           for share in ${toString cfg.shares}; do
-            if ! mountpoint -q "/mnt/Backblaze/$share"; then
-              systemctl reset-failed "mnt-Backblaze-$share.mount" "mnt-Backblaze-$share.automount"
-              systemctl start "mnt-Backblaze-$share.mount" || true
+            path="/mnt/Backblaze/$share"
+            unit="mnt-Backblaze-$share"
+            if ! mountpoint -q "$path"; then
+              # Not mounted at all — reset and retry
+              systemctl reset-failed "$unit.mount" "$unit.automount" 2>/dev/null || true
+              systemctl start "$unit.mount" || true
+            elif ! timeout 10 ls "$path" >/dev/null 2>&1; then
+              # Mounted but stale (rclone process died, kernel has ENOTCONN)
+              # Lazy-unmount to clear the dead session, then restart
+              umount -l "$path" 2>/dev/null || true
+              systemctl reset-failed "$unit.mount" "$unit.automount" 2>/dev/null || true
+              systemctl start "$unit.mount" || true
             fi
           done
         '';
       in {
-        description = "B2 FUSE mount health check — restarts failed mounts";
+        description = "B2 FUSE mount health check — restarts failed or stale mounts";
         after = ["network-online.target"];
         wants = ["network-online.target"];
         serviceConfig.Type = "oneshot";
