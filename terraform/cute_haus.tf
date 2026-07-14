@@ -13,6 +13,7 @@ locals {
     "ombi.cute.haus"           = true
     "paperless.cute.haus"      = false
     "pds.cute.haus"            = false
+    "seerr.cute.haus"          = true
     "photoprism.cute.haus"     = false
     "plex.cute.haus"           = false
     "slingshot.cute.haus"      = true

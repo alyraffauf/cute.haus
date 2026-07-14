@@ -1,0 +1,5 @@
+apiVersion: v2
+name: seerr
+description: Seerr media request management
+type: application
+version: 0.1.0
