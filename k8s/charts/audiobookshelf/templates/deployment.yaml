@@ -99,6 +99,13 @@ spec:
           envFrom:
             - secretRef:
                 name: audiobookshelf-rclone
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: "1"
+              memory: 512Mi
           volumeMounts:
             - name: rclone-media
               mountPath: /audiobooks
