@@ -65,6 +65,11 @@ spec:
               mountPath: /var/lib/postgresql/data
             - name: dshm
               mountPath: /dev/shm
+          startupProbe:
+            exec:
+              command: ["pg_isready", "-U", "immich"]
+            periodSeconds: 10
+            failureThreshold: 30
           livenessProbe:
             exec:
               command: ["pg_isready", "-U", "immich"]
