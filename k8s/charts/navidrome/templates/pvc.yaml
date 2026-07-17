@@ -45,6 +45,8 @@ metadata:
   name: {{ .Chart.Name }}-media
   labels:
     app: {{ .Chart.Name }}
+  annotations:
+    helm.sh/resource-policy: keep
 spec:
   accessModes:
     - ReadOnlyMany
