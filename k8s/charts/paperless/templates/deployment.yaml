@@ -6,6 +6,7 @@ metadata:
     app: {{ .Chart.Name }}
 spec:
   replicas: 1
+  progressDeadlineSeconds: 1800
   strategy:
     type: Recreate
   selector:
