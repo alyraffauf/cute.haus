@@ -147,7 +147,7 @@ spec:
               path: /api/
               port: http
             periodSeconds: 5
-            failureThreshold: 60
+            failureThreshold: 360
             timeoutSeconds: 5
           livenessProbe:
             httpGet:
