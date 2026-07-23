@@ -43,7 +43,7 @@ spec:
               app: {{ .Chart.Name }}
       containers:
         - name: {{ .Chart.Name }}
-          image: atcr.io/tranquil.farm/tranquil-pds:latest@sha256:5e6e154e79dfbc664f5785c4014f89d706f8ed1f71a590186c0fdc9c57b1eff9
+          image: atcr.io/tranquil.farm/tranquil-pds:latest@sha256:66e9d85c1b672b23680ad6b488165dee1cfdbe9e9c25064af27ad00b9a632c53
           imagePullPolicy: IfNotPresent
           env:
             - name: AWS_REGION
